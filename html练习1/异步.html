@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>异步</title>
+</head>
+<body>
+    <!-- 
+        所谓异步，简单说就是一个任务分成两段，先执行第一段，然后转而执行其他任务，等做好了准备，再回过头执行第二段
+
+        比如，有一个任务是读取文件进行处理，任务的第一段是向操作系统发出请求，要求读取文件，然后程序执行其他任务，等到操作系统返回文件再接着执行任务的第二段（处理文件）。这种不连续的执行，就叫做异步。
+     -->
+     <script>
+         /*
+            async函数返回的promise对象，必须等到内部所有await命令的promise对象执行完，才会发生状态的改变。也就是说，只有async函数内部的异步操作执行完才会执行then方法指定的回调函数
+         */
+         async function f() {
+            throw new Error ('出错了')
+         }
+
+         f().then(
+             v => console.log(v),
+             e => console.log(e)
+         )
+
+         /*
+            await状态返回rejected，后面的await的语句不会执行
+
+            可以将await的语句放进try……catch语句中
+         */
+        //  1>正常的try……catch的语句
+        //  async function myFunction() {
+        //      try{
+        //          await somethingThatReturnsAPromise();
+        //      }catch(err){
+        //          console.log(err)
+        //      }
+        //  }
+
+        // 2>链式调用的方法
+        // async function myFunction() {
+        //     await somethingThatReturnsAPromise()
+        //      .catch(function(err){
+        //          console.log(err);
+        //      })
+        // }
+     </script>
+</body>
+</html>

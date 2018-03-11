@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6 Symbol</title>
+</head>
+
+<body>
+    <script>
+        var aa = Symbol("a")
+        var bb = Symbol("b")
+
+        console.log(aa.toString())
+        console.log(bb.toString())
+        console.log(aa == bb)
+        console.log((+"1.1") + (+"1.1") == 2.2)
+
+        const arr_1 = [1, , 3, undefined, 4];
+        console.log(arr_1.length)
+        arr_1[1] = "qqq"
+        arr_1.map((value) => console.log(value));
+        const arr_2 = [2, 5, 1, 6, 7, 4, 3, 6, 9];
+        var sort2Arr = arr_2.sort((a, b) => b - a).unshift() //取出最大值
+        console.log(sort2Arr)
+
+
+        // 原始的布尔值true和false 与 布尔对象的值true和false 两者是有差异的
+        var b = new Boolean(false);
+        if (b) {
+            console.log("qqq")
+        } // this condition evaluates to true
+        if (b == true) {
+            console.log("qqq")
+        } // this condition evaluates to false
+
+        var buffer = new ArrayBuffer(30);
+        console.log(buffer)
+
+
+        var x = new Float32Array([17, -45.3]);
+        console.log(x[0]); // 17
+        console.log(x[1]); // -45.29999923706055
+        console.log(x.length); // 2
+
+
+
+        var buffer = new ArrayBuffer(12);
+        var x = new Float32Array(buffer, 0, 2);
+        var y = new Float32Array(buffer, 4, 1);
+        x[1] = 7;
+        console.log(y[0]); // 7
+    </script>
+</body>
+
+</html>

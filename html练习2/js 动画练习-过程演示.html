@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画练习</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        @keyframes line-before {
+            0% {
+                width: 0;
+                height: 0;
+                border-top-color: #000;
+            }
+            9.9% {
+                border-right-color: transparent;
+            }
+            10% {
+                width: 100%;
+                border-right-color: #000;
+                border-top-color: #000;
+                height: 0;
+            }
+            20%,
+            100% {
+                width: 100%;
+                border-right-color: #000;
+                border-top-color: #000;
+                height: 100%;
+            }
+            40% {
+                width: 100%;
+                border-right-color: #000;
+                border-top-color: #000;
+                height: 100%;
+                border-radius: 0;
+            }
+            /* 在执行到50%的时候变圆 */
+            50%,
+            100% {
+                width: 100%;
+                border-right-color: #000;
+                border-top-color: #000;
+                height: 100%;
+                border-radius: 50%;
+            }
+        }
+        
+        @keyframes line-after {
+            0%,
+            19.9% {
+                border-color: transparent;
+                width: 0;
+                height: 0;
+            }
+            20% {
+                width: 0;
+                height: 0;
+                border-bottom-color: #000;
+            }
+            29.9% {
+                border-left-color: transparent;
+            }
+            30% {
+                width: 100%;
+                border-left-color: #000;
+                border-bottom-color: #000;
+                height: 0;
+            }
+            40% {
+                width: 100%;
+                border-left-color: #000;
+                border-bottom-color: #000;
+                height: 100%;
+                border-radius: 0;
+            }
+            /* 在执行到50%的时候变圆 */
+            50%,
+            100% {
+                border-radius: 50%;
+                width: 100%;
+                border-left-color: #000;
+                border-bottom-color: #000;
+                height: 100%;
+            }
+        }
+        
+        .view {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin: 200px auto;
+        }
+        
+        .view:before {
+            position: absolute;
+            content: '';
+            left: 0;
+            top: 0;
+            /* border-color: transparent; */
+            /* border-width: 2px; */
+            /* border-style: solid; */
+            border: 2px solid transparent;
+            animation: line-before 4s infinite alternate;
+            /* animation-direction: alternate; */
+        }
+        
+        .view:after {
+            position: absolute;
+            content: '';
+            bottom: -4px;
+            right: -4px;
+            border-color: transparent;
+            border-width: 2px;
+            border-style: solid;
+            animation: line-after 4s infinite;
+            animation-direction: alternate;
+        }
+        
+        @keyframes spin {
+            0%,
+            50% {
+                opacity: 0;
+                transform: rotate(0deg);
+            }
+            75%,
+            100% {
+                opacity: 1;
+                transform: rotate(360deg);
+            }
+        }
+        
+        .main {
+            opacity: 0;
+            background: white;
+            width: 100%;
+            height: 50%;
+            border: 2px solid black;
+            border-bottom: 75px solid black;
+            border-radius: 50%;
+            animation: spin 4s infinite;
+            animation-direction: alternate;
+            animation-timing-function: ease;
+        }
+        
+        .main:before {
+            display: block;
+            content: '';
+            background: white;
+            width: 15px;
+            height: 15px;
+            border: 30px solid black;
+            border-radius: 50%;
+            position: absolute;
+            top: 37.5px;
+        }
+        
+        .main:after {
+            display: block;
+            content: '';
+            background: black;
+            width: 15px;
+            height: 15px;
+            border: 30px solid white;
+            border-radius: 50%;
+            position: absolute;
+            top: 37.5px;
+            right: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>由矩形框转变成圆形框-出现图形-反向-图形消失</p>
+    <div class="view">
+        <div class="main"></div>
+    </div>
+</body>
+
+</html>

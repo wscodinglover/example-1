@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>canvas实例2-小球旋转</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="1000" height="1000" style="background-color:black;"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        //    获取画布
+        var cxt = canvas.getContext('2d');
+        var time = 0;
+        // 构造函数
+        function draw() {
+            // 清除画布
+            cxt.clearRect(0, 0, 1000, 1000);
+
+            cxt.strokeStyle = "#fff";
+
+            cxt.beginPath();
+            cxt.arc(500, 500, 100, 0, 360, false);
+            cxt.closePath();
+            cxt.stroke();
+
+            cxt.beginPath();
+            cxt.arc(500, 500, 20, 0, 360, false);
+            cxt.colsePath();
+
+            var sunColor = cxt.createRadialGradient(500, 500, 0, 500, 500, 20);
+            sunColor.addColorStop(0, "#f00");
+            sunColor.addColorStop(1, "#f90");
+            cxt.fillStyle = sunColor;
+            cxt.fill();
+            // 构造环境
+            cxt.save();
+            // 起点
+            cxt.translate(500, 500);
+            cxt.rotate(time * 365 / 360 * Math.PI / 190);
+
+            cxt.beginPath();
+            cxt.arc(0, -100, 10, 0, 360, false);
+            cxt.closePath();
+
+            var earthColor = cxt.createRadialGradient(0, -100, 0, 0, -100, 10);
+            earthColor.addColorStop(0, '#78B1E8');
+            earthColor.addColorStop(1, '#050C12');
+            cxt.fillStyle = earthColor;
+            cxt.fill();
+            cxt.restore();
+
+            time += 1;
+        }
+        setInterval(draw, 10);
+    </script>
+</body>
+
+</html>

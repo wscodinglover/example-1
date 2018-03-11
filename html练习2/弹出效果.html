@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>简单的类似QQ头像的弹出效果</title>
+    <style type="text/css">
+        #oimg {
+            float: left;
+            margin: 10px
+        }
+        
+        #msg {
+            border: solid;
+            width: 300px;
+            height: 250px;
+            display: none;
+            float: left;
+            padding: 10px
+        }
+    </style>
+</head>
+
+<body>
+    <img id="oimg" src="images/eye.png" />
+    <div id="msg">啦啦啦啦。。。。。</div>
+    <script type="text/javascript">
+        var oid = document.getElementById("oimg");
+        var omsg = document.getElementById("msg");
+        var timer = null;
+        oid.onmousemove = showMsg;
+        oid.onmouseout = hideMsg;
+        omsg.onmouseout = hideMsg;
+        omsg.onmousemove = function() {
+            clearTimeout(timer)
+        };
+
+        function showMsg() {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            omsg.style.display = "block";
+        }
+
+        function hideMsg() {
+            timer = setTimeout(function() {
+                omsg.style.display = "none";
+            }, 500);
+        }
+    </script>
+</body>
+
+</html>

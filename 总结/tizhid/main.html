@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			ul{
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			.mui-btn {
+				padding: 10px;
+				border: 0px;
+			}
+			#yizhidai-main-body .mui-row{
+				background-color: #efeff4;
+				padding-top: 5px;
+				padding-bottom: 2px;
+			}
+			#yizhidai-main-body .apply{
+			/*	background-color: #0199e2;*/
+				text-align: center;
+			    padding-top: 1%;
+			}
+			#yizhidai-main-body .currentloan{
+				float: left;
+			}
+			#yizhidai-main-body .currentrepayment{
+				float: left;
+			}
+			#yizhidai-main-body .prerepayment{
+				float: right;
+			}
+
+			#yizhidai-main-body .mui-col-xs-6{
+				width: 32.1%;
+    			margin-left: 1%;
+			}
+			#yizhidai-main-body .mui-table-view .mui-media-object {
+			    line-height: 15px;
+			    max-width: 42px;
+			    height: 15px;
+			}
+			#yizhidai-main-body .mui-table-view img
+			{
+				margin-top: 3px;
+			}
+		</style>
+	</head>
+	<body class='yizhidai-body' id='yizhidai-main-body'>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;box-shadow: 0 1px 0px #ccc;">
+			<h1 class="mui-title">首页</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-slider">
+			  <div class="mui-slider-group mui-slider-loop" id="main_lunbo">
+			    <!--支持循环，需要重复图片节点(取最后一张)-->
+			    <div class="mui-slider-item mui-slider-item-duplicate"><a href="apply.html"><img src="images/index_lunbo/shangxian.png" /></a></div>
+			    <div class="mui-slider-item"><a href="apply.html"><img src="images/index_lunbo/apply.png" /></a></div>
+			    <div class="mui-slider-item"><a href="member.html"><img src="images/index_lunbo/personal.png" /></a></div>
+			    <div class="mui-slider-item"><a href="apply.html"><img src="images/index_lunbo/shangxian.png" /></a></div>
+			    <!--支持循环，需要重复图片节点(取最前一张)-->
+			    <div class="mui-slider-item mui-slider-item-duplicate"><a href="apply.html"><img src="images/index_lunbo/apply.png" /></a></div>
+			  </div>
+			  <div class="mui-slider-indicator" id="main_lunbo_button">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			  </div>
+			</div>
+			<div class="mui-col-xs-12">
+					<p style="text-align: right;">欢迎，<span id="user_access"><a href="login.html">请登录</a></span></p>
+			</div>
+			<div class='main-menu'>
+				<div class="mui-col-xs-12 apply">
+					<a href="apply.html"><img src="images/apply.png" width='60%'></a>
+				</div>
+				<div class="mui-row">
+			        <div class="mui-col-xs-6 currentloan">
+			        	<a href="currentloan.html"><img src="images/current_loan.png" width='100%'></a>
+			        </div>
+			        <div class="mui-col-xs-6 currentrepayment">
+			        	<a href="currentrepayment.html"><img src="images/repayment.png" width='100%'></a>
+			        </div>
+			        <div class="mui-col-xs-6 records">
+			        	<a href="prerepayment.html"><img src="images/records.png" width='100%'></a>
+			        </div>
+			   </div>
+			</div>
+			<ul class="mui-table-view news" id="news"></ul>
+		</div>
+		<footer class='yizhidai-footer' id='yizhidai--footer'>
+			<nav class="mui-bar mui-bar-tab">
+			    <a class="mui-tab-item mui-active">
+			        <span class="mui-icon mui-icon-home"></span>
+			        <span class="mui-tab-label">首页</span>
+			    </a>
+			    <a class="mui-tab-item" href="member.html">
+			        <span class="mui-icon mui-icon-contact"></span>
+			        <span class="mui-tab-label">个人中心</span>
+			    </a>
+			    <a class="mui-tab-item" href="more.html">
+			        <span class="mui-icon mui-icon-bars"></span>
+			        <span class="mui-tab-label">帮助</span>
+			    </a>
+			</nav>
+		</footer>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var service_url = 'https://api.1zhidai.com';
+					var settings = app.getSettings();
+					var state = app.getState();
+					if (state.api_token) {
+						app.userinfo(state.api_token, function(res) {
+							if ((typeof res != 'object') && res.constructor != Object) {
+								document.location.href = 'login.html';
+								return;
+							}else{
+								doc.getElementById('user_access').innerHTML = res.phone;
+							}
+							
+						});
+						var taskp = plus.uploader.createUpload(service_url + '/index/personal',
+								{method:"POST"},
+								function (result, status){
+									//上传完成
+									if (status == 200 ) {
+										var res = JSON.parse(result.responseText);
+										if(res.data.flag == "get"){
+											//上传位置信息
+											plus.geolocation.getCurrentPosition( function ( p ) {
+												//plus.nativeUI.toast( "位置信息(Geolocation)\n纬度(Latitude): " + p.coords.latitude + "\n经度(Longitude): " + p.coords.longitude + "\n海拔(Altitude): " + p.coords.altitude );
+												var geo = '{"Latitude":"'+p.coords.latitude+'","Longitude":"'+p.coords.longitude+'", "Altitude":"'+p.coords.altitude+'"}';
+												if(geo == state.geo_location){
+													return;
+												}else{
+													//位置保存在本地stage中
+													state.geo_location = geo;
+													app.setState(state);
+												}
+												var taskg = plus.uploader.createUpload(service_url + '/user/updateinfo',
+													{method:"POST"},
+													function (result, status){
+														//上传完成
+														if (status == 200 ) {
+															//plus.nativeUI.toast(result.responseText);
+															var res = JSON.parse(result.responseText);
+															if(res.status == 200){
+																//plus.nativeUI.toast( "位置上传成功: " + status ); 
+																return;
+															}else{
+																//plus.nativeUI.toast(res.message);
+																return;
+															}
+														} else {
+															//plus.nativeUI.toast( "位置上传失败: " + status ); 
+															return;
+														}  
+												 	}
+												);
+												taskg.addData('api_token', state.api_token);
+												taskg.addData('geo_location', geo);
+												taskg.start();
+											}, function ( e ) {
+												//plus.nativeUI.toast( "壹直贷获取您的位置失败，请在设置中打开获取位置权限" );
+											} );
+											//上传设备信息
+											var device_info = '{"device.model":"'+plus.device.model+'","device.vendor":"'+plus.device.vendor+'", "device.uuid":"'+plus.device.uuid
+																+'", "os.version":"'+plus.os.version+'", "os.name":"'+plus.os.name+'", "os.vendor":"'+plus.os.vendor+'"}';
+											if(device_info != state.device_info){
+												var taskd = plus.uploader.createUpload(service_url + '/user/updateinfo',
+													{method:"POST"},
+													function (result, status){
+														//上传完成
+														if (status == 200 ) {
+															//plus.nativeUI.toast(result.responseText);
+															var res = JSON.parse(result.responseText);
+															if(res.status == 200){
+																//plus.nativeUI.toast("设备信息上传成功: " + status); 
+																return;
+															}else{
+																//plus.nativeUI.toast(res.message);
+																return;
+															}	
+														} else {  
+															//plus.nativeUI.toast("设备信息上传失败: " + status); 
+															return;
+														}  
+												 	}
+												);
+												taskd.addData('api_token', state.api_token);
+												taskd.addData('device_info', device_info);
+												taskd.start();
+												//设备信息保存在本地stage中
+												state.device_info = device_info;
+												app.setState(state);
+											}
+											return;
+										}else{
+											//plus.nativeUI.toast(res.message);
+											return;
+										}
+									} else {  
+										//plus.nativeUI.toast("失败: " + status); 
+										return;
+									}
+							 	}
+						);
+						//taskp.addData('api_token', state.api_token);
+						taskp.start();
+					}
+					//获取首页轮播图及消息通知
+					var taskm = plus.uploader.createUpload(service_url + '/index/main',
+							{method:"POST"},
+							function (result, status) {
+								//上传完成
+								if (status == 200 ) {
+									var res = JSON.parse(result.responseText);
+									if(res.status == 200){
+										var lunbos = res.data.lunbos;
+										var messages = res.data.messages;
+										if(lunbos.length>0){
+											//轮播图片
+											var html_content = '<div class="mui-slider-item mui-slider-item-duplicate"><a href="'+lunbos[lunbos.length-1].target_url+'"><img src="'+lunbos[lunbos.length-1].img_url+'"/></a></div>';
+											for(var i=0; i<lunbos.length; i++){
+												var lunbo = lunbos[i];
+												html_content += '<div class="mui-slider-item"><a href="'+lunbo.target_url+'"><img src="'+lunbo.img_url+'" /></a></div>';
+												
+											}
+											html_content += '<div class="mui-slider-item mui-slider-item-duplicate"><a href="'+lunbos[0].target_url+'"><img src="'+lunbos[0].img_url+'"/></a></div>';
+											//轮播按钮
+			    							var button_content = '<div class="mui-indicator mui-active"></div>';
+			    							for(var i=1; i<lunbos.length; i++){
+												button_content += '<div class="mui-indicator"></div>';
+											}
+			    							doc.getElementById('main_lunbo').innerHTML = html_content;
+			    							doc.getElementById('main_lunbo_button').innerHTML = button_content;
+											var gallery = mui('.mui-slider');
+											gallery.slider({
+											  interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
+											});
+										}
+										if(messages.length>0){
+											for(var i=0; i<messages.length; i++){
+												var message = messages[i];
+												var html_content = '<li class="mui-table-view-cell mui-media">';
+													//html_content += '<a href="javascript:;">';
+													html_content += '<img class="mui-media-object mui-pull-left" src="images/mark.png" >';
+													html_content += '<div class="mui-media-body">';
+													html_content += '<p class="mui-ellipsis-2">'+message+'</p>';
+													html_content += '</div></li>';
+												doc.getElementById('news').innerHTML += html_content;
+											}	
+										}
+										return;
+									}else{
+										//plus.nativeUI.toast(res.message);
+										return;
+									}	
+								} else {  
+									//plus.nativeUI.toast( "失败: " + status ); 
+									return;
+								}  
+						 	}
+					);
+					//taskm.addData('api_token', state.api_token);
+					taskm.start();
+					var gallery = mui('.mui-slider');
+					gallery.slider({
+					  interval:3000//自动轮播周期，若为0则不自动播放，默认为0；
+					});
+					//底部导航切换
+					$('.mui-bar-tab').on('tap', 'a', function(e) {
+						if(this.href){
+							document.location.href=this.href;						
+						}
+					});
+					//系统返回按钮设置--
+					$.oldBack = mui.back;
+					var backButtonPress = 0;
+					$.back = function(event) {
+						backButtonPress++;
+						if (backButtonPress > 1) {
+							plus.runtime.quit();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					};
+				});
+			}(mui, document));
+		</script>
+	</body>
+</html>

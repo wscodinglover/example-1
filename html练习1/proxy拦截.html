@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>proxy属性拦截</title>
+</head>
+<body>
+    <a href="https://www.baidu.com" id="aId">百度一下</a>
+    <script>
+    var obj = new Proxy({},{
+        get:function(target,property){
+            return "forbbiden"
+        }
+    })
+    obj.name = 'initData'
+    console.log(obj.name);
+    console.log(obj)
+
+
+// 对于age属性进行过滤
+    let validator = {
+        set:function(obj,prop,value){
+            if(prop === 'age' ){
+                if(!Number.isInteger(value)){
+                    throw new TypeError('The age is not an integer');
+                }
+                if(value>200){
+                    throw new RangerError('The age seems invalid');
+                }
+            };
+            // 对于age以外的属性，直接保存
+            obj[prop] = value;
+        }
+    }
+    let person = new Proxy({},validator);
+    // person.age=100;
+    // person.age = 'young';
+    // person.age = 300;
+
+
+    var handler = {
+        get(target,key){
+            invariant(key,'get');
+            return target[key];
+        },
+        set(target,key,value){
+            invariant(key,'set');
+            return true
+        }
+    }
+    // 禁止属性读写的方法 对于带_的属性禁止操作
+    function invariant (key,action){
+        if(key[0] === '_'){
+            throw new Error(`Invalid attempt to ${action} private "${key}" property`);
+        }
+    }
+    var target = {};
+    var proxy = new Proxy(target,handler);
+    // proxy._prop
+    // proxy._prop = 'c'
+    </script>
+</body>
+</html>

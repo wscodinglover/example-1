@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Class 类</title>
+</head>
+<body>
+    <script>
+        /*
+        在class内部可以使用get和set关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为
+        class MyClass {
+            constructor(){
+                // ...
+            }
+            get prop() {
+                return 'getter'
+            }
+
+            set prop(value) {
+                console.log('setter: '+value)
+            }
+        }
+
+        let inst = new MyClass();
+        inst.prop = 123
+        //setter:123
+
+        inst.prop  //'getter'
+    拦截value的set和get
+        */
+        /*
+            存值函数和取值函数是设置在属性的descriptor对象上的
+        */
+    class CustomHTMLElement {
+        constructor(element) {
+            this.element = element;
+        }
+        get html() {
+            return this.element.innerHTML;
+        }
+        set html(value) {
+            this.element.innerHTML = value;
+        }
+        }
+    var descriptor = Object.getOwnPropertyDescriptor(
+        CustomHTMLElement.prototype, "html");
+        console.log("get" in descriptor,'get') // true
+        console.log("set" in descriptor,'set') // true
+    /*
+    类的构造函数，不使用new是没法调用的，会报错，这是它跟普通构造函数的一个主要区别
+    */
+ 
+
+ /*
+     如果 分成两部分可以解决因此造成的浏览器的
+     
+ */
+ console.log(Number.MAX_VALUE)
+ var num1 = parseInt("70",8);
+ console.log(num1)
+
+ var obj = new Object();
+ console.info(obj.constructor())
+
+var num2 = 10;
+console.log(0x20>>2)
+
+    </script>
+    
+</body>
+</html>

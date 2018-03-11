@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css鼠标悬停获取文本</title>
+    <style>
+    div{
+        width:100px;
+        /* border:1px solid red;   */
+        position:relative;
+        }
+    div:hover:after{
+        content:attr(data-msg);
+        position:absolute;
+        font-size: 12px;
+        width:200%;
+        line-height:30px;
+        text-align:center;
+        left:0;
+        top:25px;
+        border:1px solid green;
+        }
+    </style>
+</head>
+<body>
+    <div data-msg="纯css获取文本信息">  
+        hover
+    </div>
+</body>
+</html>

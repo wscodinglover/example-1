@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>鼠标滚动方向</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            float: left;
+            background: blue;
+        }
+        
+        div:nth-of-type(2) {
+            background: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+        // mousewheel火狐不支持此事件
+        var doc = window
+        doc.addEventListener('mousewheel', function(e) {
+            console.log("eee")
+        })
+    </script>
+</body>
+
+</html>

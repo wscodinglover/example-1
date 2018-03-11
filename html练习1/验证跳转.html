@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>验证跳转</title>
+    <style>
+    label{
+        display: inline-block;
+        width: 80px;
+        line-height: 30px;
+        color:#00d;
+        text-align: justify;
+
+    }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="username">用户名：</label>
+        <input type="text" name="username" id="username" placeholder="用户名">
+        <br>
+        <label for="psw">密码：</label>
+        <input type="password" name="userpsw" id="psw" placeholder="密码">
+        <br>
+        <button onclick="jumpOne(event)">Jump</button>
+    </form>
+    <p>当用户名为admin，密码为：123456 时才会跳转，否则会弹出错误提示</p>
+    <script>
+        var usersname = document.getElementById('username'),
+            userpsw = document.getElementById('psw');
+
+
+// 阻止表单的默认提交，使其页面跳转时不在url后追加参数，方便做一些交互判断
+        function jumpOne(ev) {
+            ev.preventDefault();
+
+            if((usersname.value=="admin")){
+                if(userpsw.value=="123456"){
+                    window.location.href="./跳转后页面.html"
+                }else{
+                    alert('用户密码错误')
+                }               
+            }else{
+                alert('用户名错误')
+            }
+        //     window.location.href="./跳转后页面.html"
+        }
+    </script>
+</body>
+</html>

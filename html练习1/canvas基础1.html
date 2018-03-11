@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ddd</title>
+    <style>
+        canvas {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <script>
+        // 获取画布
+        var canvas = document.getElementById('canvas');
+        // 设置绘图环境
+        var cxt = canvas.getContext('2d');
+        // 画一条直线
+        // 设置画笔的宽度
+        cxt.lineWidth = 10;
+        // 设置画笔的颜色
+        cxt.strokeStyle = '#ff9900';
+
+        // 画笔的起始位置
+        cxt.moveTo(20, 20);
+        // 设置移动的方式
+        cxt.lineTo(100, 20);
+        // 画线
+        cxt.stroke();
+        // 封闭路径
+        cxt.closePath();
+        // 画圆
+        cxt.beginPath();
+        cxt.lineWidth = 3;
+        cxt.strokeStyle = 'green';
+        cxt.arc(200, 200, 50, 0, 360, false);
+        cxt.stroke();
+        cxt.closePath();
+        // 画实心圆
+        cxt.beginPath();
+        cxt.fillStyle = 'rgb(255,0,0)';
+        cxt.arc(200, 100, 50, 0, 360, false);
+        cxt.fill();
+        cxt.stroke();
+        cxt.closePath();
+        // 画一个矩形
+        cxt.beginPath();
+        cxt.rect(300, 20, 100, 100);
+        cxt.stroke();
+        cxt.closePath();
+
+        cxt.beginPath();
+        cxt.strokeRect(300, 150, 100, 100);
+        cxt.closePath();
+
+        cxt.beginPath();
+        cxt.rect(300, 300, 100, 100);
+        cxt.fill();
+        cxt.closePath();
+
+        cxt.beginPath();
+        cxt.fillRect(200, 600, 200, 100);
+        cxt.closePath();
+        // 设置文字
+        cxt.font = "60px 黑体 ";
+        cxt.fillText("弄啥呢", 20, 300);
+        cxt.strokeText("弄啥呢", 20, 350);
+        // 画图 把一副图片
+        var img = new Image();
+        img.src = '1.jpg';
+        cxt.drawImage(img, 20, 370, 320, 360);
+        // 画三角
+        cxt.beginPath();
+        cxt.moveTo(300, 500);
+        cxt.lineTo(300, 600);
+        cxt.lineTo(450, 650);
+        // cxt.stroke();
+        cxt.closePath();
+        cxt.stroke();
+        // 实心
+        cxt.beginPath();
+        cxt.moveTo(300, 100);
+        cxt.lineTo(300, 200);
+        cxt.lineTo(450, 350);
+        // cxt.stroke();
+        cxt.closePath();
+        // 填充或者画路径需要先闭合路径
+        cxt.fill();
+
+
+        //         旋转
+        cxt.save(); //环境 save 和restore是成对出现的
+
+        cxt.rotate(-25 * Math.PI / 180);
+
+        cxt.beginPath();
+        cxt.moveTo(50, 50);
+        cxt.lineTo(50, 200);
+        cxt.lineWidth = 20;
+        cxt.stroke();
+        cxt.closePath();
+
+        cxt.restore();
+    </script>
+</body>
+
+</html>

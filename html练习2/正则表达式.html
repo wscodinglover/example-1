@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则表达式</title>
+    <style>
+        /* div {
+            display: grid;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- <div>
+
+    </div> -->
+    <script>
+        var regex = /^[a-zA-Z]:\\([^\\:*<>|"?\r\n/]+\\)*([^\\:*<>|"?\r\n/]+)?$/;
+        console.log(regex.test("F:\\study\\javascript\\regex\\regular expression.pdf"));
+        console.log(regex.test("F:\\study\\javascript\\regex\\"));
+        console.log(regex.test("F:\\study\\javascript"));
+        console.log(regex.test("F:\\"));
+        // => true
+        // => true
+        // => true
+        // => true
+
+        var regex = /id=".*?"/
+        var string = '<div id="container" class="main"></div>';
+        console.log(string.match(regex)[0]);
+        // => id="container" 
+
+        var regex = /id="[^"]*"/
+        var string = '<div id="container" class="main"></div>';
+        console.log(string.match(regex)[0]);
+        // => id="container"
+
+        // *表示{0,}出现任意次数，.表示任意字符 
+        // 匹配任意字符使用[\d\D]、[\w\W]、[\s\S]和[^]中任何的一个
+
+        var string1 = "12345678",
+            string2 = "123456789";
+        reg = /(?!^)(?=(\d{3})+$)/g;
+
+        var result = string1.replace(reg, ',')
+        console.log(result);
+        // => "12,345,678"
+
+        result = string2.replace(reg, ',');
+        console.log(result);
+        // => "123,456,789"
+
+
+
+        var string = "12345678 123456789",
+            reg = /(?!\b)(?=(\d{3})+\b)/g; ///\B(?=(\d{3})+\b)/g
+
+        var result = string.replace(reg, ',')
+        console.log(result);
+        // => "12,345,678 123,456,789"
+
+        // 密码正则匹配
+        var reg = /((?=.*[0-9])(?=.*[a-z])|(?=.*[0-9])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z]))^[0-9A-Za-z]{6,12}$/;
+        console.log(reg.test("1234567")); // false 全是数字
+        console.log(reg.test("abcdef")); // false 全是小写字母
+        console.log(reg.test("ABCDEFGH")); // false 全是大写字母
+        console.log(reg.test("ab23C")); // false 不足6位
+        console.log(reg.test("ABCDEF234")); // true 大写字母和数字
+        console.log(reg.test("abcdEF234")); // true 三者都有
+    </script>
+</body>
+
+</html>

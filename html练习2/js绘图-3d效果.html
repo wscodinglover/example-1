@@ -1,0 +1,106 @@
+<html>
+
+<head>
+    <title>变色的圆圈</title>
+    <style>
+        /* body {
+            background-color: #000000;
+        } */
+    </style>
+</head>
+
+<body>
+    <script language="JavaScript">
+        var CoLoUrS = new Array("ff0000", "ffffff", "0000ff", "ffffff");
+        var dots = 16;
+        var step = 0.3;
+        var a_StEp = 0.05;
+        var RunTime = Xpos = Ypos = count_a = count = currStep = 0;
+        var cntr = 70;
+        var move_a = move = 1;
+        var curColour;
+
+        // document.write("<div id="moveDiv" style="position:absolute;top:0px;left:0px">");
+        var div = document.createElement('div');
+        div.style.position = "absolute";
+        div.style.top = "0px";
+        div.style.left = "0px";
+        div.setAttribute('id', 'moveDiv')
+        document.body.appendChild(div);
+
+        for (i = 0; i < dots; i++) {
+            //  document.write("<div style="position:absolute;top:0px;left:0px;width:2px;height:2px;background:#ffffff;font-size:2px"></div>");
+            var div = document.createElement('div');
+            div.style.position = "absolute";
+            div.style.width = "2px";
+            div.style.height = "2px";
+            div.style.top = "0px";
+            div.style.left = "0px";
+            div.style.background = "#fff";
+            div.style.fontSize = "2px";
+            document.body.appendChild(div);
+        }
+
+        // document.write("</div>");
+        var x = moveDiv.all;
+        var numdiv = new Array(x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10], x[11], x[12], x[13], x[14], x[15]);
+
+        function colourStep() {
+            count += move;
+            if (count >= numdiv.length) {
+                count = 0;
+                count_a += move
+            }
+            if (count_a == CoLoUrS.length) count_a = 0;
+            numdiv[count].style.background = CoLoUrS[count_a];
+            setTimeout("colourStep()", 100)
+        }
+
+        function divmove() {
+            Ypos = document.body.scrollTop + document.body.offsetHeight / 2 + document.body.offsetHeight / 2.8 * Math.cos((RunTime) / 3) * Math.cos(RunTime / 10);
+            Xpos = document.body.scrollLeft + document.body.offsetWidth / 2 + document.body.offsetWidth / 2.4 * Math.sin((RunTime) / 5) * Math.sin(RunTime / 20);
+            RunTime += a_StEp;
+            Tma = setTimeout("divmove()", 10);
+        }
+
+        function overturn() {
+            for (i = 0; i < numdiv.length; i++) {
+                numdiv[i].style.top = Ypos + cntr * Math.cos((currStep + i * 4) / 10.2) * Math.cos(currStep / 10);
+                numdiv[i].style.left = Xpos + cntr * Math.sin((currStep + i * 4) / 10.2);
+            }
+            currStep += step;
+            setTimeout("overturn()", 10);
+        }
+
+        function Shrink() {
+            cntr -= 0.5;
+            GoShrink = setTimeout("Shrink()", 10);
+            if (cntr <= 20) {
+                clearTimeout(GoShrink);
+                Swell()
+            }
+        }
+
+        function Swell() {
+            cntr += 0.5;
+            GoSwell = setTimeout("Swell()", 10);
+            if (cntr >= 70) {
+                clearTimeout(GoSwell);
+                Shrink()
+            }
+        }
+
+        function transfer() {
+            divmove(); //移动层
+            overturn(); //使层进行翻转
+            Shrink(); //改变层的大小
+            colourStep(); //变换层的颜色
+        }
+        transfer();
+
+
+        document.body.innerHTML("<div >Hello world</div>")
+    </script>
+</body>
+
+</html>

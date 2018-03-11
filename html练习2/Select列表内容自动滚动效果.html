@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Select列表内容自动滚动效果</title>
+
+</head>
+
+<body onload="screenscroll();">
+
+    <script>
+        var arr = [],
+            i = 0;
+
+        function screenscroll() {
+            var optlist = document.form1.Text1;
+            // console.log(document.form1.text3.value)
+            arr.push(optlist[0])
+                // console.log(i)
+            optlist[0] = null;
+
+            optlist.selectedIndex = 0;
+            var timer = setTimeout('screenscroll()', 1000);
+            if (i > 10 && i < 14) {
+                optlist.selectedIndex = 9;
+            }
+
+            if (optlist.length == 10) {
+                // clearTimeout(timer)
+                // console.log(i)
+                // console.log("清除定时器")
+                arr.map((value) => {
+                    optlist.appendChild(value)
+                })
+
+                // var a = i == 3 ? 3 : (i == 6 ? 6 : 9)
+                // console.log(a)
+                optlist.selectedIndex = 0;
+                // console.log(optlist)
+            }
+        }
+    </script>
+
+    <form name="form1">
+        <!-- <input type="text" name="text3" value="55"> -->
+        <select name="Text1" size='10'>
+            
+            <option>世界名著及作者</option>
+            <option>乌托邦 作者：莫 尔</option>
+            <option>威尼斯商人 作者：莎士比亚</option>
+            <option>简.爱 作者：夏绿蒂.勃朗特</option>
+            <option>唐璜 作者：拜 伦</option>
+            <option>呼啸山庄 作者：艾米莉.勃朗特</option>
+            <option>鲁宾逊飘流记 作者：笛 福</option>
+            <option>名利场 作者：萨克雷</option>
+            <option>傲慢与偏见 作者：简.奥斯丁</option>
+            <option>双城记 作者：查尔斯.狄更斯</option>
+            <option>恋爱中的女人 作者：D.H.劳伦斯</option>
+            <option>新工具 作者：培 根</option>
+            <option>政府论 作者：洛 克</option>
+            <!-- <option>尤里西斯 作者：詹姆斯.乔伊斯</option>
+            <option>赫克尔贝里.芬历险记 作者：马克.吐温</option>
+            <option>老人与海 作者：海明威</option>
+            <option>飘 作者：玛格丽特.米切尔</option>
+            <option>嘉莉妹妹 作者：德莱塞</option>
+            <option>小妇人 作者：路易莎.梅.奥尔科特</option>
+            <option>悲惨世界 作者：雨果</option> 
+            <option>约翰.克里斯朵夫 作者：罗曼.罗兰</option>
+            <option>幻灭 作者：巴尔扎克</option>
+            <option>欧叶妮.格朗台 作者：巴尔扎克</option>
+            <option>贝姨 作者：巴尔扎克</option>
+            <option>邦斯舅舅 作者：巴尔扎克</option>
+            <option>格兰特船长的儿女 作者：儒勒.凡尔纳</option>
+            <option>漂亮朋友 作者：莫泊桑</option>
+            <option>娜娜 作者：左 拉</option>
+            <option>包法利夫人 作者：福楼拜</option>
+            <option>基督山伯爵 作者：大仲马</option>
+            <option>茶花女 作者：小仲马</option>
+            <option>巴黎圣母院 作者：雨 果</option>
+            <option>红与黑 作者：司汤达</option>
+            <option>拿破仑法典 作者： 拿破仑</option>
+            <option>人是机器 作者：拉美特里</option>
+            <option>社会契约论 作者：卢 梭</option>
+            <option>浮士德 作者：歌 德</option>
+            <option>少年维特的烦恼 作者：歌 德</option>
+            <option>希腊神话故事 作者：施瓦布</option>
+            <option>战争论 作者：克劳塞维茨</option>
+            <option>忏悔录 作者：奥古斯丁</option>
+            <option>父与子 作者：屠格涅夫</option>
+            <option>罪与罚 作者：陀思妥耶夫斯基</option>
+            <option>安娜.卡列宁娜 作者：列夫.托尔斯泰</option>
+            <option>复活 作者：列夫.托尔斯泰</option>
+            <option>上尉的女儿 作者：普希金</option>
+            <option>死魂灵 作者：果戈理</option>
+            <option>童年 作者：高尔基</option>
+            <option>我的大学 作者：高尔基</option>
+            <option>钢铁是怎样炼成的 作者：尼.奥斯特洛夫斯基</option>
+            <option>白痴 作者：陀思妥耶夫斯基</option>
+            <option>伊索寓言 作者：伊索.拉封丹</option>
+            <option>理想国 作者：柏拉图</option>
+            <option>政治学 作者：亚里士多德</option>
+            <option>安徒生童话 作者：安徒生</option>
+            <option>牛虻 作者：伏尼契</option>
+            <option>堂.吉诃德 作者：塞万提斯</option>
+            <option>汉穆拉比法典 作者：汉穆拉比</option>
+            <option>论神 作者：斯宾诺莎</option>
+            <option>癞皮鹦鹉 作者：利萨尔迪</option>
+            <option>太阳城 作者：康帕内拉</option>
+            <option>性爱与文明 作者：弗洛伊德</option>
+            <option>苔丝 作者：哈代</option>
+            <option>拉摩的侄儿 作者：狄德罗</option>
+            <option>理智与情感 作者：奥斯汀</option>
+            <option>权力意志 作者：尼采</option>
+            <option>苦闷的象征 作者：厨川白村</option>
+            <option>梦的解析 作者：弗各伊德</option>
+            <option>资本论 作者：马克思</option>
+            <option>先知 作者：纪伯伦</option>
+            <option>俄罗斯的童话 作者：高尔基</option>
+            <option>桃色的云 作者：爱罗先轲</option>
+            <option>水晶瓶塞 作者：莫里斯.勒布朗</option>
+            <option>乡村医生 作者：巴尔扎克</option>
+            <option>高龙巴 作者：梅里美</option>
+            <option>黄室奇案 作者：嘉斯东.勒鲁</option>
+            <option>克菜采奏鸣曲 作者：列.托尔斯泰</option>
+            <option>阴谋与爱情 作者：席勒</option>
+            <option>快乐王子 作者：王尔德</option>
+            <option>变形记 作者：卡夫卡</option>
+            <option>羊脂球 作者：莫泊桑</option>
+            <option>魔沼 作者：乔治.桑</option>
+            <option>死魂灵 作者：果戈里</option>
+            <option>希腊棺材之谜 作者：奎恩</option>
+            <option>母亲 作者：高尔基</option>
+            <option>被背叛的遗嘱 作者：米兰.昆德拉</option>
+            <option>毁灭 作者：法捷耶夫</option>
+            <option>绞刑架下的报告 作者：伏契克</option>
+            <option>贵族之家 作者：屠格涅夫</option>
+            <option>冷血医生 作者：玛丽.希金斯.克拉克</option>
+            <option>十日谈 作者：薄伽丘</option>
+            <option>女富翁的遗产 作者：高木彬光</option>
+            <option>绿野仙踪 作者：莱曼.弗兰.鲍姆</option>
+            <option>法国中尉的女人 作者：约翰.福尔斯</option>
+            <option>汤姆.索亚历险记 作者：马克.吐温</option>
+            <option>马可.波罗游记 作者：马可.波罗</option>
+            <option>卡门 作者：梅里美</option>
+            <option>.美丽与悲哀 作者：川端康成</option>
+            <option>野性的呼唤 作者：杰克.伦敦</option>
+            <option>吉卜赛姑娘 作者：塞万提斯</option>
+            <option>浅滩迷船 作者：里縸</option> -->
+        </select>
+    </form>
+
+</body>
+
+</html>
+</body>
+
+</html>

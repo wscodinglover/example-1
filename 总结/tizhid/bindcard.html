@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			.mui-input-group label {
+				width: 30%;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 70%;
+			}
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+				margin-top: 1px;
+			}
+			#daipu-bindcard-body #submit_info{
+				border: #0199e2;
+				background-color: #0199e2;
+			}
+		</style>
+	</head>
+
+	<body class='yizhidai-body'id='yizhidai-bindcard-body'>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">绑定银行卡</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>银行名称</label>
+					<select id='bank_name'class='mui-selected bank_name'>
+	                 	<option value=''>请选择银行</option>
+						<option value='中国工商银行'>中国工商银行</option>
+						<option value='中国农业银行'>中国农业银行</option>
+						<option value='中国建设银行'>中国建设银行</option>
+						<option value='中国银行'>中国银行</option>
+						<option value='中国邮政储蓄'>中国邮政储蓄</option>
+						<option value='交通银行'>交通银行</option>
+						<option value='招商银行'>招商银行</option>
+						<option value='中信银行'>中信银行</option>
+						<option value='华夏银行'>华夏银行</option>
+						<option value='兴业银行'>兴业银行</option>
+						<option value='中国光大银行'>中国光大银行</option>
+						<option value='北京银行'>北京银行</option>
+						<option value='北京农村商业银行'>北京农村商业银行</option>
+						<option value='上海银行'>上海银行</option>
+						<option value='上海农村商业银行'>上海农村商业银行</option>
+						<option value='上海浦东发展银行'>上海浦东发展银行</option>
+						<option value='渤海银行'>渤海银行</option>
+						<option value='深圳发展银行'>深圳发展银行</option>
+						<option value='广东发展银行'>广东发展银行</option>
+						<option value='广州市农村信用合作社'>广州市农村信用合作社</option>
+						<option value='广州市商业银行'>广州市商业银行</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>开户城市</label>
+					<input id='province_city' type="text" class="mui-input-clear mui-input" placeholder="请输入银行开户城市，如长沙">
+				</div>
+				<div class="mui-input-row">
+					<label>开户行</label>
+					<input id='bank_deposit' type="text" class="mui-input-clear mui-input" placeholder="请输入银行开户行，如长沙支行">
+				</div>
+				<div class="mui-input-row">
+					<label>银行卡号</label>
+					<input id='bank_card_no' type="text" class="mui-input-clear mui-input" placeholder="请输入银行卡号">
+				</div>
+				<div class="mui-input-row">
+					<label>开户名</label>
+					<input id='bank_credit_name' type="text" class="mui-input-clear mui-input" placeholder="请输入银行卡账户名">
+				</div>
+				<div class="mui-input-row">
+					<label>身份证号</label>
+					<input id='bank_credit_id' type="text" class="mui-input-clear mui-input" placeholder="请输入银行卡账户身份证号">
+				</div>
+				<div class="mui-input-row">
+					<label>手机号</label>
+					<input id='bank_phone' type="text" class="mui-input-clear mui-input" placeholder="请输入银行账户开户手机号">
+				</div>
+				<div class="mui-input-row">
+					<label>验证码</label>
+					<input id='captcha' type="text" class="mui-input-clear mui-input" placeholder="请输入短信验证码">
+					<input id='token' type="hidden" class="mui-input-clear mui-input" placeholder="Token">
+					<button id='send_captcha' type="button" data-loading-icon="mui-spinner mui-spinner-custom" class="mui-btn mui-btn-danger" style="width:33%;position:absolute;margin-left: 37%;border: #0199e2;background-color: #0199e2;">获取验证码</button>
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<div style='height:50px;text-align:center;font-size: 12px;font-color:red;margin-top:10px;'>* 根据支付系统要求，首次绑卡时需要收取1元绑卡手续费，请知悉！</div>
+				<button id='submit_info' class="mui-btn mui-btn-block mui-btn-primary" style='border: #0199e2;background-color: #0199e2;'>绑定</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var settings = app.getSettings();
+					var state = app.getState();
+					if (state.api_token) {
+						app.userloaninfo(state.api_token, function(res) {
+							if(!res){
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+							if ((typeof res != 'object') && res.constructor != Object) {
+								//plus.nativeUI.toast(res);
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+							doc.getElementById('bank_phone').value = res.phone;
+							doc.getElementById('bank_credit_name').value = res.user_name;
+							doc.getElementById('bank_credit_id').value = res.id_card;
+						});
+					}else{
+						document.location.href = 'login.html';
+						return;
+					}
+					var captchaButton = doc.getElementById('send_captcha');
+					var submitButton = doc.getElementById('submit_info');
+					var bankNameBox = doc.getElementById('bank_name');
+					var provinceCityBox = doc.getElementById('province_city');
+					var bankDepositBox = doc.getElementById('bank_deposit');
+					var bankCardNoBox = doc.getElementById('bank_card_no');
+					var bankCreditNameBox = doc.getElementById('bank_credit_name');
+					var bankCreditIdBox = doc.getElementById('bank_credit_id');
+					var phoneBox = doc.getElementById('bank_phone');
+					var captchaBox = doc.getElementById('captcha');
+					var tokenBox = doc.getElementById('token');
+					//倒计时
+					var InterValObj;
+					var count = 120; //间隔函数，1秒执行
+					var curCount;//当前剩余秒数
+					//timer处理函数
+					function SetRemainTime() {
+						if (curCount == 0) { 
+							window.clearInterval(InterValObj);//停止计时器
+							captchaButton.innerHTML = "发送验证码";
+						}else {
+							curCount--;
+							captchaButton.innerHTML = ("已发送 (" + curCount + "秒)");
+						}
+					}
+					captchaButton.addEventListener('tap', function(event) {
+						if(captchaButton.innerHTML.indexOf('已发送') >= 0){
+							plus.nativeUI.toast('验证码已发送! 请稍后再试');
+							return;
+						}
+						var bindcaptchaInfo = {
+							api_token: state.api_token,
+							card_holder_name: bankCreditNameBox.value,
+            				card_holder_id: bankCreditIdBox.value,
+							phone: phoneBox.value,
+							pan: bankCardNoBox.value
+						};
+						var waiting = plus.nativeUI.showWaiting();//显示原生等待框 
+						app.bindBankcardcaptcha(bindcaptchaInfo, function(res) {
+							waiting.close(); //关闭原生等待框 
+							if ((typeof res != 'object') && res.constructor != Object) {
+								plus.nativeUI.toast(res);
+								return;
+							}else{
+								if(res.responseCode =='00'){
+									tokenBox.value = res.token;
+									plus.nativeUI.toast('发送成功');
+									curCount = count;//开始倒计时
+									InterValObj = window.setInterval(SetRemainTime, 1000);
+								}else{
+									plus.nativeUI.toast(res.message);
+									return;
+								}
+							}
+						});
+					});
+					submitButton.addEventListener('tap', function(event) {
+						var pwaiting = plus.nativeUI.showWaiting();//显示原生等待框 
+						var mask = mui.createMask(function(){return;});//callback为用户点击蒙版时自动执行的回调；
+						mask.show();//显示遮罩
+						var bindCardInfo = {
+							api_token: state.api_token,
+							bank_name: bankNameBox.value,
+							province_city: provinceCityBox.value,
+							bank_deposit: bankDepositBox.value,
+							bank_card_no: bankCardNoBox.value,
+							bank_credit_name: bankCreditNameBox.value,
+							bank_credit_id: bankCreditIdBox.value,
+							bank_phone: phoneBox.value,
+							captcha: captchaBox.value,
+							token:tokenBox.value,
+						};
+						app.bankcardbind(bindCardInfo, function(res) {
+							pwaiting.close();//关闭原生等待框 
+							mask.close();//关闭遮罩
+							if ((typeof res != 'object') && res.constructor != Object) {
+								plus.nativeUI.toast(res);
+								return;
+							}else{
+								if(res.responseCode == '00'){
+									plus.nativeUI.toast('绑定成功,跳转至借款');
+									document.location.href='apply.html';
+								}else{
+									plus.nativeUI.toast(res.message);
+									return;
+								}
+							}
+							
+						});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

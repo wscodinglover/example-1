@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js实现的穿梭框效果</title>
+    <style>
+        #input {
+            width: 200px;
+            height: 30px;
+            text-align: center;
+        }
+        
+        .view {
+            display: none;
+            width: 600px;
+            height: 400px;
+            margin: 100px auto;
+            border: 2px solid black;
+        }
+        
+        .container {
+            display: flex;
+            /* flex-direction: row; */
+        }
+        
+        .left,
+        .right {
+            flex-basis: 30%;
+            /* border: 2px solid blue; */
+            text-align: center;
+        }
+        
+        .middle {
+            flex-basis: 15%;
+            margin: 80px auto;
+        }
+        
+        .middle button {
+            margin: 5px;
+            padding: 5px;
+            width: 80px;
+            background: #25d;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        .left>select,
+        .right>select {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn {
+            margin: 10px;
+            width: 100px;
+        }
+        
+        .middle button:hover,
+        .btn:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body onload="initInput();">
+    <!--bug 1: index是共享的 删除和添加都可以点击  解决办法：做数据隔离-->
+    <h2>纯js实现穿梭框效果</h2>
+    <p>点击进行选择</p>
+    <form action="#" name="form_input">
+        <input type="text" name="text_input" onfocus="input_select()" placeholder="请选择" id="input">
+    </form>
+    <div class="view">
+        <div class="container">
+            <div class="left">
+                <h3>未选择</h3>
+                <select size="10" name="left_select">
+                    <option value="11">111111</option>
+                    <option value="22">222222</option>
+                    <option value="33">333333</option>
+                    <option value="44">444444</option>
+                    <option value="55">555555</option>
+                     
+                </select>
+            </div>
+            <div class="middle">
+                <button onclick="add()">添加</button>
+                <button onclick="addAll()">添加全部</button>
+                <button onclick="remove()">删除</button>
+                <button onclick="removeAll()">删除全部</button>
+            </div>
+            <div class="right">
+                <h3>已选择</h3>
+                <select size="10" name="right_select">
+                    <option value="66">666666</option>
+                    <option value="77">777777</option>
+                    <option value="88">888888</option>             
+                </select>
+            </div>
+        </div>
+        <button onclick="save()" class="btn">保存</button>
+        <button onclick="cancel()" class="btn">取消</button>
+    </div>
+    <script>
+        var input = document.form_input.text_input,
+            view = document.querySelector('.view'),
+            left = document.querySelector('.left>select'),
+            right = document.querySelector('.right>select'),
+            left_temp = [],
+            right_temp = [];
+
+        for (let i = 0; i < left.length; i++) {
+            left_temp.push(left[i])
+        }
+        for (let i = 0; i < right.length; i++) {
+            right_temp.push(right[i])
+        }
+
+        function inputData() {
+            var right_value = []
+            for (let i = 0; i < right.length; i++) {
+                right_value.push(right[i].value);
+            }
+            var right_str = right_value.join("-");
+            // console.log(right_str)
+            return right_str;
+        }
+
+        function initInput() {
+            input.value = inputData()
+        }
+
+        function input_select() {
+            view.style.display = 'block';
+            // if (view.style.display == 'block') {
+            input.disabled = true;
+            // }
+        }
+        var index = -1;
+
+        function addEventListener(a) {
+
+            a.addEventListener('click', (ev) => {
+                if (ev.target.nodeName.toLowerCase() == "option") {
+                    index = [].indexOf.call(a, ev.target)
+                }
+            })
+        }
+        // left.addEventListener('click', (ev) => {
+        //     if (ev.target.nodeName.toLowerCase() == "option") {
+        //         index = [].indexOf.call(left, ev.target)
+        //     }
+        // })
+        addEventListener(left);
+        addEventListener(right);
+        // right.addEventListener('click', (ev) => {
+        //     if (ev.target.nodeName.toLowerCase() == "option") {
+        //         index = [].indexOf.call(right, ev.target)
+        //     }
+        // })
+
+        function one(left, right) {
+
+            if (index == -1) {
+                return;
+            }
+            var temp = left[index]
+            left.remove(index);
+            right.appendChild(temp)
+            index = -1;
+        }
+
+        function all(left, right) {
+            var temp = [],
+                a = left.length;
+
+            for (var i = 0; i < a; i++) {
+                temp.push(left[0])
+                left[0] = null
+            }
+            temp.map((value) => {
+                right.appendChild(value)
+            })
+            index = -1;
+        }
+
+        function add() {
+            one(left, right);
+
+            //  if (index == -1) {
+            //     return;
+            // }
+            // var temp = left[index]
+            // left.remove(index);
+            // right.appendChild(temp)
+        }
+
+        function addAll() {
+            all(left, right);
+
+            // var temp = [],
+            //     a = left.length;
+            // console.log(left.length)
+            // for (var i = 0; i < a; i++) {
+            //     temp.push(left[0])
+            //     left[0] = null
+            // }
+            // temp.map((value) => {
+            //     right.appendChild(value)
+            // })
+        }
+
+        function remove() {
+            one(right, left);
+
+            // if (index == -1) {
+            //     return;
+            // }
+            // var temp = right[index]
+            // right.remove(index);
+            // left.appendChild(temp)
+
+        }
+
+        function removeAll() {
+            all(right, left)
+
+            // var temp = [];
+
+            // for (var i = 0; i < 8; i++) {
+            //     temp.push(right[0])
+            //     right[0] = null
+            // }
+            // temp.map((value) => {
+            //     left.appendChild(value)
+            // })
+        }
+
+        function save() {
+
+            view.style.display = 'none';
+            input.disabled = false;
+            input.value = inputData();
+
+            left_temp = [];
+            right_temp = [];
+
+            for (let i = 0; i < left.length; i++) {
+                left_temp.push(left[i])
+            }
+            for (let i = 0; i < right.length; i++) {
+                right_temp.push(right[i])
+            }
+        }
+
+        function cancel() {
+            view.style.display = 'none';
+            input.disabled = false;
+            // console.log(left);
+            // console.log(left_temp);
+
+
+            var a = left.length,
+                b = right.length;
+
+            for (var i = 0; i < a; i++) {
+                left[0] = null
+            }
+            left_temp.map((value) => {
+                left.appendChild(value)
+            })
+
+            for (var i = 0; i < b; i++) {
+                right[0] = null
+            }
+            right_temp.map((value) => {
+                right.appendChild(value)
+            })
+
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jsonp</title>
+</head>
+<body>
+    <script type="text/javascript">  
+        function jsonpCallback(result) {  
+            //alert(result);  
+            for(var i in result) {  
+                alert(i+":"+result[i]);//循环输出a:1,b:2,etc.  
+            }  
+        }  
+        var JSONP=document.createElement("script");  
+        JSONP.type="text/javascript";  
+        JSONP.src="http://open.douyucdn.cn/api/RoomApi/game?callback=jsonpCallback";  
+        document.getElementsByTagName("head")[0].appendChild(JSONP);  
+    </script> 
+</body>
+</html> 

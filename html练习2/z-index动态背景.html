@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zindex 动态背景</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .main {
+            background: rgba(50, 50, 50, 0.5);
+            width: 100px;
+            height: 100px;
+            position: relative;
+            border: 2px solid black;
+            margin: 100px auto 0;
+            z-index: 15;
+        }
+        
+        .aside {
+            background: red;
+            width: 200px;
+            height: 200px;
+            position: relative;
+            border: 2px solid green;
+            margin: -50px auto 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- z-index只能在position属性值为relative或absolute或fixed的元素上有效。  -->
+    <div class="main"></div>
+    <div class="aside"></div>
+</body>
+
+</html>

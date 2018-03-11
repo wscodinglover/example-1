@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Event对象</title>
+</head>
+
+<body>
+    <script>
+        var eventCapturing = Event.CAPTURING_PHASE
+        var eventAtTarget = Event.AT_TARGET
+        var eventBubbling = Event.BUBBLING_PHASE
+            // 是事件对象的三个常量
+        console.log(eventCapturing, '1') //<--捕获阶段
+        console.log(eventAtTarget, '2') //<--正常阶段 ，处于当前目标
+        console.log(eventBubbling, '3') //<--冒泡阶段
+
+        // Event.isTrusted
+        // 返回一个布尔值,表明当前事件是否是由用户行为触发(比如说真实的鼠标点击触发一个click事件), 还是由一个脚本生成的(使用事件构造方法,比如event.initEvent)
+
+        var iarr = [{
+            name: "zhangsan",
+            age: 18
+        }, {
+            name: "lisi",
+            age: 24
+        }]
+        var tarr = [...iarr, {
+            name: "wangwu",
+            age: 20
+        }]
+        console.log(tarr)
+        var iobj = {
+            name: "zhangsan",
+            age: 18
+        }
+        var tobj = {
+            age: 20
+        }
+        console.log(tobj)
+        var str = 'abcdef';
+        var _str = str.slice(1, -1); //<--从index=1，开始截取，不包括index=-1（即最后一个）
+        console.log(_str)
+    </script>
+</body>
+
+</html>

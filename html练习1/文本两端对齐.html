@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文本两端对齐</title>
+    <style>
+    div{
+        margin:10px 0; 
+        /* width:100px; */
+        /* border:1px solid red; */
+        /* text-align: justify; */
+        text-align-last: justify;
+    }
+    .column{
+        width:600px;
+        column-count: 3;
+        column-gap: 60px;
+        /* column-rule:1px outset red;  */
+    }
+    .verticle-mode {
+        writing-mode: tb-rl;
+        -webkit-writing-mode: vertical-rl;      
+        /* writing-mode: vertical-rl; */
+    }
+    img.desaturate {
+        filter: grayscale(100%);
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+    }
+    </style>    
+</head>
+<body>
+    <div>姓名</div>
+    <div>手机号码</div>
+    <div>验证码</div>
+    <div>账号</div>
+    <div>密码</div>
+    <div>对齐了吗对齐</div>
+
+    <div class="column">看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥看看是啥</div>
+    <div class="verticle-mode">
+        <h4>咏柳</h4>
+        <p>碧玉妆成一树高，<br>万条垂下绿丝绦。<br>不知细叶谁裁出，<br>二月春风似剪刀。</p>
+    </div>
+    <p>下面展示一张黑白照片</p>
+    <img src="./2.jpg" alt="" class="desaturate"> 
+    
+    <script>
+        let url = `https://user-gold-cdn.xitu.io/2017/9/25/0844cf44a8d8c4ed026d6c488a6e9b80?
+imageView2/1/w/500/h/200/q/85/interlace/1`
+        function getImgUrl(imgHash, width=0, height=0,quality=75) {
+            if(!imgHash) {
+                return "";
+            }
+            //判断imgHash是否带http
+            var reg=/(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+            if(reg.test(imgHash)){
+                return imgHash;
+            }
+
+            let imgPostfix = "auto";
+            if(window.supportWebp) {
+                imgPostfix = "webp";
+            }
+            return TIMG_RES_SERVER + `/convert/resize/url_${imgHash}/width_${width}/height_${height}/quality_${quality}/tfs/xxx.${imgPostfix}`;
+        }
+    </script>
+</body>
+</html>

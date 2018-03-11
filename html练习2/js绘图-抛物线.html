@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js绘图-抛物线</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .view {
+            position: relative;
+            width: 600px;
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="view">
+
+    </div>
+    <script>
+        // y=x*x+60
+        var view = document.querySelectorAll('.view')[0];
+        // console.log(view)
+
+        function drawline(x) {
+            var a = x
+            while (x > -a) {
+                var div = document.createElement('div');
+                div.style.width = '5px';
+                div.style.height = '5px';
+                div.style.backgroundColor = '#f00';
+                div.style.position = 'absolute';
+                div.style.right = 100 * x + 'px';
+                div.style.margin = '20px,auto'
+                div.style.bottom = 100 * Math.cos((Math.PI * 2 / 180) * 100 * x) + 'px';
+                view.appendChild(div)
+                x -= 0.01;
+            }
+        }
+        drawline(30)
+    </script>
+
+</body>
+
+</html>

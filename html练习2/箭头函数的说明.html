@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>箭头函数的用法说明</title>
+</head>
+
+<body>
+    <script>
+        // setInterval 是个普通函数，内部的this会bind到全局对象window上
+
+        // function Counter() {
+        //     this.num = 0;
+        //     this.timer = setInterval(function add() {
+        //         this.num++;
+        //         console.log(this.num);
+        //     }, 1000);
+        // }
+        // var b = new Counter();
+
+
+        // 使用箭头函数后  会根据上下文来bind(this)
+        // 普通函数会对其内部的this解绑，使其不指向window
+        function Counters() {
+            this.num = 0;
+            this.timer = setInterval(() => {
+                this.num++;
+                console.log(this.num);
+            }, 1000);
+        }
+        var c = new Counters();
+
+        function foo(name, age, sex) {
+            console.log(arguments);
+        }
+
+        foo('name', 'age', 'sex')
+    </script>
+</body>
+
+</html>

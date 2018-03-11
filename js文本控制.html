@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文本编写</title>
+    <style>
+        body {
+            /* overflow: auto; */
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        div {
+            font-size: 14px;
+            width: 280px;
+            font-weight: bold;
+            color: white;
+            font-family: Arial, 宋体;
+            background: #6090da;
+            padding: 4px 10px;
+            text-indent: 28px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <script>
+            let user_name, from_name, to_name;
+            let str_prompt = '请输入你自己的名字和对方的名字。两个名字用空格分开';
+            let str_prompt_default = "自己的名字 对方的名字";
+            user_name = prompt(str_prompt, str_prompt_default);
+
+            // 默认值
+            user_name = user_name ? user_name : "油条 豆浆";
+            from_name = user_name.split(" ")[0];
+            to_name = user_name.split(" ")[1];
+            document.write(("<p>亲爱的" + to_name + "</p>").fontsize(3));
+            /*信件的正文，替换掉文中的名称*/
+            document.write("<p>想到你那洒脱的笑容与动人的曲线，我禁不住提起笔，我选择这种原始的方式来标识我对你的爱，希望你能接受。</p>".replace(/你/g, to_name + "你").replace(/我/g, from_name + "我"));
+            document.write("<p>你再我心中的分量日益增加。你的眼，你的脸，你的笑容，悄悄的偷走了我的心，在我闲暇时总有那种幻想的美……</p>".replace(/你/g, to_name + "你").replace(/我/g, from_name + "我"));
+            document.write(("<p>爱你的" + from_name + "</p>").fontsize(2).fontcolor("gold").link("mailto:1692529535@qq.com"));
+        </script>
+    </div>
+</body>
+
+</html>

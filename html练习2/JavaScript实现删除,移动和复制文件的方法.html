@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>删除,移动和复制文件</title>
+</head>
+
+<body>
+    <h2>删除,移动和复制文件</h2>
+    <hr>
+    <script language="JavaScript">
+        var strSourFile = "D:\Documents\Desktop\test.txt";
+        var strDestFile = "D:\Documents\Desktop\test\test.txt";
+        var objFSO = new ActiveXObject("Scripting.FileSystemObject");
+        // 检查文件是否存在
+        if (objFSO.FileExists(strSourFile)) {
+            // 移动文件
+            var strPath = objFSO.MoveFile(strSourFile, strDestFile);
+            if (objFSO.FileExists(strDestFile))
+                document.write("文件已经移动到: " + strDestFile + "<br>");
+            // 复制文件
+            var strPath = objFSO.CopyFile(strDestFile, strSourFile);
+            if (objFSO.FileExists(strSourFile))
+                document.write("文件已经复制到: " + strSourFile + "<br>");
+            // 删除文件
+            objFSO.DeleteFile(strDestFile, true);
+            document.write("文件: " + strDestFile + "已经删除<br>");
+        } else
+            document.write("文件: " + strSourFile + "不存在<br>");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>布局设计</title>
+    <style>
+        body {
+            margin: 0px;
+            counter-reset: section;
+        }
+        
+        .container {
+            margin: 0px;
+            font-size: 0;
+            padding: 10px;
+            background: #f00;
+            transform: translateY(40px);
+            cursor: help;
+        }
+        
+        .one {
+            display: inline-block;
+            vertical-align: top;
+            width: 33.3%;
+            height: 88px;
+            background: #f00;
+            color: blue;
+            font-size: 20px;
+            padding: 0px 5px;
+            /* border: 2px solid #fff; */
+            box-sizing: border-box;
+            transform: rotate(45deg);
+        }
+        
+        .border-two {
+            background: #0f0;
+            font-size: 20px;
+            /*将小写字母转化为大写*/
+            font-variant: small-caps;
+        }
+        
+        .pline {
+            margin-top: 100px;
+        }
+        
+        section:before {
+            content: counter(section) ".";
+            counter-increment: section;
+        }
+        
+        section {
+            counter-reset: pcounter;
+            cursor: wait;
+        }
+        
+        p:before {
+            content: counter(section) "." counter(pcounter);
+            counter-increment: pcounter;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="one">
+            <div class="border-two">这是第二类</div>
+        </div>
+        <div class="one">
+            <div class="border-two">hello world</div>
+        </div>
+        <div class="one">
+            <div class="border-two">这是第二类</div>
+        </div>
+    </div>
+    <hr class="pline"></hr>
+    <section>这是第一个章节
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+    </section>
+    <section>这是第二个章节
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+    </section>
+    <section>这是第三个章节
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+    </section>
+    <section>这是第四个章节
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+    </section>
+    <section>这是第五个章节
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+        <p>这是一段话</p>
+    </section>
+</body>
+
+</html>

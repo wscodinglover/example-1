@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>进制转换</title>
+</head>
+<script>
+    function mulBase(num, base) {
+        var s = []
+        do {
+            s.push(num % base);
+            num = Math.floor(num /= base);
+        } while (num > 0);
+        // var converted = '';
+        // while (s.length > 0) {
+        //     converted += s.pop();
+        // }
+        s = s.reverse().join('')
+        return s;
+    }
+    var num = 32;
+    var base = 2;
+    var a = mulBase(16, 2);
+    a = a.slice(0)
+
+
+    // 十进制转化为16进制
+    /**
+     * 10转化为2
+     * 2转化为16
+     */
+    function trans(num, base) {
+
+        var arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+        var s = mulBase(num, base)
+
+    }
+</script>
+
+
+<body>
+
+</body>
+
+</html>

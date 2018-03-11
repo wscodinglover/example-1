@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <canvas id="clock" width="500" height="500"></canvas>
+    <script>
+        var colock = document.getElementById('clock');
+        var cxt = clock.getContext('2d');
+        // cxt.scale(2, 2)  将画布放大，以减小图像模糊
+
+        function drawClock() {
+            //清除画布 
+            cxt.clearRect(0, 0, 500, 500);
+
+            var now = new Date();
+            var sec = now.getSeconds();
+            var min = now.getMinutes();
+            var hour = now.getHours();
+            // 小时必须获取浮点类型（小时+分钟转化成的小时）
+            hour = hour + min / 60;
+            // 将24小时转换为12小时
+            hour = hour > 12 ? hour - 12 : hour;
+
+            //表盘 蓝色
+            cxt.lineWidth = 5;
+            cxt.strokeStyle = 'blue';
+            cxt.beginPath();
+            cxt.arc(250, 250, 200, 0, 360, false);
+            cxt.closePath();
+            cxt.stroke();
+            // 刻度
+            // 时刻度
+            for (var i = 0; i < 12; i++) {
+                cxt.save();
+                // 设置时钟的粗细
+                cxt.lineWidth = 5;
+                // 设置时钟的颜色
+                cxt.strokeStyle = "#000"
+                    // 先设置0,0点
+                cxt.translate(250, 250);
+                // 设置旋转角度
+                cxt.rotate(i * 30 * Math.PI / 180);
+                cxt.beginPath();
+                // 设置起点位置
+                cxt.moveTo(0, -180);
+                // 设置移动方式
+                cxt.lineTo(0, -190);
+                cxt.closePath();
+
+                cxt.stroke();
+                cxt.restore();
+            }
+            // 分刻度
+            for (var i = 0; i < 60; i++) {
+                cxt.save();
+                cxt.lineWidth = 2;
+                cxt.strokeStyle = '#000';
+                cxt.translate(250, 250);
+                cxt.rotate(i * 6 * Math.PI / 180);
+
+                cxt.beginPath();
+                cxt.moveTo(0, -185);
+                cxt.lineTo(0, -190);
+                cxt.closePath();
+
+                cxt.stroke();
+                cxt.restore();
+
+            }
+
+            // 时针
+            // 设置时钟风格
+            cxt.save();
+            cxt.lineWidth = 1;
+            cxt.strokeStyle = "#000";
+            cxt.fillStyle = "#000";
+            cxt.translate(250, 250);
+            cxt.rotate(hour * 30 * Math.PI / 180);
+            cxt.beginPath();
+            cxt.moveTo(0, -80);
+            cxt.lineTo(-4, 10);
+            cxt.lineTo(4, 10);
+            cxt.fill();
+            cxt.closePath();
+            cxt.stroke();
+            cxt.restore();
+            // 分针
+            cxt.save();
+            cxt.lineWidth = 1;
+            cxt.strokeStyle = "green";
+            cxt.fillStyle = "green"
+            cxt.translate(250, 250);
+            cxt.rotate(min * 6 * Math.PI / 180);
+            cxt.beginPath();
+            cxt.moveTo(0, -120);
+            cxt.lineTo(-3, 20);
+            cxt.lineTo(3, 20);
+            cxt.closePath();
+            cxt.fill();
+            cxt.stroke();
+            cxt.restore();
+            // 秒针
+            cxt.save();
+            cxt.strokeStyle = 'red';
+            cxt.lineWidth = .3;
+            cxt.fillStyle = 'red';
+            cxt.translate(250, 250);
+            cxt.rotate(sec * 6 * Math.PI / 180);
+            cxt.beginPath();
+            cxt.moveTo(0, -160);
+            cxt.lineTo(-2, 30);
+            cxt.lineTo(2, 30);
+            cxt.closePath();
+            cxt.fill();
+            cxt.stroke();
+            // 画交叉点
+            cxt.beginPath();
+            cxt.arc(0, 0, 5, 0, 360, false);
+            cxt.closePath();
+            cxt.fillStyle = '#fff';
+            cxt.fill();
+            cxt.stroke();
+
+            cxt.beginPath();
+            cxt.arc(0, -100, 8, 0, 360, false);
+            cxt.closePath();
+            cxt.fillStyle = '#fff';
+            cxt.fill();
+            cxt.stroke();
+
+            cxt.restore();
+
+            for (var i = 1; i <= 12; i++) {
+                cxt.save();
+                cxt.font = '36px Arial';
+                cxt.fillStyle = '#000';
+                cxt.textAlign = 'center';
+                cxt.textBaseline = 'middle';
+                // 先设置0,0点
+                cxt.translate(250, 250);
+                // 设置旋转角度
+                cxt.rotate(i * (30) * Math.PI / 180);
+                cxt.fillText(i, 0, -150);
+                cxt.restore();
+            }
+
+
+
+            // 使用setInterval()让时钟动起来
+        }
+        setInterval(drawClock, 1000);
+    </script>
+</body>
+
+</html>

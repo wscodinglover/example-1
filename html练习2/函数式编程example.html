@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数式编程练习</title>
+</head>
+
+<body>
+    <script>
+        const add1 = x => x + 1
+        const mul3 = x => x * 3
+        const composeF = (f, g) => {
+            return x => f(g(x))
+        }
+        const addOneThenMul3 = composeF(mul3, add1)
+        console.log(addOneThenMul3(4)) // 打印 15
+    </script>
+</body>
+
+</html>

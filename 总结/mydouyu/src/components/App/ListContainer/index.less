@@ -1,0 +1,51 @@
+.list-flex-container{
+    width:100%;
+    box-sizing: border-box;
+    background: #eee;
+    padding:60px 20px 0px 20px;
+    font-size: 0px;
+    .list-flex-item{
+        display: inline-block;
+        vertical-align: top;
+        width:50%;
+        box-sizing: border-box;
+        background: #eee;
+        padding:0px 20px;
+        .list-item-img{
+            width:100%;
+            height:100%;
+            display: inline-block;
+            vertical-align: top;
+            border-radius: 30px;
+        }
+        .list-item-sub{
+            color:#fff;
+            height:100px;
+            margin-top:-120px;
+            width:100%;
+            position: relative;
+            font-size: 80px;
+            line-height: 100px;
+            font-family: "楷体";
+            .list-item-name{
+                position: absolute;
+                left: 50px;
+                bottom:20px;
+            }
+            .list-item-online{
+                position: absolute;
+                right: 50px;
+                bottom:20px;
+            }
+        }
+        .list-item-title{
+            font-size: 80px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 90px;
+            font-family: "宋体";
+        }
+    }
+}

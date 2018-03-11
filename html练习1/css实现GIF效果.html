@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现GIF效果</title>
+    <style>
+        #frame {
+            width: 50px;
+            height: 72px;
+            border: 1px solid transparent;
+            background: url(./sprite-steps.png) no-repeat left top;
+            animation: frame-animation 1s steps(10) infinite;
+        }
+        
+        @keyframes frame-animation {
+            0% {
+                background-position: 0px 0;
+            }
+            100% {
+                background-position: -500px 0;
+            }
+        }
+        
+        @keyframes panoramic {
+            to {
+                background-position: 100% 0;
+            }
+        }
+        
+        .pic {
+            width: 300px;
+            height: 300px;
+            background: url('./b.jpg');
+            background-size: auto 100%;
+            animation: panoramic 10s linear infinite alternate;
+            animation-play-state: paused;
+        }
+        
+        .pic:hover,
+        .pic:focus {
+            animation-play-state: running;
+        }
+        
+        @keyframes typing {
+            from {
+                width: 0
+            }
+        }
+        /* 光标 */
+        
+        @keyframes caret {
+            50% {
+                border-right-color: transparent;
+            }
+        }
+        
+        h1 {
+            font-size: 10px;
+            font: bold 200% Consolas, Monaco, monospace;
+            width: 75ch;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .05em solid;
+            animation: typing 40s steps(75), caret 1s steps(1) infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="frame"></div>
+    <div class="pic"></div>
+    <h1>CSS is awesome!CSS is awesome!CSS is awesome!CSS is awesome!CSS is awesome!</div>
+</body>
+
+</html>

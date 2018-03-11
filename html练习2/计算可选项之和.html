@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>计算可选项的和</title>
+    <style>
+        div {
+            width: 100px;
+            height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--1  -->
+    <div id="">
+        <input type="checkbox" class="input_check" id="test" />
+        <em class="jine">1</em>
+        <input type="text" class="input_value" /><br />
+    </div>
+    <!--2  -->
+    <div id="">
+        <input type="checkbox" class="input_check" id="test" />
+        <em class="jine">2</em>
+        <input type="text" class="input_value" /><br />
+    </div>
+    <!--3  -->
+    <div id="">
+        <input type="checkbox" class="input_check" id="test" />
+        <em class="jine">3</em>
+        <input type="text" class="input_value" /><br />
+    </div>
+    <!--4  -->
+    <div id="">
+        <input type="checkbox" class="input_check" id="test" />
+        <em class="jine">4</em>
+        <input type="text" class="input_value" /><br />
+    </div>
+    <!--5  -->
+    <div id="">
+        <input type="checkbox" class="input_check" id="test" />
+        <em class="jine">5</em>
+        <input type="text" class="input_value" /><br />
+    </div>
+    <!--6  -->
+    <div id="">
+        <input type="checkbox" class="input_check" id="test" />
+        <em class="jine">6</em>
+        <input type="text" class="input_value" /><br />
+    </div>
+
+    <div style="font-size: 20px;">
+        共计金额：<span id="id1">0.0</span>
+    </div>
+    <button type="button" class="btn">计算</button>
+
+    <script>
+        var input_check = document.getElementsByClassName('input_check')
+        var input_value = document.getElementsByClassName('input_value')
+        var btn = document.getElementsByClassName('btn')[0]
+        var id1 = document.getElementById('id1')
+
+        function calc(i) {
+            if (input_check[i].checked) {
+                arr[i] = input_value[i].value * 1
+            } else {
+                arr[i] = 0
+            }
+            var temp = 0;
+            for (var j = 0; j < arr.length; j++) {
+                temp = temp + arr[j]
+            }
+            btn.addEventListener('click', function() {
+                console.log('dd')
+                id1.innerHTML = temp
+            })
+        }
+
+        for (let i = 0; i < input_check.length; i++) {
+            // 初始化一个数组，
+            var arr = [];
+            // 初始化赋值
+            arr.push(0)
+
+            // 先选中，再输入，采用的计算逻辑
+            input_value[i].addEventListener('change', function() {
+                arr[i] = input_value[i].value * 1
+                calc(i)
+            })
+
+            // 先输入，再选中，采用的计算逻辑
+            input_check[i].addEventListener('click', function() {
+                calc(i)
+            })
+        }
+    </script>
+</body>
+
+</html>

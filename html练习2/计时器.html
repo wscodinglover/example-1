@@ -1,0 +1,96 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计时器</title>
+</head>
+
+<body>
+    <script>
+        //计时器
+        window.timer = (function() {
+            function mod(opt) {
+                //可配置参数 都带有默认值
+                //必选参数
+                this.ele = typeof(opt.ele) == "string" ? document.getElementById(opt.ele) : opt.ele; //元素
+                //可选参数
+                this.startT = opt.startT || 0; //时间基数
+                this.endT = opt.endT == "undefined" ? 24 * 60 * 60 : opt.endT; //结束时间 默认为一天
+                this.setStr = opt.setStr || null; //字符串拼接
+                this.countdown = opt.countdown || false; //倒计时
+                this.step = opt.step || 1000;
+                //不可配置参数
+                this.timeV = this.startT; //当前时间
+                this.startB = false; //是否启动了计时
+                this.pauseB = false; //是否暂停
+                this.init();
+            }
+            mod.prototype = {
+                constructor: "timer",
+                init: function() {
+                    this.ele.innerHTML = this.setStr(this.timeV);
+                },
+                start: function() {
+                    if (this.pauseB == true || this.startB == true) {
+                        this.pauseB = false;
+                        return;
+                    }
+                    if (this.countdown == false && this.endT <= this.cardinalNum) {
+                        return false;
+                    } else if (this.countdown == true && this.endT >= this.startT) {
+                        return false;
+                    }
+                    this.startB = true;
+                    var v = this.startT,
+                        this_ = this,
+                        anim = null;
+                    anim = setInterval(function() {
+                        if (this_.startB == false || v == this_.endT) {
+                            clearInterval(anim);
+                            return false
+                        }
+                        if (this_.pauseB == true) return;
+                        this_.timeV = this_.countdown ? --v : ++v;
+                        this_.ele.innerHTML = this_.setStr(this_.timeV);
+                    }, this_.step);
+                },
+                reset: function() {
+                    this.startB = false;
+                    this.timeV = this.startT;
+                    this.ele.innerHTML = this.setStr(this.timeV);
+                },
+                pause: function() {
+                    if (this.startB == true) this.pauseB = true;
+                },
+                stop: function() {
+                    this.startB = false;
+                }
+            }
+            return mod;
+        })();
+
+        var timerO_1 = new timer({
+            ele: "BOX1",
+            startT: 0,
+            endT: 15,
+            setStr: function(num) {
+                return num + "s";
+            }
+        });
+        var timerO_2 = new timer({
+            ele: "BOX2",
+            startT: 30,
+            endT: 0,
+            countdown: true,
+            step: 500,
+            setStr: function(num) {
+                return num + "s";
+            }
+        });
+    </script>
+</body>
+
+</html> -->

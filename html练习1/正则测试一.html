@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则表达</title>
+</head>
+
+<body>
+    <script>
+        var num = 12345678901
+            // var num_R = num.toString().replace(/\d{3}(\d{4})\d{4}/, '$1****$2');
+            // console.log(num_R)
+        var regex = /\d{3}(\d{4})\d{4}/;
+        var string = "12345678901";
+
+        regex.test(string);
+        console.log(RegExp.$1); // "2017"
+        // console.log(RegExp.$2); // "06"
+        // console.log(RegExp.$3); // "12"
+
+        var regex1 = /^((\d)(\d(\d)))\1\2\3\4$/;
+        var string1 = "2342342344";
+        console.log(regex1.test(string1)); // true
+        console.log(RegExp.$1); // 123
+        console.log(RegExp.$2); // 1
+        console.log(RegExp.$3); // 23
+        console.log(RegExp.$4); // 3
+
+        var num = /^\d{5}6\d{5}9$/
+        var n1 = 111116111119
+        var a = num.test(n1)
+        var arr = [11116111119, 11111611119, 111116111119, 1111161191119, 111111111119, 111116111111]
+        arr.map((val) => {
+            console.log(num.test(val))
+            if (num.test(val)) {
+                console.log(val)
+            }
+        })
+        console.log(a, 'aa')
+            // const a = 3
+            // const a = 'aa'
+    </script>
+</body>
+
+</html>

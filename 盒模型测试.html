@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>盒模型测试</title>
+    <style>
+        .container {
+            width: 200px;
+            height: 200px;
+            border: 5px solid black;
+            background: red;
+            background-origin: content-box;
+            padding: 20px;
+            margin: 30px;
+        }
+        
+        .inner {
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+            margin: 5px;
+            border: 10px solid pink;
+            background: blue;
+        }
+        
+        .line {
+            background: green;
+            margin: 20px;
+            outline: 5px solid red;
+        }
+        
+        .shadow {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 标准盒模型 -->
+    <!-- 
+        background 渲染的是padding和content 
+        margin padding border content 都占用空间，默认是从左到右
+
+        所有元素的都有 margin，padding 和 border
+    
+    -->
+
+    <div class="container">
+        <div class="inner"></div>
+    </div>
+    <span class="line">hhhhhh</span>
+
+    <div class="shadow"></div>
+    <script>
+        let strA = Date.parse("2099-1-1");
+        // Date.parse方法将时间解析为13位毫秒值
+        console.log(strA)
+    </script>
+</body>
+
+</html>

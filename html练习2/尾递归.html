@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>尾递归</title>
+</head>
+
+<body>
+    <script>
+        function factorial(n, total = 1) {
+            if (n === 0) {
+                return total
+            }
+            return factorial(n - 1, n * total)
+        }
+        console.log(factorial(4))
+    </script>
+</body>
+
+</html>

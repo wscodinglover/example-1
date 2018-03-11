@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>css+js打造超酷黑灰色二级横向下拉导航菜单</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+        
+        #mainHeader {
+            width: 100%;
+            z-index: 3020;
+            position: relative;
+        }
+        
+        #mainHeader ul,
+        #mainHeader li {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            z-index: 3020;
+        }
+        
+        #headerTop {
+            background: #222;
+            background: linear-gradient(bottom, #171717 0, #222 10%);
+            background: -moz-linear-gradient(bottom, #171717 0, #222 10%);
+            /* background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #171717), color-stop(10%, #222)); */
+            z-index: 3020;
+            height: 52px;
+        }
+        
+        #headerBottom {
+            border-top: 1px solid #4f4f4f;
+            border-bottom: 1px solid #000;
+            position: relative;
+            height: 34px;
+            background: #2c2c2c;
+            background: linear-gradient(top, #3c3c3c 0, #1d1d1d 100%);
+            background: -moz-linear-gradient(top, #3c3c3c 0, #1d1d1d 100%);
+            /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #3c3c3c), color-stop(100%, #1d1d1d)); */
+            z-index: 3010;
+        }
+        
+        #navmenu {
+            width: 900px;
+            margin: 0 auto;
+            position: relative;
+            font-size: 14px;
+        }
+        
+        #navmenu li {
+            display: block;
+            position: relative;
+            float: left;
+            border-top: 0;
+            border-left: 1px solid #454545;
+            border-bottom: 0;
+            border-right: 1px solid #151515;
+            height: 18px;
+        }
+        
+        #navmenu li a {
+            text-shadow: 1px 1px 1px black;
+            display: block;
+            padding: 8px 18px;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        #navmenu li a:hover {
+            padding-top: 5px;
+            border-top: 3px solid #ff0000;
+        }
+        
+        .newSash {
+            position: relative;
+        }
+        
+        .newSash .newSashSpan {
+            background: url(images/newSashRed.gif) top left no-repeat;
+            width: 26px;
+            height: 26px;
+            position: absolute;
+            top: -1px;
+            right: 0;
+        }
+        
+        .downArrow {
+            display: block;
+            border-color: #fff transparent transparent transparent;
+            border-style: solid;
+            border-width: 3px;
+            height: 0;
+            width: 0;
+            position: absolute;
+            top: 16px;
+            right: 8px;
+            _border: none;
+        }
+        
+        #navmenu div {
+            position: absolute;
+            visibility: hidden;
+            padding: 0;
+            margin-left: -1px;
+            margin-top: 2px;
+            background: #313131;
+            border: 1px solid #222;
+        }
+        
+        #navmenudiv a {
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 8px 10px;
+            border-bottom: 1px solid #fff;
+            width: auto;
+            white-space: nowrap;
+            text-align: left;
+            text-decoration: none;
+            background: #666;
+            color: #fff;
+        }
+        
+        #navmenu div a:hover {
+            background: #222;
+            border-top: none;
+            border-left: 3px solid #ff0000;
+            color: #FFF;
+            padding: 8px 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        var timeout = 500;
+        var closetimer = 0;
+        var ddmenuitem = 0;
+
+        function mopen(id) {
+            mcancelclosetime();
+            if (ddmenuitem) ddmenuitem.style.visibility = "hidden";
+            ddmenuitem = document.getElementById(id);
+            ddmenuitem.style.visibility = "visible";
+        }
+
+        function mclose() {
+            if (ddmenuitem) ddmenuitem.style.visibility = "hidden";
+        }
+
+        function mclosetime() {
+            closetimer = window.setTimeout(mclose, timeout);
+        }
+
+        function mcancelclosetime() {
+            if (closetimer) {
+                window.clearTimeout(closetimer);
+                closetimer = null;
+            }
+        }
+        document.onclick = mclose;
+    </script>
+</head>
+
+<body style="text-align:center">
+    <div id="mainHeader">
+        <div id="headerTop"></div>
+        <div id="headerBottom">
+            <ul id="navmenu">
+                <li><a href="#" onmouseover="mopen(" m1 ")" onmouseout="mclosetime()">网站首页<span class="downArrow"></span></a>
+                    <div id="m1" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                        <a href="#">JavaScript中文网</a>
+                        <a href="#">电子商务</a>
+                        <a href="#">网络营销人才</a>
+                        <a href="#">导航条代码</a>
+                        <a href="#">网站营销</a> </div>
+                </li>
+                <li><a href="#" onmouseover="mopen(" m2 ")" onmouseout="mclosetime()">导航条代码<span class="downArrow"></span></a>
+                    <div id="m2" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                        <a href="#">JavaScript中文网</a>
+                        <a href="#">电子商务</a>
+                        <a href="#">网络营销人才</a>
+                        <a href="#">导航条代码</a>
+                        <a href="#">网站营销</a> </div>
+                </li>
+                <li><a href="#" onmouseover="mopen(" m3 ")" onmouseout="mclosetime()">网页素材<span class="downArrow"></span></a>
+                    <div id="m3" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                        <a href="#">JavaScript中文网</a>
+                        <a href="#">电子商务</a>
+                        <a href="#">网络营销人才</a>
+                        <a href="#">导航条代码</a>
+                        <a href="#">网站营销</a> </div>
+                </li>
+                <li class="newSash"><a href="#">JavaScript中文网</a><span class="newSashSpan"></span>
+                </li>
+                <li><a href="#" onmouseover="mopen(" m4 ")" onmouseout="mclosetime()">开源源码<span class="downArrow"></span></a>
+                    <div id="m4" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
+                        <a href="#">JavaScript中文网</a>
+                        <a href="#">电子商务</a>
+                        <a href="#">网络营销人才</a>
+                        <a href="#">导航条代码</a>
+                        <a href="#">网站营销</a> </div>
+                </li>
+                <li><a href="#">网站营销</a>
+                </li>
+                <li><a href="#">网站建设</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <br><br><br><br>
+    <p>
+        <p>非常小巧的JS下拉菜单代码，兼容：IE6+, Firefox 1.5+, Opera 8+, Safari 3+, Chrome 0.2+</p>
+    </p>
+</body>
+
+</html>

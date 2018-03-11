@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    div{
+        width: 200px;
+        height: 200px;
+        background: yellow;
+        transition: height 3s;
+    }
+    </style>
+</head>
+<body>
+    <div id="oDiv" onclick="change()">点击高度变化</div>
+    <script>
+    function change(){
+       var oDiv = document.getElementById('oDiv');
+       oDiv.style.height='500px'
+    }
+    </script>
+</body>
+</html>

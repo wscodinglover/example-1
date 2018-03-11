@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>节点重建、示例代码</title>
+    <style type="text/css">
+        html {
+            color: #000;
+            background: #FFF;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body,
+        div,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        pre,
+        code,
+        form,
+        fieldset,
+        legend,
+        input,
+        textarea,
+        p,
+        blockquote,
+        th,
+        td {
+            margin: 0;
+            padding: 0;
+        }
+        
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        
+        fieldset,
+        img {
+            border: 0;
+        }
+        
+        address,
+        caption,
+        cite,
+        code,
+        dfn,
+        em,
+        strong,
+        th,
+        var {
+            font-style: normal;
+            font-weight: normal;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        caption,
+        th {
+            text-align: left;
+        }
+        
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 100%;
+            font-weight: normal;
+        }
+        
+        q:before,
+        q:after {
+            content: "";
+        }
+        
+        abbr,
+        acronym {
+            border: 0;
+            font-variant: normal;
+        }
+        
+        sup {
+            vertical-align: text-top;
+        }
+        
+        sub {
+            vertical-align: text-bottom;
+        }
+        
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+        }
+        
+        input,
+        textarea,
+        select {
+            *font-size: 100%;
+        }
+        
+        legend {
+            color: #000;
+        }
+        
+        body {
+            text-align: center;
+            color: #000;
+        }
+        
+        a:link,
+        a:visited,
+        a:hover {
+            text-decoration: none;
+            color: #049;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        table {
+            margin: 30px auto;
+            width: 600px;
+            border: 1px solid #CDCDCD;
+        }
+        
+        thead {
+            background-color: #F3F3F3;
+        }
+        
+        th,
+        td {
+            height: 26px;
+            line-height: 26px;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .left {
+            text-align: left;
+        }
+    </style>
+    <base target="_blank" />
+</head>
+
+<body>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th width="50">编号</th>
+                <th>标题</th>
+                <th width="50">操作</th>
+            </tr>
+        </thead>
+        <tbody id="reroder-list">
+            <tr>
+                <td>1</td>
+                <td class="left"><a href="http://www.jb51.net/article/70631.htm">JS+CSS实现表格高亮的方法</a></td>
+                <td><a href="#del" class="lnk-del">删除</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td class="left"><a href="http://www.jb51.net/article/70625.htm">JavaScript节点及列表操作实例小结</a></td>
+                <td><a href="#del" class="lnk-del">删除</a></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td class="left"> <a href="http://www.jb51.net/article/70613.htm">JavaScript实现删除,移动和复制文件的方法</a></td>
+                <td><a href="#del" class="lnk-del">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        var delAndReorder = function(root, rowTag, delTag, delClass, idTag) {
+            var doc = document,
+                list = doc.getElementById(root || "reroder-list");
+            if (!list) {
+                return false;
+            }
+            var stopEvent = function(evt) {
+                    stopPropagation(evt);
+                    preventDefault(evt);
+                },
+                stopPropagation = function(evt) {
+                    if (evt.stopPropagation) {
+                        evt.stopPropagation();
+                    } else {
+                        evt.cancelBubble = true;
+                    }
+                },
+                preventDefault = function(evt) {
+                    if (evt.preventDefault) {
+                        evt.preventDefault();
+                    } else {
+                        evt.returnValue = false;
+                    }
+                },
+                hasClass = function(elem, className) {
+                    var has = new RegExp("(?:^|\s+)" + className + "(?:\s+|$)");
+                    return has.test(elem.className);
+                },
+                byClass = function(tag, className, root) {
+                    var elems = [],
+                        tempEl = root.getElementsByTagName(tag),
+                        i,
+                        len = tempEl.length;
+
+                    for (i = 0; i < len; ++i) {
+                        if (hasClass(tempEl[i], className)) {
+                            elems.push(tempEl[i]);
+                        }
+                    }
+                    if (elems.length < 1) {
+                        return false;
+                    } else {
+                        return elems;
+                    }
+                },
+                firstTds = [],
+                rows = list.getElementsByTagName(rowTag || "tr"),
+                delBtns = byClass((delTag || "a"), (delClass || "lnk-del"), list),
+                i = 0,
+                len = rows.length,
+                reorder = function(idx) {
+                    var i = idx,
+                        len = firstTds.length;
+                    if (idx !== (len - 1)) {
+                        for (; i < len; i += 1) {
+                            firstTds[i].innerHTML = i;
+                        }
+                    }
+                };
+            for (; i < len; i += 1) {
+                firstTds.push(rows[i].getElementsByTagName(idTag || "td")[0]);
+                delBtns[i].onclick = function(idx) {
+                    return function(event) {
+                        var evt = event || window.event;
+                        list.removeChild(rows[idx]);
+                        reorder(idx);
+                        delAndReorder();
+                        stopEvent(evt);
+                    };
+                }(i);
+            }
+        }
+        delAndReorder();
+    </script>
+</body>
+
+</html>

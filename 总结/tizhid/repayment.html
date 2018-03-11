@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			.mui-input-group label {
+				width: 35%;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 65%;
+			}
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+				margin-top: 1px;
+			}
+			#daipu-bindcard-body #submit_info{
+				border: #0199e2;
+				background-color: #0199e2;
+			}
+		</style>
+	</head>
+
+	<body class='yizhidai-body'id='yizhidai-bindcard-body'>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">还款</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<!--<div class="mui-input-row">
+					<label>还款人</label>
+					<input id='bank_credit_name' type="text" class="mui-input-clear mui-input">
+				</div>-->
+				<div class="mui-input-row">
+					<label>还款银行卡</label>
+					<input id='storable_card_no_encr' type="text" class="mui-input-clear mui-input">
+					<input id='storable_card_no' type="hidden" class="mui-input-clear mui-input">
+				</div>
+				<div class="mui-input-row">
+					<label>还款金额</label>
+					<input id='amount' type="text" class="mui-input-clear mui-input">
+				</div>
+				<div class="mui-input-row">
+					<label>动态验证码</label>
+					<input id='token' type="hidden" class="mui-input-clear mui-input">
+					<input id='captcha' type="text" class="mui-input-clear mui-input" placeholder="请输入收到的银行短信验证码">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='submit_info' class="mui-btn mui-btn-block mui-btn-primary" style='border: #0199e2;background-color: #0199e2;'>确认还款</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var settings = app.getSettings();
+					var state = app.getState();
+					if (state.api_token) {
+						app.userinfo(state.api_token, function(res) {
+							if ((typeof res != 'object') && res.constructor != Object) {
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+						});
+					}else{
+						document.location.href = 'login.html';
+						return;
+					}
+					//获取URL所有参数
+		     		var args = new Object();
+		            var query = location.search.substring(1); //获取查询串
+		            var pairs = query.split("&"); //在逗号处断开
+		            for(var i = 0; i < pairs.length; i++) {
+		                var pos = pairs[i].indexOf('='); //查找name=value
+		                if(pos == -1) continue; //如果没有找到就跳过
+		                var argname = pairs[i].substring(0, pos); //提取name
+		                var value = pairs[i].substring(pos + 1); //提取value
+		                args[argname] = decodeURIComponent(value); //存为属性
+		            }
+					var loanInfo = {
+						loan_status: 'repaymenting',
+						api_token: state.api_token
+					};
+					app.loanlist(loanInfo, function(res) {
+						if ((typeof res != 'object') && res.constructor != Object) {
+							plus.nativeUI.toast(res);
+							document.location.href = 'main.html';
+							return;
+						}
+						if(res.length>0){
+							if(res[0].storable_card_no){
+								doc.getElementById('storable_card_no_encr').value = res[0].storable_card_no.slice(0,6)+'****'+res[0].storable_card_no.slice(6);
+								doc.getElementById('storable_card_no').value = res[0].storable_card_no;
+							}else{
+								plus.nativeUI.toast('您还没有绑定银行卡，请联系客服选择支付宝还款！');
+								document.location.href = 'currentrepayment.html';
+								return;
+							}
+							if(args.repayment_type == 'delay'){
+		            			doc.getElementById('amount').value = res[0].delay_accrual ? res[0].delay_accrual:res[0].accrual;
+		            		}else{
+		            			doc.getElementById('amount').value = res[0].repayment_amount;
+		            		}
+							//获取还款验证码
+							var repaymentInfo = {
+								api_token: state.api_token,
+								storable_pan:res[0].storable_card_no,
+								repayment_type:args.repayment_type
+							};
+							app.repaymentCaptcha(repaymentInfo, function(res) {
+								if ((typeof res != 'object') && res.constructor != Object) {
+									plus.nativeUI.toast(res);
+									document.location.href = 'main.html';
+									return;
+								}
+								if(res.responseCode == '00'){
+									doc.getElementById('token').value = res.token;
+								}else{
+									plus.nativeUI.toast(res.message);
+									document.location.href = 'currentrepayment.html';
+									return;
+								}
+							});
+						}
+					});
+					
+					var submitButton = doc.getElementById('submit_info');
+					var captchaBox = doc.getElementById('captcha');
+					var cardNoBox = doc.getElementById('storable_card_no');
+					var tokenBox = doc.getElementById('token');
+					submitButton.addEventListener('tap', function(event) {
+						var reapymentInfo = {
+							api_token: state.api_token,
+							storable_card_no: cardNoBox.value,
+							captcha: captchaBox.value,
+							token: tokenBox.value,
+							repayment_type: args.repayment_type
+						};
+						var waiting = plus.nativeUI.showWaiting();//显示原生等待框 
+						app.repaymentOrder(reapymentInfo, function(res) {
+							waiting.close(); //关闭原生等待框
+							if ((typeof res != 'object') && res.constructor != Object) {
+									plus.nativeUI.toast(res);
+									document.location.href = 'main.html';
+									return;
+								}
+								if(res.responseCode == '00'){
+									plus.nativeUI.toast('还款成功!');
+									document.location.href = 'currentrepayment.html';
+									return;
+								}else{
+									plus.nativeUI.toast(res.message);
+									document.location.href = 'currentrepayment.html';
+									return;
+								}
+						});
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

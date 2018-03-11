@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>history</title>
+</head>
+
+<body>
+    <div id="aa"></div>
+    <a href="./b.html">跳转到b页面</a>
+    <script>
+        var aa = document.getElementById('aa');
+        var content = localStorage.getItem("ctn") || " init"
+        aa.innerHTML = content;
+    </script>
+</body>
+
+</html>

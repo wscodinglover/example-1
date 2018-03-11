@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>stream练习</title>
+    <script src="./js/stream.js"></script>
+</head>
+
+<body>
+    <script>
+        function sieve(s) {
+            var h = s.head();
+            return new Stream(h, function() {
+                return sieve(s.tail().filter(function(x) {
+                    return x % h != 0;
+                }));
+            });
+        }
+        sieve(Stream.range(2)).take(10).print();
+        // 取前10个质数
+    </script>
+</body>
+
+</html>

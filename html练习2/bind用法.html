@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bind的用法</title>
+</head>
+
+<body>
+    <script>
+        // const Greeters = []
+        // for (var i = 0; i < 10; i++) {
+        //     // Greeters.push(function() {
+        //     //     return console.log(i)
+        //     // })
+        //  //   Greeters.push(console.log.bind(null, i))
+        //  //   输出是 0 1 2
+        // }
+        // Greeters[0]() // 10
+        // Greeters[1]() // 10
+        // Greeters[2]() // 10
+
+        class Foo {
+            constructor(name) {
+                this.name = name
+                    //方法一 // this.greet = this.greet.bind(this)
+            }
+            greet() {
+                console.log('hello, this is ', this.name)
+            }
+            someThingAsync() {
+                return Promise.resolve()
+            }
+            asyncGreet() {
+                this.someThingAsync()
+                    .then(this.greet.bind(this)) //方法二
+            }
+        }
+        new Foo('dog').asyncGreet()
+    </script>
+</body>
+
+</html>

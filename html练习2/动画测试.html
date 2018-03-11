@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画测试</title>
+    <style>
+        div {
+            width: 1px;
+            height: 1px;
+            border: 1px solid black;
+            border-radius: 50%;
+            position: absolute;
+            top: 200px;
+            left: 500px;
+        }
+        /* .d1 {
+            animation: d_1 4s linear infinite;
+        }
+        
+        .d2 {
+            border-color: red;
+            animation: d_1 4s linear 1s infinite;
+        }
+        
+        .d3 {
+            border-color: green;
+            animation: d_1 4s linear 2s infinite;
+        }
+        
+        .d4 {
+            border-color: blue;
+            animation: d_1 4s linear 3s infinite;
+        } */
+        
+        @keyframes d_1 {
+            0% {
+                /* transform: scale(0, 0) */
+                width: 1px;
+                height: 1px;
+                top: 400px;
+                left: 700px;
+            }
+            100% {
+                /* transform: scale(100, 100) */
+                width: 400px;
+                height: 400px;
+                top: 200px;
+                left: 500px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="d1"></div> -->
+    <!-- <div class="d2"></div>
+    <div class="d3"></div>
+    <div class="d4"></div> -->
+
+    <script>
+        var colorArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+
+        function colorDiv() {
+            var str = '';
+            for (let i = 0; i < 6; i++) {
+                var num = Math.floor(Math.random() * 16)
+                str += colorArr[num]
+            }
+            str = '#' + str
+            return str
+        }
+
+        function createDiv(a) {
+            for (let i = 0; i < a; i++) {
+                var div = document.createElement('div');
+                // div.style.width = '1px';
+                // div.style.height = '1px';
+                // alternate
+                div.style.borderColor = colorDiv();
+                div.style.animation = 'd_1 4s linear ' + i * 4 / a + 's infinite alternate'
+                document.body.appendChild(div);
+            }
+
+        }
+        createDiv(100)
+    </script>
+</body>
+
+</html>

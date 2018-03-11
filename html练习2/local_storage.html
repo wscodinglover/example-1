@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="count"></div>
+    <script>
+        //通过localStorage直接引用key, 另一种写法，等价于：
+        //localStorage.getItem("pageLoadCount");
+        //localStorage.setItem("pageLoadCount", value);
+        if (!localStorage.pageLoadCount)
+            localStorage.pageLoadCount = 0;
+        localStorage.pageLoadCount = parseInt(localStorage.pageLoadCount) + 1;
+        document.getElementById('count').textContent = localStorage.pageLoadCount;
+        console.log(localStorage.pageLoadCount)
+            // You have viewed this page an untold number of time(s).
+    </script>
+</body>
+
+</html>

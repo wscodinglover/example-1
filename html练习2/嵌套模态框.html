@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>嵌套模态框</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+</head>
+
+<body>
+    <div id="part1" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span>
+              </button>
+                    <h4 class="modal-title">技术部</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#signup">快速报名</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#part1">
+  Launch demo modal
+</button>
+    <div>
+        <div id="signup" class="modal fade" style="margin-top:500px">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">  <span aria-hidden="true">&times;</span>
+              </button>
+                        <h4 class="modal-title">技术部</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">快速报名</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- modal -->
+    </div>
+
+    <script>
+        // var Modal = function(element, options) {
+        //     this.options = options
+        //     this.$element = $(element)
+        //         .delegate('[data-dismiss="modal"]', 'click.dismiss.modal', $.proxy(this.hide, this))
+        //     this.options.remote && this.$element.find('.modal-body').load(this.options.remote)
+        // }
+        var Modal = function(element, options) {
+            this.options = options
+            this.$element = $(element)
+                .delegate('[data-dismiss="modal"]:first', 'click.dismiss.modal', $.proxy(this.hide, this))
+            this.options.remote && this.$element.find('.modal-body').load(this.options.remote)
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>js来绘制圆形和矩形</title>
+    <meta content="js来绘制圆形和矩形" charset="utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #div {
+            position: absolute;
+            background: #ccc;
+        }
+        
+        .sel {
+            margin: 30px auto;
+            width: 960px;
+            overflow: hidden
+        }
+        
+        li {
+            list-style: none;
+            float: left;
+            width: 60px;
+            height: 20px;
+        }
+        
+        #colors {
+            width: 500px;
+            float: left
+        }
+        
+        .selColor {
+            float: left
+        }
+        
+        #radius {
+            width: 40px;
+            height: 20px;
+        }
+        
+        .red {
+            background: red;
+        }
+        
+        .yellow {
+            background: yellow;
+        }
+        
+        .blue {
+            background: blue;
+        }
+        
+        .pink {
+            background: pink;
+        }
+        
+        .black {
+            background: black;
+        }
+        
+        .orange {
+            background: orange;
+        }
+        
+        .green {
+            background: green;
+        }
+        
+        .xz {
+            width: 340px;
+            float: right;
+        }
+        
+        #canvas {
+            width: 960px;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin: 0 auto
+        }
+    </style>
+    <script>
+        function $Id(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            var oCanvas = $Id("canvas");
+            var oRoud = $Id("roud");
+            var oRadius = $Id("radius");
+            var oCir = $Id("circle");
+            var oSqu = $Id("squ");
+            var oColors = $Id("colors");
+            var aColors = oColors.getElementsByTagName("li");
+            var color = "red";
+            var aInputs = document.getElementsByTagName("input");
+            var xz = "roud";
+            var arr = [];
+            for (var i = 0; i < aInputs.length; i++) {
+                if (aInputs[i].type == "checkbox") {
+                    arr.push(aInputs[i]);
+                }
+            }
+            for (var i = 0; i < arr.length; i++) {
+                arr[i].onclick = function() {
+                    if (!this.checked) {
+                        this.checked = false;
+                    } else {
+                        for (var j = 0; j < arr.length; j++) {
+                            arr[j].checked = false;
+                        }
+                        this.checked = true;
+                        xz = this.value;
+                    }
+                }
+            }
+            //选择颜色
+            for (var i = 0; i < aColors.length; i++) {
+                aColors[i].onclick = function() {
+                    color = this.className;
+                }
+            }
+            oCanvas.onmousedown = function(ev) {
+                if (oCanvas.setCapture) {
+                    oCanvas.setCapture();
+                }
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].checked) {
+                        arr[i].checked = true;
+                        xz = arr[i].value;
+                    }
+                }
+                var oEv = ev || window.event;
+                var disX = oEv.clientX;
+                var disY = oEv.clientY;
+                var oR = document.createElement("div");
+                oR.id = "div";
+                oR.style.top = disY + "px";
+                oR.style.left = disX + "px";
+                oR.style.backgroundColor = color;
+                document.body.appendChild(oR);
+                document.onmousemove = function(ev) {
+                    var oEv = ev || window.event;
+                    var x = oEv.clientX;
+                    var y = oEv.clientY;
+                    if (x < oCanvas.offsetLeft) {
+                        x = oCanvas.offsetLeft;
+                    } else if (x > oCanvas.offsetLeft + oCanvas.offsetWidth) {
+                        x = oCanvas.offsetLeft + oCanvas.offsetWidth
+                    }
+                    if (y < oCanvas.offsetTop) {
+                        y = oCanvas.offsetTop;
+                    } else if (y > oCanvas.offsetTop + oCanvas.offsetHeight) {
+                        y = oCanvas.offsetTop + oCanvas.offsetHeight
+                    }
+                    oR.style.width = Math.abs(x - disX) + "px";
+                    oR.style.top = Math.min(disY, y) + "px";
+                    oR.style.left = Math.min(disX, x) + "px";
+                    switch (xz) {
+                        case "roud":
+                            oR.style.height = Math.abs(y - disY) + "px";
+                            oR.style.borderRadius = oRadius.value + "px";
+                            break;
+                        case "circle":
+                            oR.style.height = Math.min(Math.abs(x - disX), Math.abs(y - disY)) + "px";
+                            oR.style.width = Math.min(Math.abs(x - disX), Math.abs(y - disY)) + "px";
+                            oR.style.borderRadius = (Math.min(Math.abs(x - disX), Math.abs(y - disY))) / 2 + "px";
+                            break;
+                        case "squ":
+                            oR.style.height = Math.abs(y - disY) + "px";
+                            break;
+                        case "square":
+                            oR.style.height = Math.min(Math.abs(x - disX), Math.abs(y - disY)) + "px";
+                            oR.style.width = Math.min(Math.abs(x - disX), Math.abs(y - disY)) + "px";
+                    }
+                }
+                document.onmouseup = function() {
+                    document.onmousemove = null;
+                    document.onmouseout = null;
+                    if (oCanvas.releaseCapture) {
+                        oCanvas.releaseCapture();
+                    }
+                }
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="sel">
+        <span class="selColor">请选择一种颜色</span>
+        <ul id="colors">
+            <li value="red" class="red"></li>
+            <li value="yellow" class="yellow"></li>
+            <li value="blue" class="blue"></li>
+            <li value="pink" class="pink"></li>
+            <li value="black" class="black"></li>
+            <li value="orange" class="orange"></li>
+            <li value="green" class="green"></li>
+        </ul>
+        <p class="xz">
+            <input type="checkbox" value="roud" id="roud" />圆角矩形
+            <label>半径</label><input type="text" value="" id="radius" />
+            <input type="checkbox" id="circle" value="circle" />正圆
+            <input type="checkbox" id="squ" value="squ" />矩形
+            <input type="checkbox" id="square" value="square" />正方形
+        </p>
+    </div>
+    <div id="canvas">
+    </div>
+</body>
+
+</html>

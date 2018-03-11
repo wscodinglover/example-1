@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Number最大值和最小值</title>
+</head>
+
+<body>
+    <!--在javascript中数值最小的是Number.MIN_VALUE,这里可以想象成Number是一个类，而MIN_VALUE 是一个静态变量，储存最小值，同样，最大的是Number.MAX_VALUE。  -->
+    <script>
+        // console.log(isNaN('9j'))
+        //     // NaN是不等于任何数值的数值
+        var arr = [{
+            v: 2
+        }, {
+            v: 1
+        }, {
+            v: 4
+        }, {
+            v: 5
+        }, {
+            v: 3
+        }, {
+            v: 8
+        }, {
+            v: 9
+        }, {
+            v: 2
+        }, {
+            v: 3
+        }]
+        arr.sort(function(a, b) {
+            return b.v - a.v
+        })
+        console.log(arr)
+    </script>
+</body>
+
+</html>

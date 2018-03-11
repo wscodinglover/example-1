@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			.mui-btn {
+				padding: 10px;
+				border: #0199e2;
+				background-color: #0199e2;
+				
+			}
+			#yizhidai-apply-body .main-limit{
+				background-color: #0199e2;
+				text-align: center;
+				padding-top: 5px;
+				margin-top: 10px;
+			}
+			#yizhidai-apply-body .menu-btn{
+				background-color: #efeff4;
+			}
+			.apply-confirm{
+				font-size:15px;
+				padding-top:10px;
+			}
+		</style>
+	</head>
+	<body class='yizhidai-body' id='yizhidai-apply-body'>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;box-shadow: 0 1px 0px #ccc;">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" href='main.html'></a>
+			<h1 class="mui-title">申请借款</h1>
+		</header>
+		<div class="mui-content">
+				<div class='main-limit'>
+					<img id='main-personal-limit' src='images/limit/600.png' width='80%'>
+				</div>
+				<div class="mui-page-content" id="loan_form">
+					<p style="margin-top: 10px">选择收款银行卡</p>
+					<ul class="mui-table-view mui-table-view-radio" style="margin-bottom: 15px;color: #8f8f94;" id="bankcards_list">
+						<!--<li class="mui-table-view-cell mui-selected">
+							<input type='hidden' id="12345678" value='12345678'>
+							<a class="mui-navigate-right">建设银行 1234****5678</a>
+						</li>-->
+					</ul>
+					<button id='bind_card'type="button" class="mui-btn mui-btn-block mui-btn-primary" style="background-color: #0199e2;">+ 绑定新的银行卡</button>
+					<p>若无绑定银行卡，客服会优先放款至您的支付宝账号</p>
+					<div class="mui-input-row">
+						<input id='loan_amount' type="text" class="mui-input-clear amount" placeholder="输入借款金额（100元整数）" />
+						<input id='duration' type="text" class="mui-input-clear date" placeholder="输入借款时间（5-15天）" />
+						<input id='coupon_code' type="text" class="mui-input-clear coupon_code" placeholder="输入推荐码，可获得利息优惠" />
+						<input id='geo_location' type="hidden" class="mui-input-clear geo" placeholder="地理位置" />
+						<input id='storable_card_no' type="hidden" class="mui-input-clear storable" placeholder="放款银行卡" />
+					</div>
+					<p>借款起始额度600元，额度根据实际还款情况及信用度依次递增。<a id='loan_accrual_desc'>点击查看借款费率详情说明</a></p>
+					<button id='submit' type="button" class="mui-btn mui-btn-block mui-btn-primary">确认申请</button>
+					<button id='buchong' type="button" class="mui-btn mui-btn-block mui-btn-primary">补充个人信息</button>
+				</div>
+		</div>
+		<footer class='yizhidai-footer' id='yizhidai-apply-footer'>
+			<nav class="mui-bar mui-bar-tab">
+			    <a class="mui-tab-item mui-active" href="main.html">
+			        <span class="mui-icon mui-icon-home"></span>
+			        <span class="mui-tab-label">首页</span>
+			    </a>
+			    <a class="mui-tab-item" href="member.html">
+			        <span class="mui-icon mui-icon-contact"></span>
+			        <span class="mui-tab-label">个人中心</span>
+			    </a>
+			    <a class="mui-tab-item" href="more.html">
+			        <span class="mui-icon mui-icon-bars"></span>
+			        <span class="mui-tab-label">帮助</span>
+			    </a>
+			</nav>
+		</footer>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var settings = app.getSettings();
+					var state = app.getState();
+					if (state.api_token) {
+						app.userinfo(state.api_token, function(res) {
+							if ((typeof res != 'object') && res.constructor != Object) {	
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+							if(res.loan_limit){
+								doc.getElementById('main-personal-limit').src = 'https://media.1zhidai.com/limit/'+res.loan_limit+'.png';
+							}
+							if(res.status == 'block'){
+								doc.getElementById('loan_form').innerHTML = '<p>你已经进入借款黑名单, 暂时不能借款。如有疑问请联系客服人员。</p>';
+								return;
+							}
+						});
+					}else{
+						document.location.href = 'login.html';
+						return;
+					}
+					//获取位置信息
+					plus.geolocation.getCurrentPosition( function ( p ) {
+						doc.getElementById('geo_location').value = '{"Latitude":"'+p.coords.latitude+'","Longitude":"'+p.coords.longitude+'", "Altitude":"'+p.coords.altitude+'"}';
+					}, function (e) {
+						plus.nativeUI.toast( "壹直贷获取您的位置失败，请在设置中打开获取位置权限，否则无法借款。" );
+					} );
+					//绑定银行卡
+					var bindButton = doc.getElementById('bind_card');
+					bindButton.addEventListener('tap', function(event) {
+						document.location.href='bindcard.html';
+					});
+					//选取放款银行卡
+					var list = document.querySelector('.mui-table-view.mui-table-view-radio');
+					list.addEventListener('selected', function(e){
+						doc.getElementById('storable_card_no').value = e.detail.el.children[0].value;
+					});
+					//获取用户银行卡
+					app.userbankcardsinfo(state.api_token, function(res) {
+						if ((typeof res == 'object') || res.constructor == Object) {
+							if(res.length>0){
+								var html_content='';
+								for(var i=0; i<res.length; i++){
+									var bankcard = res[i];
+									var selected='';
+									if(i == 0){
+										doc.getElementById('storable_card_no').value = bankcard.storable_card_no;
+										selected = 'mui-selected';
+									}
+									html_content += '<li class="mui-table-view-cell '+selected+'">';
+									html_content += '<input type="hidden" id="'+bankcard.storable_card_no+'" value="'+bankcard.storable_card_no+'">';
+									html_content += '<a class="mui-navigate-right">'+bankcard.bank_name+' '+ bankcard.storable_card_no.slice(0, 6)+'****'+bankcard.storable_card_no.slice(6)+'</a>';
+									html_content += '</li>';	
+								}
+								doc.getElementById('bankcards_list').innerHTML = html_content;
+							}else{
+								doc.getElementById('bankcards_list').innerHTML = '';
+							}
+						}else{
+							doc.getElementById('bankcards_list').innerHTML = '';
+						}
+					});
+					//申请借款
+					var applyButton = doc.getElementById('submit');
+					var accualDescButton = doc.getElementById('loan_accrual_desc');
+					var amountBox = doc.getElementById('loan_amount');
+					var durationBox = doc.getElementById('duration');
+					var couponCodeBox = doc.getElementById('coupon_code');
+					var geoBox = doc.getElementById('geo_location');
+					var cardNoBox = doc.getElementById('storable_card_no');
+					var source_type= 'yizhidai';
+					applyButton.addEventListener('tap', function(event) {
+						var loanInfo = {
+								loan_amount: amountBox.value,
+								duration: durationBox.value,
+								coupon_code: couponCodeBox.value,
+								geo_location: geoBox.value,
+								storable_card_no: cardNoBox.value,
+								source: source_type,
+								api_token: state.api_token
+						};
+						app.loanpre(loanInfo, function(res) {
+							if ((typeof res == 'object') || res.constructor == Object) {
+								var btnArray = ['取消申请', '提交申请'];
+	               				mui.confirm('\r\n本期贷款金额：'+res.loan_amount+' 元\t\t\t\t\t\t\t\t\r\n本期贷款期限：'+res.duration+' 天\t\t\t\t\t\t\t\t\r\n到期应还金额：'+res.repayment_amount+' 元\t\t\t\t\t\t\t\t', '确认借款', btnArray, function(e) {
+			                    	if (e.index == 1) {
+				                        var loanInfo = {
+											loan_amount: amountBox.value,
+											duration: durationBox.value,
+											coupon_code: couponCodeBox.value,
+											geo_location: geoBox.value,
+											storable_card_no: cardNoBox.value,
+											source: source_type,
+											api_token: state.api_token
+										};
+										app.loan(loanInfo, function(err) {
+											if (err) {
+												plus.nativeUI.toast(err);
+												return;
+											}
+											document.location.href='currentloan.html';
+										});
+									}
+			                    });
+			                } else {
+			                	plus.nativeUI.toast(res);
+								return;
+			                }
+						});
+					});
+					accualDescButton.addEventListener('tap', function(event) {
+						mui.alert("1.正常借款费率说明: 根据您的信用评分，我们在借款前会计算出您的可借款额度，申请借款时系统会根据大数据分析给出您的适配费率，待您确认后生成借款申请单。\t\t\t\t\t\t\t\t\t\t\n\r"+
+						"2.延期/续期说明: 延/续期功能是指您在结清本期的息费后，可以继续使用本金，默认延/续期时限为15天，延/续期的息费按照正常借款费率方式收取。续期请在“待还款”界面操作选择”延期还款”，如出现问题请与微信/QQ客服联系。\t\t\t\t\t\t\t\t\t\t\n\r"+
+						"3.逾期借款费率说明: 逾期费用的计算方法为：逾期费用=本金X2%每日。若您未在还款日进行主动还款，将产生逾期费用。若恶意不还款，您的逾期情况将被记录在网络征信系统和中国信用黑名单。\t\t\t\t\t\t\t\t\t\t\n\r"+
+						"4.其他说明: 请保持良好的还款习惯，否则会影响您在一直贷的信用额度、审核通过率等，进而影响您的个人征信记录甚至影响申请银行贷款。\t\t\t\t\t\t\t\t\t\t",'借款费率说明','我知道了',function(){return;});
+					});
+					var buchongButton = doc.getElementById('buchong');
+					buchongButton.addEventListener('tap', function(event) {
+						document.location.href='member.html';
+					});
+					//底部导航切换
+					$('.mui-bar-tab').on('tap', 'a', function(e) {
+						if(this.href){
+							document.location.href = this.href;						
+						}
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包测试</title>
+</head>
+
+<body>
+    <script>
+        function f1() {
+            var N = 0; // N是f1函数的局部变量
+
+            function f2() // f2是f1函数的内部函数，是闭包
+            {
+                N += 1; // 内部函数f2中使用了外部函数f1中的变量N
+                console.log(N);
+            }
+            return f2;
+        }
+        var result = f1();
+        result(); // 输出1
+        result(); // 输出2
+        result(); // 输出3
+
+        function Product() {
+            var name; //私有成员变量
+            // this.name
+            this.setName = function(value) {
+                name = value;
+                // this.name=value
+            };
+            this.getName = function() {
+                return name;
+                // return this.name;
+            };
+        }
+        var p = new Product();
+        p.setName("Fundebug");
+        console.log(p.name); // 输出undefined   //输出Fundebug
+        console.log(p.getName()); // 输出Fundebug
+
+        // 柯里化，即Currying，可以是函数变得更加灵活。我们可以一次性传入多个参数调用它；也可以只传入一部分参数来调用它，让它返回一个函数去处理剩下的参数。
+        // f(2)(3)==5   ||  f(2,3)==5
+        var add = function(x) {
+            return function(y) {
+                return x + y;
+            };
+        };
+        console.log(add(1)(1)); // 输出2
+        var add1 = add(1);
+        console.log(add1(1)); // 输出2
+        var add10 = add(10);
+        console.log(add10(1)); // 输出11
+
+
+        // 缓存
+        function memoizeFunction(func) {
+            var cache = {};
+            return function() {
+                var key = arguments[0];
+                if (cache[key]) {
+                    return cache[key];
+                } else {
+                    var val = func.apply(this, arguments);
+                    cache[key] = val;
+                    return val;
+                }
+            };
+        }
+        var fibonacci = memoizeFunction(function(n) {
+            return (n === 0 || n === 1) ? n : fibonacci(n - 1) + fibonacci(n - 2);
+        });
+        // 返回n-1项的和加上n-2项的和
+        console.log(fibonacci(100)); // 输出354224848179262000000
+        console.log(fibonacci(12)); // 输出354224848179262000000
+        //8 21 9 34  10 55  11 89  12 144
+    </script>
+</body>
+
+</html>

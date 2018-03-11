@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        section {
+            display: flex;
+            justify-content: space-around;
+            margin: 50px;
+        }
+        
+        p {
+            text-align: center;
+        }
+        
+        p>span {
+            font-size: 30px;
+            font-weight: bold;
+            padding: 0 20px;
+            color: blue;
+        }
+        
+        #p1 {
+            width: 100px;
+            background: #f30;
+        }
+        
+        #p2 {
+            width: 120px;
+            background: #f90;
+        }
+        
+        #p3 {
+            width: 140px;
+            background: #fd0;
+        }
+        
+        #p4 {
+            width: 160px;
+            background: #f09;
+        }
+        
+        #p5 {
+            width: 180px;
+            background: #f66;
+        }
+        
+        #p6 {
+            width: 200px;
+            background: #f0f;
+        }
+        
+        div {
+            flex-basis: 30%;
+            height: 500px;
+            /* margin: 10px; */
+            background: blue;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div id="div1" ondrop="down(event)" ondragover="allowDrop(event)">
+            <p id="p6" draggable="true" ondragstart="onstart(event)">拖动---6</p>
+            <p id="p5" draggable="true" ondragstart="onstart(event)">拖动---5</p>
+            <p id="p4" draggable="true" ondragstart="onstart(event)">拖动---4</p>
+            <p id="p3" draggable="true" ondragstart="onstart(event)">拖动---3</p>
+            <p id="p2" draggable="true" ondragstart="onstart(event)">拖动---2</p>
+            <p id="p1" draggable="true" ondragstart="onstart(event)">拖动---1</p>
+        </div>
+        <div id="div2" ondrop="down(event)" ondragover="allowDrop(event)">
+        </div>
+        <div id="div3" ondrop="down(event)" ondragover="allowDrop(event)">
+        </div>
+    </section>
+    <!-- <button onclick="start()">开始游戏</button> -->
+    <p>已经移动了 <span id="span1">0</span>步 </p>
+    <p>计时 :<span id="span2">0</span> 秒</p>
+    <script>
+        var pId = '',
+            dId = '',
+            i = 0,
+            span2 = document.getElementById("span2");
+
+        var onstart = (ev) => {
+
+            // console.log(ev.target.parentNode.id);
+            dId = ev.target.parentNode.id
+            pId = ev.target.id
+        }
+        var allowDrop = (ev) => {
+            ev.preventDefault();
+        }
+        var timeCount = 0;
+        // var start = () => {
+        // if (timeCount == 0) {
+        // console.log("dd")
+        // timer = setInterval(() => {
+        // timeCount++;
+        // span2.innerHTML = timeCount
+        // }, 1000)
+        // }
+        // }
+
+
+        function down(ev) {
+
+            if (timeCount == 0) {
+                console.log("dd")
+                timer = setInterval(() => {
+                    timeCount++;
+                    span2.innerHTML = timeCount
+                }, 1000)
+            }
+
+            var target = ev.target.childNodes,
+                length = ev.target.childNodes.length,
+
+                p = document.getElementById(pId),
+                span1 = document.getElementById("span1"),
+                div3 = document.getElementById('div3'),
+
+                div = document.getElementById(dId),
+
+                arr_temp = [];
+
+            for (let i = 0; i < div.childNodes.length; i++) {
+                if (div.childNodes[i].nodeType == 1) {
+                    arr_temp.push(div.childNodes[i].clientWidth);
+                }
+            }
+            // console.log(div)
+            // console.log(ev.target.id)
+            // 同一个div中拖拽不计数
+            if (ev.target.id == dId) {
+                return;
+            }
+            // console.log(Math.min(...arr_temp));
+            // 只能从上开始拖动
+            if (Math.min(...arr_temp) != p.clientWidth) {
+                return;
+            }
+            // 大的不能放到小的上面
+            if (target[length - 1].clientWidth < p.clientWidth) {
+                return;
+            }
+            // 避免p放入p中
+            if (ev.target.nodeName.toLowerCase() == 'p') {
+                return;
+            }
+            ev.preventDefault();
+
+            ev.target.appendChild(p);
+            i++;
+            span1.innerHTML = i;
+
+            // console.log(div3.childNodes.length)
+            if (div3.childNodes.length == 5) {
+                clearInterval(timer)
+                alert('恭喜你成功了！ 一共移动了' + i + "步")
+            }
+        }
+    </script>
+</body>
+
+</html>

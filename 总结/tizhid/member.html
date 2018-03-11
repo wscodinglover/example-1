@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/mui.picker.css" />
+		<link rel="stylesheet" href="css/mui.poppicker.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			#yizhidai-main-body{
+				font-size: 11px;
+				color: #8f8f94;
+			}
+			.mui-btn {
+				padding: 10px;
+				border: #0199e2;
+				background-color: #0199e2;
+			}
+			#step-1, #step-2, #step-3, #step-4{
+				margin-top:15px;
+				margin-bottom:15px;
+			}
+			.mui-input-row p{
+				font-size: 12px;
+			}
+			input, select, textarea {
+    			font-size: 11px;
+    			margin-bottom: 10px;
+    			padding:0px 10px;
+			}
+			
+		</style>
+	</head>
+	<body class='yizhidai-body' id='yizhidai-main-body'>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;box-shadow: 0 1px 0px #ccc;">
+			<h1 class="mui-title">个人中心</h1>
+		</header>
+		<div class="mui-content">
+			<!-- 第一步 -->
+			<div class="mui-page-content" id='member_step1'>
+				<p id='step-1'><img src="images/step_1.png" width='100%'> </p>
+				<p>联系方式 </p>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>借款本人手机号:</label>
+						<input id='phone' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号(必填)">
+					</div>
+					<div class="mui-input-row">
+						<label>手机服务密码:</label>
+						<input id='phone_password' type="text" class="mui-input-clear password" placeholder="手机服务密码(必填)" />
+					</div>
+					<div class="mui-input-row">
+						<label>支付宝账号:</label>
+						<input id='alipay_account' type="text" class="mui-input-clear alipay_account" placeholder="请输入支付宝账号(必填)" />
+					</div>
+					<div class="mui-input-row">
+						<label>联系QQ:</label>
+						<input id='qq_number' type="text" class="mui-input-clear qq_number" placeholder="请输入QQ号码(必填)" />
+					</div>
+					<div class="mui-input-row">
+						<label>芝麻信用分数:</label>
+						<input id='zhima_number' type="text" class="mui-input-clear zhima_number" placeholder="请输入芝麻信用分数(必填)" />
+					</div>
+					<p>关系人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='member_contact1' class="mui-icon mui-icon-personadd"></span></p>
+					<div class="mui-input-row">
+						<label>姓名:</label>
+						<input id='privy_name' type="text" class="mui-input-clear contact1_name" placeholder="关系人姓名(必填)" readonly="readonly"/>
+					</div>
+					<div class="mui-input-row">
+						<label>联系手机号:</label>
+						<input id='privy_phone' type="text" class="mui-input-clear contact1_phone" placeholder="关系人手机号(必填)" readonly="readonly"/>
+					</div>
+					<p>常用联系人&nbsp;&nbsp;<span id='member_contact2' class="mui-icon mui-icon-personadd"></span></p>
+					<div class="mui-input-row">
+						<label>姓名:</label>
+						<input id='contacter_name' type="text" class="mui-input-clear contacter_name" placeholder="联系人姓名(必填)" readonly="readonly">
+					</div>
+					<div class="mui-input-row">
+						<label>联系手机号:</label>
+						<input id='contacter_phone' type="text" class="mui-input-clear contacter_phone" placeholder="联系人手机号(必填)" readonly="readonly"/>
+					</div>
+					<input id='phone_contacts' type="hidden" class="mui-input-clear">
+					<div style='height:30px;text-align:center;font-size: 12px;margin-top:10px;'>请确认您的信息准确无误！</div>
+				</div>
+				<button id='submit_step1' type="button" class="mui-btn mui-btn-block mui-btn-primary">下一步</button>
+			</div>
+			<!-- 第二步 -->
+			<div class="mui-page-content"  id='member_step2'  hidden="true">
+				<p id='step-2'><img src="images/step_2.png" width='100%'></p>
+
+				<p>身份信息</p>
+				<div class="row mui-input-row">
+					<p>工作证件/学生证(必填)</p>
+					<div class="mui-input-row">
+						<img id='personal_card_pic' src="images/example/personal_card.jpg" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='personal_card' class="mui-icon mui-icon-camera"></span>
+					</div>
+					<p>手持自拍照(必填)</p>
+					<div class="mui-input-row">
+						<img id='self_portrait_pic' src="images/example/zipai.png" width="50%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='member_self_portrait' class="mui-icon mui-icon-camera"></span>
+					</div>
+					<p>身份证正面照片(必填)</p>
+					<div class="mui-input-row">
+						<img id='id_card_pic' src="images/example/id.png" width="50%"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='member_id_card' class="mui-icon mui-icon-camera"></span>
+					</div>
+					<div class="row mui-input-group">
+						<div class="mui-input-row">
+							<label>职业:</label>
+							<input id='profession' type="text" class="mui-input-clear" placeholder="必填" />
+						</div>
+						<div class="mui-input-row">
+							<label>姓名:</label>
+							<input id='user_name' type="text" class="mui-input-clear" placeholder="必填" />
+						</div>
+						<div class="mui-input-row" >	
+	                 		<label>性别:</label>
+	                 		<select id='gender'class='mui-selected gender' style='font-size:11px; height:40px;'>
+	                 			<option value=''>请选择</option>
+								<option value='男'>男</option>
+								<option value='女'>女</option>
+							</select>
+						</div>
+						<div class="mui-input-row">
+							<label>身份证号:</label>
+							<input id='id_card' type="text" class="mui-input-clear  contact" placeholder="必填" />
+						</div>
+					</div>
+					<div style='height:30px;text-align:center;font-size: 12px;margin-top:10px;'>请确认您的信息准确无误！</div>
+				</div>
+				<button id='return_step2' type="button" class="mui-btn mui-btn-block mui-btn-primary"  style="float:left;width:40%;margin-left:2%;">返回上一步</button>
+				<button id='submit_step2' type="button" class="mui-btn mui-btn-block mui-btn-primary" style="float:right;width:40%;margin-right:2%;">下一步</button>
+			</div>
+			<!-- 第三步 -->
+			<div class="mui-page-content"  id='member_step3'  hidden="true">
+				<p id='step-3'><img src="images/step_3.png" width='100%'> </p>
+				<p>信用认证 - 填写越多额度越高</p>
+				<div class="row mui-input-row">
+					<ul class="mui-table-view"> 
+						<li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">支付宝个人主页</a>
+				            <div class="mui-collapse-content">
+				                <p>请上传你的支付宝个人主页截图 </p>
+				                <p><img id='alipay_userinfo_pic' src="images/example/alipayuserinfo.png" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='alipay_userinfo_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+						<li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">芝麻信用分</a>
+				            <div class="mui-collapse-content">
+				                <p>请上传你的芝麻信用分截图 </p>
+				                <p><img id='zhima_credit_pic' src="images/example/zhimaxinyong.jpg" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='zhima_credit_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">京东白条</a>
+			           		<div class="mui-collapse-content">
+				                <p>请上传你的京东白条截图 </p>
+				                <p><img id='jd_baitiao_pic' src="images/example/jdbaitiao.png" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='jd_baitiao_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">花呗余额</a>
+				            <div class="mui-collapse-content">
+				                <p>请上传你的花呗截图 </p>
+				                <p><img id='huabei_limit_pic' src="images/example/huabei.jpg" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='huabei_limit_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">支付宝月账单</a>
+				            <div class="mui-collapse-content">
+				                <p>请上传支付宝月账单截图</p>
+				                <p><img id='alipay_bill_pic' src="images/example/alipayyuezhd.jpg" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='alipay_bill_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">支付宝资产凭证</a>
+				            <div class="mui-collapse-content">
+				                <p>请将支付宝收支明细证明发送至：<span style='color: #ec5151;font-weight: bold;'>service@1zhidai.com</span></p>		
+				                <p>如果您已经安装支付宝，点击跳转至 <span class='mui-btn-primary' id='alipay_btn'>支付宝</span></p>
+				           		<p><img id='alipay_shouzhi_pic' src="images/example/alipay_shouzhi.jpg" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">携程消费</a>
+				            <div class="mui-collapse-content">
+				                <p>请上传你的携程消费记录截图 </p>
+				                <p><img id='ctrip_pic' src="images/example/ctrip.png" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='ctrip_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">途牛消费</a>
+				            <div class="mui-collapse-content">
+				                <p>请上传你的途牛消费记录截图</p>
+				                <p><img id='tuniu_pic' src="images/example/tuniu.png" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='tuniu_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">个人信用报告</a>
+				            <div class="mui-collapse-content">
+				                <p>请至中国人民银行征信中心(https://ipcrs.pbccrc.org.cn/)下载您的信用报告</p>
+				                <p><img id='individual_credit_pic' src="images/example/xinyongbaogao.jpg" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='individual_credit_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				        <li class="mui-table-view-cell mui-collapse">
+				            <a class="mui-navigate-right" href="#">社保公积金</a>
+				            <div class="mui-collapse-content">
+				                <p>请至你的社保/公积金所在地官网或APP截图上传</p>
+				                <p><img id='shebao_gjj_pic' src="images/example/shbgjj.jpg" width="60%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id='shebao_gjj_button' class="mui-icon mui-icon-image"></span></p>
+				            </div>
+				        </li>
+				   </ul>
+				</div>
+				<div style='height:30px;text-align:center;font-size: 12px;margin-top:10px;'>请确认您的信息准确无误！</div>
+				<button id='return_step3' type="button" class="mui-btn mui-btn-block mui-btn-primary" style="float:left;width: 40%; margin-left:2%;">返回上一步</button>					
+				<button id='submit_step3' type="button" class="mui-btn mui-btn-block mui-btn-primary" style="float:right;width:40%; margin-right:2%;">完成</button>
+			</div>
+		</div>
+		<footer class='yizhidai-footer' id='yizhidai-main-footer'>
+			<nav class="mui-bar mui-bar-tab">
+			    <a class="mui-tab-item" href="main.html">
+			        <span class="mui-icon mui-icon-home"></span>
+			        <span class="mui-tab-label">首页</span>
+			    </a>
+			    <a class="mui-tab-item  mui-active">
+			        <span class="mui-icon  mui-icon-contact"></span>
+			        <span class="mui-tab-label">个人中心</span>
+			    </a>
+			    <a class="mui-tab-item" href="more.html">
+			        <span class="mui-icon mui-icon-bars"></span>
+			        <span class="mui-tab-label">帮助</span>
+			    </a>
+			</nav>
+		</footer>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/mui.picker.js" ></script>
+		<script type="text/javascript" src="js/mui.poppicker.js" ></script>
+		<script type="text/javascript" src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				//初始设置
+				$.plusReady(function() {
+					var service_url = 'https://api.1zhidai.com';
+					var media_url = 'https://media.1zhidai.com/images/';
+					var settings = app.getSettings();
+					var state = app.getState();
+					if (state.api_token) {
+						app.userloaninfo(state.api_token, function(res) {
+							if(!res){
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+							if ((typeof res != 'object') && res.constructor != Object) {
+								//plus.nativeUI.toast(res);
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+							
+							//step1
+							doc.getElementById('phone').value = res.phone;
+							doc.getElementById('phone_password').value = res.phone_password;
+							doc.getElementById('alipay_account').value = res.alipay_account;
+							doc.getElementById('qq_number').value = res.qq_number;
+							doc.getElementById('zhima_number').value = res.zhima_number;
+							doc.getElementById('privy_name').value = res.privy_name;
+							doc.getElementById('privy_phone').value = res.privy_phone;
+							doc.getElementById('contacter_name').value = res.contacter_name;
+							doc.getElementById('contacter_phone').value = res.contacter_phone;
+							//step2
+							if(res.personal_card_pic){
+								doc.getElementById('personal_card_pic').src = media_url+res.user_id+'/'+res.personal_card_pic+'?'+Math.random();
+							}
+							if(res.id_card_pic){
+								doc.getElementById('id_card_pic').src = media_url+res.user_id+'/'+res.id_card_pic+'?'+Math.random();
+							}
+							if(res.self_portrait_pic){
+								doc.getElementById('self_portrait_pic').src = media_url+res.user_id+'/'+res.self_portrait_pic+'?'+Math.random();
+							}
+							doc.getElementById('profession').value = res.profession;
+							doc.getElementById('user_name').value = res.user_name;
+							var select = document.getElementById("gender");  
+						    for(var i=0; i<select.options.length; i++){  
+						        if(select.options[i].value == res.gender){  
+						            select.options[i].selected = true;  
+						            break;  
+						        }
+						    }
+							doc.getElementById('id_card').value = res.id_card;
+							//step3
+							if(res.alipay_userinfo_pic){
+								doc.getElementById('alipay_userinfo_pic').src = media_url+res.user_id+'/'+res.alipay_userinfo_pic+'?'+Math.random();
+							}
+							if(res.zhima_credit_pic){
+								doc.getElementById('zhima_credit_pic').src = media_url+res.user_id+'/'+res.zhima_credit_pic+'?'+Math.random();
+							}
+							if(res.jd_baitiao_pic){
+								doc.getElementById('jd_baitiao_pic').src = media_url+res.user_id+'/'+res.jd_baitiao_pic+'?'+Math.random();
+							}
+							if(res.huabei_limit_pic){
+								doc.getElementById('huabei_limit_pic').src = media_url+res.user_id+'/'+res.huabei_limit_pic+'?'+Math.random();
+							}
+							if(res.alipay_bill_pic){
+								doc.getElementById('alipay_bill_pic').src = media_url+res.user_id+'/'+res.alipay_bill_pic+'?'+Math.random();
+							}
+							if(res.ctrip_pic){
+								doc.getElementById('ctrip_pic').src = media_url+res.user_id+'/'+res.ctrip_pic+'?'+Math.random();
+							}
+							if(res.tuniu_pic){
+								doc.getElementById('tuniu_pic').src = media_url+res.user_id+'/'+res.tuniu_pic+'?'+Math.random();
+							}
+							if(res.individual_credit_pic){
+								doc.getElementById('individual_credit_pic').src = media_url+res.user_id+'/'+res.individual_credit_pic+'?'+Math.random();
+							}
+							if(res.shebao_gjj_pic){
+								doc.getElementById('shebao_gjj_pic').src = media_url+res.user_id+'/'+res.shebao_gjj_pic+'?'+Math.random();
+							}
+						});
+					}else{
+						document.location.href = 'login.html';
+						return;
+					}
+
+					//关系人选择器
+					var contanct1PickerButton = doc.getElementById('member_contact1');
+					var contact1_name = doc.getElementById('privy_name');
+					var contact1_phone = doc.getElementById('privy_phone');
+					contanct1PickerButton.addEventListener('tap', function(event) {
+						//提取用户手机联系人 传给数据源contact_arr
+						var contact_arr = new Array();
+						var userPicker = new $.PopPicker();
+						plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function(addressbook) {
+							addressbook.find(["displayName", "phoneNumbers"], function(contacts) {
+								for (var i = 0; i < contacts.length; i++) {
+									//contact_arr_text是contact_arr数据源中每一个item用于显示的值 此处为联系人名称+手机号
+									//这里一定要判断联系人名称不为空 一旦漏判undefined后面所有逻辑都不会执行!!
+									if (contacts[i] !== undefined && contacts[i].displayName !== undefined) {
+										//判断用户的手机号码不为空时 取手机号码
+										if (contacts[i].phoneNumbers[0] !== undefined) {
+											var contact_phone = contacts[i].phoneNumbers[0].value;
+										}
+										//若手机号为空 则判断住宅号是否为空 不为空就用住宅号码 若住宅号码也为空 这个用户就不显示了
+										else if (contacts[i].phoneNumbers[1] !== undefined) {
+											var contact_phone = contacts[i].phoneNumbers[1].value;
+										}
+										contact_arr.push({value: {name:contacts[i].displayName, phone:contact_phone}, text:contacts[i].displayName});
+									}
+								}
+								//alert(JSON.stringify(contact_arr));
+								doc.getElementById('phone_contacts').value = JSON.stringify(contact_arr);
+								userPicker.setData(contact_arr);
+							});
+						}, false);
+						userPicker.show(function(items) {
+							contact1_name.value = items[0].value.name;
+							contact1_phone.value = items[0].value.phone;
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+					//联系人选择器
+					var contanct2PickerButton = doc.getElementById('member_contact2');
+					var contact2_name = doc.getElementById('contacter_name');
+					var contact2_phone = doc.getElementById('contacter_phone');
+					contanct2PickerButton.addEventListener('tap', function(event) {
+						//提取用户手机联系人 传给数据源contact_arr
+						var contact_arr = new Array();
+						var userPicker = new $.PopPicker();
+						plus.contacts.getAddressBook(plus.contacts.ADDRESSBOOK_PHONE, function(addressbook) {
+							addressbook.find(["displayName", "phoneNumbers"], function(contacts) {
+								for (var i = 0; i < contacts.length; i++) {
+									//contact_arr_text是contact_arr数据源中每一个item用于显示的值 此处为联系人名称+手机号
+									//这里一定要判断联系人名称不为空 一旦漏判undefined后面所有逻辑都不会执行!!
+									if (contacts[i] !== undefined && contacts[i].displayName !== undefined) {
+										//判断用户的手机号码不为空时 取手机号码
+										if (contacts[i].phoneNumbers[0] !== undefined) {
+											var contact_phone = contacts[i].phoneNumbers[0].value;
+										}
+										//若手机号为空 则判断住宅号是否为空 不为空就用住宅号码 若住宅号码也为空 这个用户就不显示了
+										else if (contacts[i].phoneNumbers[1] !== undefined) {
+											var contact_phone = contacts[i].phoneNumbers[1].value;
+										}
+										contact_arr.push({value: {name:contacts[i].displayName, phone:contact_phone}, text:contacts[i].displayName});
+									}
+								}
+								//alert(JSON.stringify(contact_arr));
+								doc.getElementById('phone_contacts').value = JSON.stringify(contact_arr);
+								userPicker.setData(contact_arr);
+							});
+						}, false);
+						userPicker.show(function(items) {
+							contact2_name.value = items[0].value.name;
+							contact2_phone.value = items[0].value.phone;
+						});
+					}, false);
+					//摄像头工作证件
+					var personalcardButton = doc.getElementById('personal_card');
+					personalcardButton.addEventListener('tap', function(event) {
+						var cmr = plus.camera.getCamera();
+						cmr.captureImage( function ( p ) {
+							//读取拍照文件
+							plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
+								compress2uploadImg(entry.toLocalURL(), 'personal_card_pic');
+							}, function ( e ) {
+								plus.nativeUI.toast( "读取拍照文件错误："+e.message );
+							} );
+						}, function ( e ) {
+							//plus.nativeUI.toast( "取消选择图片" );
+						}, {filename:"_doc/camera/", index:1} );
+					});
+					//摄像头自拍照
+					var selfportraitButton = doc.getElementById('member_self_portrait');
+					selfportraitButton.addEventListener('tap', function(event) {
+//						plus.gallery.pick( function(path){
+//							compress2uploadImg(path, 'self_portrait_pic');
+//					    }, function ( e ) {
+//					    	//plus.nativeUI.toast( "取消选择图片" );
+//					    }, {filter:"image"});
+						var cmr = plus.camera.getCamera();
+						cmr.captureImage( function ( p ) {
+							//读取拍照文件
+							plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
+								compress2uploadImg(entry.toLocalURL(), 'self_portrait_pic');
+							}, function ( e ) {
+								plus.nativeUI.toast( "读取拍照文件错误："+e.message );
+							} );
+						}, function ( e ) {
+							//plus.nativeUI.toast( "取消选择图片" );
+						}, {filename:"_doc/camera/", index:1} );
+					});
+					//摄像头身份证正面照
+					var idcardButton = doc.getElementById('member_id_card');
+					idcardButton.addEventListener('tap', function(event) {
+						var cmr = plus.camera.getCamera();
+						cmr.captureImage( function ( p ) {
+							//读取拍照文件
+							plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
+								compress2uploadImg(entry.toLocalURL(), 'id_card_pic');
+							}, function ( e ) {
+								plus.nativeUI.toast( "读取拍照文件错误："+e.message );
+							} );
+						}, function ( e ) {
+							//plus.nativeUI.toast( "取消选择图片" );
+						}, {filename:"_doc/camera/", index:1} );
+					});
+					//图片库选择支付宝个人主页截图
+					var alipayuserinfoButton = doc.getElementById('alipay_userinfo_button');
+					alipayuserinfoButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'alipay_userinfo_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择芝麻信用
+					var zhimaButton = doc.getElementById('zhima_credit_button');
+					zhimaButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'zhima_credit_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择京东白条
+					var jdbaitiaoButton = doc.getElementById('jd_baitiao_button');
+					jdbaitiaoButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'jd_baitiao_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择花呗截图
+					var huabeiButton = doc.getElementById('huabei_limit_button');
+					huabeiButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'huabei_limit_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择支付宝月账单
+					var alipaybillButton = doc.getElementById('alipay_bill_button');
+					alipaybillButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'alipay_bill_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择携程消费
+					var ctripButton = doc.getElementById('ctrip_button');
+					ctripButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'ctrip_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择途牛消费
+					var tuniuButton = doc.getElementById('tuniu_button');
+					tuniuButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'tuniu_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择个人信用报告
+					var increditbillButton = doc.getElementById('individual_credit_button');
+					increditbillButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'individual_credit_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片库选择社保公积金
+					var shbgjjbillButton = doc.getElementById('shebao_gjj_button');
+					shbgjjbillButton.addEventListener('tap', function(event) {
+						plus.gallery.pick( function(path){
+							compress2uploadImg(path, 'shebao_gjj_pic');
+					    }, function ( e ) {
+					    	//plus.nativeUI.toast( "取消选择图片" );
+					    }, {filter:"image"});
+					});
+					//图片压缩
+					function compress2uploadImg(img_src, img_area){
+						plus.zip.compressImage({
+								src: img_src,
+								dst: img_src,
+								overwrite:true,
+								quality:70,
+								width:"50%"	//缩小到原来的一半
+							},
+							function(e) {
+								//plus.nativeUI.toast("压缩成功，上传图片!");
+								uploadImg(img_src, img_area);
+							},
+							function(error) {
+								//plus.nativeUI.toast("图片压缩未成功，上传原图片!");
+								return;
+							}
+						);
+					}
+					//上传图片到服务器
+					function uploadImg(src, img_area) {
+						var task = plus.uploader.createUpload(service_url + '/user/uploadimg',
+							{method:"POST"},
+							function (result, status) {
+								//上传完成  
+								//console.log(result.responseText);
+								if (status == 200 ) {
+									var res = JSON.parse(result.responseText)
+									if(res.status == 200){
+										doc.getElementById(img_area).src=src;
+										if(img_area == 'id_card_pic'){
+											if(!Array.isArray(res.data.data)){
+												doc.getElementById('user_name').value = res.data.data.name;
+												var select = document.getElementById("gender");  
+											    for(var i=0; i<select.options.length; i++){  
+											        if(select.options[i].value == res.data.data.gender){  
+											            select.options[i].selected = true;  
+											            break;  
+											        }
+											    }  
+												doc.getElementById('id_card').value = res.data.data.id_card_number;
+											}	
+										}
+									}else{
+										plus.nativeUI.toast(res.message);
+									}	
+								} else {  
+									plus.nativeUI.toast( "图片上传失败: " + status ); 
+								}  
+						 	}
+						);
+						task.addData('api_token', state.api_token);
+						task.addData('action', 'uploadImg');
+						task.addData('field', img_area);
+						task.addFile(src, {key: 'idImg'});
+						task.start();
+					}
+					//调用支付宝
+					var alipayButton = doc.getElementById('alipay_btn');
+					alipayButton.addEventListener('tap', function(event) {
+						if ( plus.os.name == "Android" ) {
+							plus.runtime.launchApplication( {pname:"com.eg.android.AlipayGphone"}, function ( e ) {
+								plus.nativeUI.toast( "请手工切换至支付宝截图发送至：service@yizhidai.com" + e.message );
+							} );
+						} else if ( plus.os.name == "iOS" ) {
+							plus.runtime.launchApplication( {action:"https://mobile.alipay.com/index.htm"}, function ( e ) {
+								plus.nativeUI.toast( "请手工切换至支付宝截图发送至：service@yizhidai.com" + e.message );
+							} );
+						}else{
+							window.open("https://mobile.alipay.com/index.htm", "_blank"); 
+						}
+					});
+					//个人中心流程控制
+					var step_1 = doc.getElementById('submit_step1');
+					var step_2 = doc.getElementById('submit_step2');
+					var step_3 = doc.getElementById('submit_step3');
+					var return_2 = doc.getElementById('return_step2');
+					var return_3 = doc.getElementById('return_step3');
+					step_1.addEventListener('tap', function(event) {
+						if(doc.getElementById('phone').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "借款人手机号不能为空" );
+							return false;
+						}
+						if(doc.getElementById('phone_password').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "手机服务密码不能为空" );
+							return false;
+						}
+						if(doc.getElementById('alipay_account').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "支付宝账号不能为空" );
+							return false;
+						}
+						if(doc.getElementById('qq_number').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "联系QQ号码不能为空" );
+							return false;
+						}
+						if(doc.getElementById('zhima_number').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "芝麻信用分数不能为空" );
+							return false;
+						}
+						var task = plus.uploader.createUpload(service_url + '/user/updateinfo',
+							{method:"POST"},
+							function (result, status) {
+								//alert(JSON.stringify(result));
+								if (status == 200 ) {
+									var res= JSON.parse(result.responseText);
+									if(res.status == 200){
+										$('.mui-page-content').each(function(index, element) {
+						        			element.style.display= 'none';
+						    			});
+										doc.getElementById('member_step2').style.display= 'block';
+										mui.scrollTo(0, 1);
+									}else{
+										plus.nativeUI.toast(res.message);
+									}
+								} else {  
+									plus.nativeUI.toast( "个人联系方式保存失败: " + status ); 
+								}  
+						 	}
+						);
+						task.addData('api_token', state.api_token);
+						task.addData('phone_contacts', doc.getElementById('phone_contacts').value); //通讯录
+						task.addData('phone', doc.getElementById('phone').value); //手机号
+						task.addData('phone_password', doc.getElementById('phone_password').value); //手机密码
+						task.addData('alipay_account', doc.getElementById('alipay_account').value); //支付宝账号
+						task.addData('qq_number', doc.getElementById('qq_number').value); //QQ号码
+						task.addData('zhima_number', doc.getElementById('zhima_number').value); //芝麻信用分
+						task.addData('privy_name', doc.getElementById('privy_name').value); //关系人名称
+						task.addData('privy_phone', doc.getElementById('privy_phone').value); //关系人号码
+						task.addData('contacter_name', doc.getElementById('contacter_name').value); //常用联系人名称
+						task.addData('contacter_phone', doc.getElementById('contacter_phone').value); //常用联系人号码
+						task.start();
+					});
+					step_2.addEventListener('tap', function(event) {
+						if(doc.getElementById('profession').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "职业不能为空" );
+							return false;
+						}
+						if(doc.getElementById('user_name').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "姓名不能为空" );
+							return false;
+						}
+						if(doc.getElementById('id_card').value.replace(/(^\s*)|(\s*$)/g, "").length == 0){
+							plus.nativeUI.toast( "身份证号不能为空" );
+							return false;
+						}
+						var task = plus.uploader.createUpload(service_url + '/user/updateinfo',
+							{method:"POST"},
+							function (result, status) {
+								//alert(JSON.stringify(result));
+								if (status == 200 ) {
+									var res= JSON.parse(result.responseText);
+									if(res.status == 200){
+										$('.mui-page-content').each(function(index, element) {
+						        			element.style.display= 'none';
+						    			});
+										doc.getElementById('member_step3').style.display= 'block';
+										mui.scrollTo(0, 1);
+									}else{
+										plus.nativeUI.toast(res.message);
+									}
+								} else {  
+									plus.nativeUI.toast( "身份信息保存失败: " + status ); 
+								}
+						 	}
+						);
+						task.addData('api_token', state.api_token);
+						task.addData('profession', doc.getElementById('profession').value);
+						task.addData('user_name', doc.getElementById('user_name').value);
+						task.addData('gender', doc.getElementById('gender').value);
+						task.addData('id_card', doc.getElementById('id_card').value);
+						task.start();
+					});
+					step_3.addEventListener('tap', function(event) {
+						document.location.href = 'apply.html';
+					});
+					//第二步返回操作
+					return_2.addEventListener('tap', function(event) {
+						$('.mui-page-content').each(function(index, element) {
+					        element.style.display= 'none';
+					    });
+						doc.getElementById('member_step1').style.display= 'block';
+						mui.scrollTo(0, 1);
+					});
+					//第三步返回操作
+					return_3.addEventListener('tap', function(event) {
+						$('.mui-page-content').each(function(index, element) {
+					        element.style.display= 'none';
+					    });
+						doc.getElementById('member_step2').style.display= 'block';
+						mui.scrollTo(0, 1);
+					});
+					//底部导航切换
+					$('.mui-bar-tab').on('tap', 'a', function(e) {
+						if(this.href){
+							document.location.href=this.href;						
+						}
+					});
+					//系统返回按钮设置--
+					$.oldBack = mui.back;
+					var backButtonPress = 0;
+					$.back = function(event) {
+						backButtonPress++;
+						if (backButtonPress > 1) {
+							plus.runtime.quit();
+						} else {
+							plus.nativeUI.toast('再按一次退出应用');
+						}
+						setTimeout(function() {
+							backButtonPress = 0;
+						}, 1000);
+						return false;
+					};
+				});
+			}(mui, document));
+		</script>
+	</body>
+</html>

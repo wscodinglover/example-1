@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/mui.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			#yizhidai-currentrepayment-body #submit, #bankCard_repay, #bankCard_repay_delay{
+				border: #0199e2;
+				background-color: #0199e2;
+			}
+		</style>
+	</head>
+	<body class='yizhidai-body' id='yizhidai-currentrepayment-body'>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;box-shadow: 0 1px 0px #ccc;">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" href='main.html'></a>
+			<h1 class="mui-title">待还款</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" id="repayment_cotent" hidden="true">
+				<ul class="mui-table-view" id="repayment_detail">
+				    <li class="mui-table-view-cell loan_amount">贷款金额： <span id='loan_amount'></span>元</li>
+				    <li class="mui-table-view-cell apply_date">贷款期限： <span id='duration'></span>天</li>
+				    <li class="mui-table-view-cell apply_amount">应还金额：  <span id='repayment_amount'></span>元</li>
+				    <li class="mui-table-view-cell apply_time">到期时间： <span id='repayment_time'></span></li>
+				    <li class="mui-table-view-cell apply_status">还款状态：<span style="color: red;" id="loan_status"> 待还款</span></li>
+				    <li class="mui-table-view-cell">官方还款支付宝账号: <b>pay@1zhidai.com</b> <br>客服微信公众号: <span id="service_wechat" style="color:#007AFF">yzd_kefu</span>, 客服QQ：  <span id="service_qq" style="color:#007AFF">2269830250</span><br>如果申请延期还款，只需要将该期利息归还，系统自动延期15天。如有疑问请联系客服！ </li>
+				</ul>
+				<button class='mui-btn mui-btn-block mui-btn-primary' id='bankCard_repay'>全额还款</button>
+				<button class='mui-btn mui-btn-block mui-btn-primary' id='bankCard_repay_delay'>延期还款</button>
+			</div>
+			<div class="mui-content-padded" style="margin-top: 20px;">
+				<button class='mui-btn mui-btn-block mui-btn-primary mui-action-back' id='submit' >返回</button>
+			</div>
+		</div>
+		<footer class='yizhidai-footer' id='yizhidai-main-footer'>
+			<nav class="mui-bar mui-bar-tab">
+		    <a class="mui-tab-item mui-active" href="main.html">
+		        <span class="mui-icon mui-icon-home"></span>
+		        <span class="mui-tab-label">首页</span>
+		    </a>
+		    <a class="mui-tab-item"  href="member.html">
+		        <span class="mui-icon mui-icon-contact"></span>
+		        <span class="mui-tab-label">个人中心</span>
+		    </a>
+		    <a class="mui-tab-item" href="more.html">
+		        <span class="mui-icon mui-icon-bars"></span>
+		        <span class="mui-tab-label">帮助</span>
+		    </a>
+		</nav>
+		</footer>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var settings = app.getSettings();
+					var state = app.getState();
+					if (state.api_token) {
+						app.userinfo(state.api_token, function(res) {
+							if ((typeof res != 'object') && res.constructor != Object) {
+								state.api_token = '';
+								app.setState(state);
+								document.location.href = 'login.html';
+								return;
+							}
+						});
+					}else{
+						document.location.href = 'login.html';
+						return;
+					}
+					var loanInfo = {
+						loan_status: 'repaymenting',
+						api_token: state.api_token
+					};
+					app.loanlist(loanInfo, function(res) {
+						if ((typeof res != 'object') && res.constructor != Object) {
+							plus.nativeUI.toast(res);
+							doc.getElementById('repayment_cotent').innerHTML = '<p style="text-align:center;margin-top: 20px;">暂无需要还的款项</p>';
+							return;
+						}
+						if(res.length>0){
+							doc.getElementById('loan_amount').innerHTML = res[0].loan_amount;
+							doc.getElementById('repayment_time').innerHTML = res[0].repayment_time;
+							doc.getElementById('repayment_amount').innerHTML = res[0].repayment_amount;
+							doc.getElementById('duration').innerHTML = res[0].duration;
+							doc.getElementById('loan_status').innerHTML = res[0].status;
+							doc.getElementById('repayment_cotent').style.display= 'block';
+						}else{
+							doc.getElementById('repayment_cotent').style.display= 'block';
+							doc.getElementById('repayment_cotent').innerHTML = '<p style="text-align:center;margin-top:20px;">暂无需要还的款项</p>';						
+						}
+						return;
+					});
+					var repayButton = doc.getElementById('bankCard_repay');
+					repayButton.addEventListener('tap', function(event) {
+						document.location.href = 'repayment.html?repayment_type=repayment';			
+					});
+					var repayDelayButton = doc.getElementById('bankCard_repay_delay');
+					repayDelayButton.addEventListener('tap', function(event) {
+						document.location.href = 'repayment.html?repayment_type=delay';			
+					});
+					var qqButton = doc.getElementById('service_qq');
+					qqButton.addEventListener('tap', function(event) {
+						if (plus.os.name == "Android") {
+				            var main = plus.android.runtimeMainActivity(); 
+				            var Intent = plus.android.importClass('android.content.Intent'); 
+				            var Uri = plus.android.importClass('android.net.Uri'); 
+				            var intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=2269830250")); 
+				            main.startActivity(intent); 
+				        } 
+				        if (plus.os.name == "iOS") { 
+						   plus.runtime.launchApplication({ 
+							   action: "mqq://im/chat?chat_type=wpa&uin=2269830250&version=1&src_type=web"  
+						   }, function(e) {  
+							   plus.nativeUI.confirm("检查到您未安装qq，请先到appstore搜索下载？", function(i) {  
+								   if (i.index == 0) {
+									   iosAppstore("itunes.apple.com/cn/app/mqq/");  
+								   }  
+							   });  
+						   });  
+					    }				
+					});
+					
+					$('.mui-bar-tab').on('tap', 'a', function(e) {
+						if(this.href){
+							document.location.href=this.href;						
+						}
+					});
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

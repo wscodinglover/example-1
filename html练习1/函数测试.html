@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数测试</title>
+</head>
+
+<body>
+    <script>
+        function deduplicate(params) {
+            if (Array.isArray(params)) {
+                let result
+                params.forEach(item => {
+                    if (item) {
+                        result = item
+                    }
+                })
+                return result
+            } else {
+                return params
+            }
+        }
+
+        var arr_1 = [2, 3, 5, 6, 7, 2, 2, 1, 1, 4];
+        // var result = deduplicate(arr_1);
+        // console.log(result)
+        var obj_1 = {};
+        console.info(obj_1)
+        var obj_2 = { 100: 'a', 2: 'b', 7: 'c' };
+        console.log(Object.values(obj_2))
+
+        for(let value of arr_1 ){
+            console.log(value,'in')
+        }
+//  for of  可以得到数组元素的value
+//  for in  可以得到数组元素的index
+
+        var haha = {
+            name:'zhangsan',
+            age:18
+        }
+        var aa = new FormData()
+        aa.append('name','zhangsan')
+        aa.append('age',18)
+        console.log(aa)
+    </script>
+</body>
+
+</html>

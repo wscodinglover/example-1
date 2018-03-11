@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    div{
+        height: 100px;
+        width: 100px;
+        background: red;
+        position: absolute;
+        top: 300px;
+        left: 400px;
+        animation: scaleDiv  5s  linear infinite alternate;
+        /* transition:  5s; */
+        /* transition: height 5s,width 5s; */
+    }
+    div:hover{
+        /* transform: scale(0.5,0.5); */
+        width: 200px;
+        height: 300px;
+        
+    }
+    @keyframes scaleDiv {
+        from {transform: scale(0.5,0.5)}
+        to {transform: scale(2,2)}
+    }
+    </style>
+</head>
+<body>
+    <div>哈哈哈哈</div>
+</body>
+</html>

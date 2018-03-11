@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>grid网格布局</title>
+    <style>
+        .container{
+            display: grid;
+            /* grid-template-columns 列宽 */
+            grid-template-columns:100px 100px 100px;
+            /* fr 单元允许你用等分网格容器剩余可用空间来设置 网格轨道(Grid Track) 的大小 。例如，下面的代码会将每个网格项设置为网格容器宽度的三分之一 */
+            /* grid-template-columns: 1fr 50px 1fr 1fr; */
+            /* grid-template-rows 行高 */
+            grid-template-rows:100px 100px 100px; 
+             /* 内容的对齐方式  */
+            justify-content:center;
+            align-content: center;
+        }
+        .container>div{
+            background: #aaa;
+            margin: 2px;
+        }
+        /* 要定位和调整 items(子元素) 大小，我们将使用 grid-column 和 grid-row 属性来设置 */
+        .item1{
+            /* 我们在这里要做的是，我们希望 item1 占据从第一条网格线开始，到第四条网格线结束。换句话说，它将独立占据整行。 */
+            grid-column-start: 1;
+            grid-column-end: 3;
+
+            /* grid-column: 1 / 3; */
+        }
+        .item3 {
+            /* grid-row-start: 2;
+            grid-row-end: 4; */
+            grid-row: 2 / 4;
+        }
+        .item4 {
+            /* grid-column-start: 2;
+            grid-column-end: 4; */
+            grid-column: 2 / 4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item1">1</div>
+        <div class="item2">2</div>
+        <div class="item3">3</div>
+        <div class="item4">4</div>
+        <div class="item5">5</div>
+        <div class="item6">6</div>
+    </div>
+</body>
+</html>

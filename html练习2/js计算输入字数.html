@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>javascript计算文本框还能输入多少个字</title>
+</head>
+
+<body>
+    <textarea rows="10" cols="10" onkeyup="input(event)"></textarea>
+    <script>
+        var txt = document.querySelector('textarea'),
+            txtnum = 0;
+
+        function input(e) {
+
+            if (e.key == 'Backspace') {
+                txtnum--
+            } else {
+                txtnum++
+            }
+            console.log(txtnum)
+        }
+    </script>
+</body>
+
+</html>

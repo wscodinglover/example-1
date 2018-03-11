@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>try和catch</title>
+</head>
+<body>
+    <script>
+       function exam (arr){
+           try {
+               if(Array.isArray(arr)){
+                   console.log('this is an array')
+               }else{
+                   throw ('this isn\'t an array')
+               }
+               
+           } catch (error) {
+               console.log(error)
+           }
+       }
+    var arr_a = [1,2,4]
+    var arr_e = {name:'haha'}
+
+    // exam(arr_a)
+    // exam(arr_e)
+
+
+    function* g() {
+        yield 1;
+        console.log('throwing an exception');
+        throw new Error('generator broke!');
+        yield 2;
+        yield 3;
+    }
+    function log(generator) {
+        var v;
+        console.log('starting generator');
+        try {
+            v = generator.next();
+            console.log('第一次运行next方法', v);
+        } catch (err) {
+            console.log('捕捉错误', v);
+        }
+        try {
+            v = generator.next();
+            console.log('第二次运行next方法', v);
+        } catch (err) {
+            console.log('捕捉错误', v);
+        }
+        try {
+            v = generator.next();
+            console.log('第三次运行next方法', v);
+        } catch (err) {
+            console.log('捕捉错误', v);
+        }
+        console.log('caller done');
+    }
+    log(g());
+        // starting generator
+        // 第一次运行next方法 { value: 1, done: false }
+        // throwing an exception
+        // 捕捉错误 { value: 1, done: false }
+        // 第三次运行next方法 { value: undefined, done: true }
+        // caller done
+    </script>
+    
+</body>
+</html>

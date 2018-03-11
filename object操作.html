@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let obj = [
+        {s:"a",l:'1234654'},
+        { s:"b",l:'ewefwsd'},
+        {s:"c",l:''},
+        {s:"d",l:123}
+    ]
+    let arr = []
+    obj.map((value,index)=>{
+        // console.log(value.s,value.l)
+        if(value.l!==''){
+            let str = `${value.s}=${value.l}`
+            console.log(str)
+            arr.push(str)
+        }
+    })
+    console.log(arr.join('&'))
+
+    </script>
+</body>
+</html>

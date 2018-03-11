@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>回到顶部</title>
+    <style>
+        div {
+            height: 2000px;
+            width: 100%;
+            position: relative;
+        }
+        
+        button {
+            width: 500px;
+            height: 100px;
+            display: fixed;
+            position: absolute;
+            bottom: 0;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button><a href="javascript:scroll(0,0)">返回顶部</a></button>
+    </div>
+    <!-- 
+        一、使用HTML的锚标记最简单了
+
+但是唯一的缺点就是样式不怎么样，会显示这个锚标记。
+
+<aname="top"id="top"></a>
+
+放置位置在<body>标签之后随便找个地方放都可以，只要靠近顶部即可。
+
+页面底部放置：
+
+<ahref="#top"target="_self">返回顶部</a>
+
+二、使用Javascript Scroll函数返回顶部
+
+scrooll函数用来控制滚动条的位置，有两种很简单的实现方式：
+
+方式1（推荐：简单方便）：
+
+<ahref="javascript:scroll(0,0)">返回顶部</a>
+
+scroll第一个参数是水平位置，第二个参数是垂直位置，比如要想定位在垂直50像素处，改成scroll(0,50)就可以了。
+
+方式2（注重效果：缓慢向上）：
+
+本方式是渐进式返回顶部，要好看一些，代码如下：
+
+functionpageScroll() {window.scrollBy(0,-10);scrolldelay=setTimeout('pageScroll()',100);}<ahref="pageScroll();">返回顶部</a>
+
+这样就会动态返回顶部，不过虽然返回到顶部但是代码仍在运行，还需要在pageScroll函数加一句给停止掉。
+
+if(document.documentElement.scrollTop==0)clearTimeout(scrolldelay);
+
+三、使用Onload加上scroll功能实现动态返回顶部
+
+首先在网页body标签结束之前加上：
+
+<divid="gotop">返回顶部</div>
+
+2、再调用以下JS脚本部分：
+
+BackTop=function(btnId){varbtn=document.getElementById(btnId);vard=document.documentElement;window.onscroll=set;btn.onclick=function(){btn.style.display="none";window.onscroll=null;this.timer=setInterval(function(){d.scrollTop-=Math.ceil(d.scrollTop*0.1);if(d.scrollTop==0)clearInterval(btn.timer,window.onscroll=set);},10);};functionset(){btn.style.display=d.scrollTop?'block':"none"}};BackTop('gotop');
+
+这些可以放到网页中中，也可以独立存成一个js文件，比如gotop.js，再通过以下形式：
+
+<scriptsrc="/js/gotop.js"type=text/javascript></script>
+
+来调用，当然了位置最好放在“返回顶部”标签的下面，该调用方法已假设文件路径为JS，放在其它位置请根据实际修改。
+     -->
+</body>
+
+</html>

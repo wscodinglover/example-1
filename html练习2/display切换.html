@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>display切换</title>
+    <style>
+        .one {
+            width: 80px;
+            height: 80px;
+            background: blue;
+            margin: 10px;
+            display: none;
+        }
+        
+        .two {
+            width: 50px;
+            height: 50px;
+            background: red;
+            border-radius: 50%;
+            margin: 10px;
+            /* display: none; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="one"></div>
+    <div class="one"></div>
+    <div class="one"></div>
+
+    <div class="two"></div>
+    <div class="two"></div>
+    <div class="two"></div>
+    <div class="two"></div>
+
+    <button type="">切换</button>
+</body>
+<script>
+    var one = document.getElementsByClassName('one');
+    var two = document.getElementsByClassName('two');
+    var btn = document.getElementsByTagName('button')[0];
+    var flag = false;
+    btn.addEventListener('click', function() {
+        flag = !flag
+        console.log(flag)
+        if (flag) {
+            // two.style.display = 'block'
+            for (var i = 0; i < one.length; i++) {
+                one[i].style.display = 'block'
+                    // two[i].style.display = 'none'
+            }
+            // one.style.display = 'none'
+            for (var i = 0; i < two.length; i++) {
+                two[i].style.display = 'none'
+            }
+
+        } else {
+            for (var i = 0; i < one.length; i++) {
+                one[i].style.display = 'none'
+                    // two[i].style.display = 'block'
+            }
+            // two.style.display = 'none'
+            // one.style.display = 'block'
+
+            setTimeout(function() {
+                two[0].style.display = 'block'
+            }, 200)
+
+            setTimeout(function() {
+                two[1].style.display = 'block'
+            }, 400)
+
+            setTimeout(function() {
+                two[2].style.display = 'block'
+            }, 600)
+
+            setTimeout(function() {
+                two[3].style.display = 'block'
+            }, 800)
+        }
+
+    })
+</script>
+
+</html>

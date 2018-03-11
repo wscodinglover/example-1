@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .join {
+            position: absolute;
+            line-height: 40px;
+            width: 148px;
+            height: 40px;
+            background-color: blue;
+            border-radius: 20px;
+            border: 1px solid #fff;
+            top: 247px;
+            left: 0px;
+        }
+        /*光点*/
+        
+        .spark {
+            position: absolute;
+            width: 30px;
+            height: 41px;
+            background-color: red;
+            top: 227px;
+            left: 6px;
+            transform-origin: 50% 100%;
+            animation: spark 8s linear infinite;
+        }
+        /*动画*/
+        
+        @keyframes spark {
+            0% {
+                left: 6px;
+                transform: rotate(0deg)
+            }
+            35% {
+                left: 112px;
+                transform: rotate(0deg)
+            }
+            50% {
+                left: 112px;
+                transform: rotate(180deg)
+            }
+            85% {
+                left: 6px;
+                transform: rotate(180deg)
+            }
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+</head>
+<div class="join">
+
+</div>
+<div class="spark">
+
+</div>
+
+<body>
+
+</body>
+
+</html>

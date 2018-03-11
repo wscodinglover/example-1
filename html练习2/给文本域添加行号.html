@@ -1,0 +1,183 @@
+<!-- <html>
+
+<head>
+    <title>Js给文本框添加行号功能</title>
+    <style type="text/css">
+        #codeTextarea {
+            width: 500px;
+            height: 310px;
+        }
+        
+        .textAreaWithLines {
+            font-family: courier;
+            border: 1px solid #ddd;
+        }
+        
+        .textAreaWithLines textarea,
+        .textAreaWithLines div {
+            border: 0px;
+            line-height: 120%;
+            font-size: 12px;
+        }
+        
+        .lineObj {
+            color: #666;
+        }
+    </style>
+    <script type="text/javascript">
+        var lineObjOffsetTop = 2;
+
+        function createTextAreaWithLines(id) {
+            var el = document.createElement("DIV");
+            var ta = document.getElementById(id);
+            ta.parentNode.insertBefore(el, ta);
+            el.appendChild(ta);
+            el.className = "textAreaWithLines";
+            el.style.width = (ta.offsetWidth + 30) + "px";
+            ta.style.position = "absolute";
+            ta.style.left = "30px";
+            el.style.height = (ta.offsetHeight + 2) + "px";
+            el.style.overflow = "hidden";
+            el.style.position = "relative";
+            el.style.width = (ta.offsetWidth + 30) + "px";
+            var lineObj = document.createElement("DIV");
+            lineObj.style.position = "absolute";
+            lineObj.style.top = lineObjOffsetTop + "px";
+            lineObj.style.left = "0px";
+            lineObj.style.width = "27px";
+            el.insertBefore(lineObj, ta);
+            lineObj.style.textAlign = "right";
+            lineObj.className = "lineObj";
+            var string = "";
+            for (var no = 1; no < 20; no++) {
+                if (string.length > 0) string = string + "<br>";
+                string = string + no;
+            }
+            ta.onkeydown = function() {
+                positionLineObj(lineObj, ta);
+            };
+            ta.onmousedown = function() {
+                positionLineObj(lineObj, ta);
+            };
+            ta.onscroll = function() {
+                positionLineObj(lineObj, ta);
+            };
+            ta.onblur = function() {
+                positionLineObj(lineObj, ta);
+            };
+            ta.onfocus = function() {
+                positionLineObj(lineObj, ta);
+            };
+            ta.onmouseover = function() {
+                positionLineObj(lineObj, ta);
+            };
+            lineObj.innerHTML = string;
+        }
+
+        function positionLineObj(obj, ta) {
+            obj.style.top = (ta.scrollTop * -1 + lineObjOffsetTop) + "px";
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <textarea id="codeTextarea"></textarea>
+    </form>
+    <script type="text/javascript">
+        createTextAreaWithLines("codeTextarea");
+    </script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文本域添加行号</title>
+    <style>
+        .container {
+            width: 100%;
+            height: 100vh;
+            border: 1px solid black;
+            display: flex;
+        }
+        
+        .left {
+            flex-basis: 20px;
+        }
+        
+        .left p {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            line-height: 20px;
+        }
+        
+        .right {
+            width: 100%;
+        }
+        
+        #txt {
+            width: 100%;
+            line-height: 20px;
+            /* border: 1px solid blue; */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--删除内容时 第一次退格会删除行号，而后不会  -->
+    <div class="container">
+        <div class="left">
+            <p>1</p>
+        </div>
+        <div class="right">
+            <div id="txt" contenteditable="true" onkeydown="cc(event)">1</div>
+        </div>
+    </div>
+    <script>
+        var left = document.querySelectorAll('.left')[0];
+        var txt = document.getElementById('txt')
+
+        var num = 1
+
+
+        function cc(e) {
+
+            if (e.key === "Enter") {
+                var p = document.createElement('p')
+                p.setAttribute('class', 'add')
+                p.innerHTML = ++num;
+                left.appendChild(p)
+
+
+            }
+            var aa = txt.clientHeight
+            console.log("1-" + aa)
+            if (e.key === "Backspace") {
+                var bb = txt.clientHeight
+                console.log("2-" + bb)
+                console.log(num)
+                var index = num - 2
+                if (index < 0) {
+                    return;
+                }
+
+                if (aa == 20 * num) {
+                    var pDelete = document.getElementsByClassName('add')[index]
+                    console.log(pDelete)
+                    left.removeChild(pDelete)
+                    num--
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>

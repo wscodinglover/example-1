@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="status"></div>
+    <script>
+        if (window.openDatabase) {
+            //打开数据库，如果没有则创建
+            var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024);
+            //通过事务，创建一个表，并添加两条记录
+            db.transaction(function(tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+                tx.executeSql('INSERT INTO LOGS (id, log) VALUES (1, "foobar")');
+                tx.executeSql('INSERT INTO LOGS (id, log) VALUES (2, "logmsg")');
+            });
+            //查询表中所有记录，并展示出来
+            db.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM LOGS', [], function(tx, results) {
+                    var len = results.rows.length,
+                        i;
+                    msg = "Found rows: " + len + "";
+                    for (i = 0; i < len; i++) {
+                        msg = i + " " + results.rows.item(i).log + ""
+                    }
+                    document.querySelector('#status').innerHTML = msg;
+                }, null);
+            });
+        }
+    </script>
+</body>
+
+</html>

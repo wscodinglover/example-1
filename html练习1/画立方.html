@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="wangshuai">
+    <title></title>
+    <style>
+        #inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+            animation: change 3s linear infinite;
+        }
+        
+        @keyframes change {
+            0% {
+                transform: translateZ(-10em) rotateX(0deg) rotateY(0deg);
+            }
+            33% {
+                transform: translateZ(-10em) rotateX(120deg) rotateY(240deg);
+            }
+            66% {
+                transform: translateZ(-10em) rotateX(240deg) rotateY(480deg);
+            }
+            100% {
+                transform: translateZ(-10em) rotateX(360deg) rotateY(720deg);
+            }
+        }
+        
+        #inner div {
+            height: 308px;
+            width: 308px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+        /*前面样式*/
+        
+        #front {
+            margin-top: -154px;
+            margin-left: -154px;
+            background-color: red;
+            transform: translateZ(158px);
+        }
+        /*后面样式*/
+        
+        #after {
+            margin-top: -154px;
+            margin-left: -154px;
+            background-color: yellow;
+            transform: translateZ(-158px);
+        }
+        /*左面样式*/
+        
+        #left {
+            margin-top: -154px;
+            margin-left: -154px;
+            background-color: green;
+            transform: rotateY(90deg) translateZ(158px);
+        }
+        /*右面样式*/
+        
+        #right {
+            margin-top: -154px;
+            margin-left: -154px;
+            background-color: blue;
+            transform: rotateY(90deg) translateZ(-158px);
+        }
+        /*上面样式*/
+        
+        #up {
+            margin-top: -154px;
+            margin-left: -154px;
+            background-color: purple;
+            transform: rotateX(90deg) translateZ(158px);
+        }
+        /*下面样式*/
+        
+        #down {
+            margin-top: -154px;
+            margin-left: -154px;
+            background-color: green;
+            transform: rotateX(90deg) translateZ(-158px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="inner">
+        <div id="front">1</div>
+        <div id="after">2</div>
+        <div id="left">3</div>
+        <div id="right">4</div>
+        <div id="up">5</div>
+        <div id="down">6</div>
+    </div>
+
+</body>
+
+</html>

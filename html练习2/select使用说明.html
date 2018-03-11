@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>select使用说明</title>
+    <!-- <script src="~/Scripts/jquery-1.10.2.js"></script> -->
+
+    <!-- <script src="~/Content/bootstrap/js/bootstrap.js"></script> -->
+    <!-- <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" /> -->
+
+    <!-- <script src="~/Content/select2-master/dist/js/select2.js"></script> -->
+    <!-- <link href="~/Content/select2-master/dist/css/select2.css" rel="stylesheet" /> -->
+</head>
+
+<body>
+    <select id="sel_menu2" multiple="multiple" class="form-control">
+         <optgroup label="系统设置">
+              <option value="1">用户管理</option>
+              <option value="2">角色管理</option>
+              <option value="3">部门管理</option>
+              <option value="4">菜单管理</option>
+         </optgroup>
+         <optgroup label="订单管理">
+              <option value="5">订单查询</option>
+              <option value="6">订单导入</option>
+              <option value="7">订单删除</option>
+              <option value="8">订单撤销</option>
+         </optgroup>
+         <optgroup label="基础数据">
+              <option value="9">基础数据维护</option>
+          </optgroup>
+     </select>
+    <script>
+        //多选
+        // $("#sel_menu2").select2({
+        //     tags: true,
+        //     maximumSelectionLength: 3 //最多能够选择的个数
+        // });
+
+        // 异常处理
+
+        try {
+            throw new Error(10, "asdasdasd")
+        } catch (e) {
+            alert(e.message);
+            alert(e.description)
+            alert(e.number)
+            alert(e.name)
+            throw new Error(10, "asdasdasd")
+        }
+    </script>
+</body>
+
+</html>

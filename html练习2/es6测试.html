@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>es6测试</title>
+</head>
+
+<body>
+    <script>
+        var map = new Map();
+        map.set('first', 'hello');
+        map.set('second', 'world');
+
+        //  [key, value]  是对象结构中的数据结构
+        for (let [key, value] of map) {
+            console.log(key + " is " + value);
+        }
+        // first is hello
+        // second is world
+
+
+        // codePointAt()方法会正确返回32位的UTF-16字符的码点。对于那些两个字节储存的常规字符
+        // var s = '𠮷a';
+        // var a1 = s.codePointAt(0).toString(16) // "20bb7"
+        // var a2 = s.charCodeAt(2).toString(16) // "61"
+        // console.log(a1 + "--" + a2)
+        // var a3 = '\u{20BB7}' //汉字字符码
+        // console.log(a3)
+
+        // codePointAt方法是测试一个字符由两个字节还是由四个字节组成的最简单方法。
+
+        // function is32Bit(c) {
+        // return c.codePointAt(0) > 0xFFFF;
+        // }
+        // var b1 = is32Bit("𠮷") // true
+        // var b2 = is32Bit("a") // false
+        // console.log(b1 + '--' + b2)
+
+        // String.fromCharCode不能识别大于0xFFFF的码点，所以0x20BB7就发生了溢出，最高位2被舍弃了，最后返回码点U+0BB7对应的字符，
+        // 而不是码点U+20BB7对应的字符。
+        // ES6提供了String.fromCodePoint方法，可以识别0xFFFF的字符，弥补了String.fromCharCode方法的不足。在作用上，正好与codePointAt方法相
+        // 反。
+
+        // 不支持数字，支持字符串
+        for (let codePoint of '123456') {
+            console.log(codePoint)
+        }
+        console.log('*'.repeat(5))
+
+        // 字符串补齐 padStart在之前补齐，padEnd在之后补齐@param1是长度，@param2是填充的字符 
+        // 如果省略 param2 将用空格补齐
+        console.log('9'.padStart(6, 'abc')) //abcab9
+
+        // 另一个用途是提示字符串格式。
+        '12'.padStart(10, 'YYYY-MM-DD') // "YYYY-MM-12"
+        '09-12'.padStart(10, 'YYYY-MM-DD') // "YYYY-09-12"
+
+        // es6标签模板
+        var a = 5;
+        var b = 10;
+
+        function tag(s, v1, v2) {
+            console.log(s[0]);
+            console.log(s[1]);
+            console.log(s[2]);
+            console.log(v1);
+            console.log(v2);
+            return "OK";
+        }
+        tag `Hello ${ a + b } world ${ a * b}`; //tag(['Hello','world'],15,50)
+        // "Hello "
+        // " world "
+        // ""
+        // 15
+        // 50
+        // "OK"
+
+
+        var sender = '<script>alert("abc")</ script>';
+        // 恶意代码 
+        var message = `<p>${sender} has sent you a message.</p>`;
+        console.log(message);
+        //<p>&lt;script&gt;alert("abc")&lt;/script&gt; has sent you a message.</p>
+        // ES6还为原生的String对象，提供了一个raw方法。
+        var m1 = String.raw `Hi\n${2+3}!`;
+        console.log(m1) // "Hi\\n5!"
+
+
+        // String.raw方法也可以作为正常的函数使用。这时，它的第一个参数，应该是一个具有raw属性的对象，且raw属性的值应该是一个数组
+        String.raw({
+            raw: 'test'
+        }, 0, 1, 2);
+        // 't0e1s2t'
+        // 等同于
+        String.raw({
+            raw: ['t', 'e', 's', 't']
+        }, 0, 1, 2);
+
+        // 数值转化为十进制
+        var num2 = Number(0b1000)
+        console.log(num2)
+
+        // Number.isInteger()用来判断一个值是否为整数。需要注意的是，在JavaScript内部，整数和浮点数是同样的储存方法，所以3和3.0被视为同一个值。
+
+
+        // 浮点计算是不准确的，Number.EPSILON 极小值是一个误差范围，只要小于这个范围就可以认为得到的结果是正确的;
+        function withinErrorMargin(left, right) {
+            return Math.abs(left - right) < Number.EPSILON;
+        }
+        var nep1 = withinErrorMargin(0.1 + 0.2, 0.3)
+            // true
+        var nep2 = withinErrorMargin(0.2 + 0.2, 0.3)
+            // false
+
+        console.log(nep1 + '*'.repeat(5) + nep2);
+
+        // ES6引入了Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER这两个常量，用来表示这个范围的上下限。
+        // 超出这两值都认为是不精确的
+
+        // Math.trunc方法用于去除一个数的小数部分，返回整数部分。
+        Math.trunc(4.1) // 4
+        Math.trunc(4.9) // 4
+        Math.trunc(-4.1) // -4
+        Math.trunc(-4.9) // -4
+        Math.trunc(-0.1234); // -0
+
+        // Math.sign方法用来判断一个数到底是正数、负数、还是零。
+        Math.sign(-5) // -1
+        Math.sign(5) // +1
+        Math.sign(0) // +0
+        Math.sign(-0) // -0
+        Math.sign(NaN) // NaN
+        Math.sign('foo'); // NaN
+        Math.sign(); // NaN
+
+        // Math.cbrt方法用于计算一个数的立方根。
+        // Math.sqrt 平方根
+        Math.cbrt(-1) // -1
+        Math.cbrt(0) // 0
+        Math.cbrt(1) // 1
+        Math.cbrt(2) // 1.2599210498948734
+        console.log(Math.sqrt(2))
+
+        // JavaScript的整数使用32位二进制形式表示，Math.clz32方法返回一个数的32位无符号整数形式有多少个前导0。
+        Math.clz32(0) // 32
+        Math.clz32(1) // 31
+        Math.clz32(1000) // 22
+        Math.clz32(0b01000000000000000000000000000000) // 1
+        Math.clz32(0b00100000000000000000000000000000) // 2
+
+        // Math.hypot方法返回所有参数的平方和的平方根。
+        Math.hypot(3, 4) //5
+
+        // 对数方法
+        // Math.expm1(x)返回ex - 1，即Math.exp(x) - 1。
+        Math.expm1(-1) // -0.6321205588285577
+        Math.expm1(0) // 0
+        Math.expm1(1) // 1.718281828459045
+
+        // Math.log1p(x)方法返回1 + x的自然对数，即Math.log(1 + x)。如果x小于-1，返回NaN。
+        Math.log1p(1) // 0.6931471805599453
+        Math.log1p(0) // 0
+        Math.log1p(-1) // -Infinity
+        Math.log1p(-2) // NaN
+
+        // Math.log10(x)返回以10为底的x的对数。如果x小于0，则返回NaN。
+        Math.log10(2) // 0.3010299956639812
+        Math.log10(1) // 0
+        Math.log10(0) // -Infinity
+        Math.log10(-2) // NaN
+        Math.log10(100000) // 5
+
+        /** ES6新增了6个三角函数方法。
+         *  Math.sinh(x) 返回x的双曲正弦（hyperbolic sine）
+         *  Math.cosh(x) 返回x的双曲余弦（hyperbolic cosine）
+         *  Math.tanh(x) 返回x的双曲正切（hyperbolic tangent）
+         *  Math.asinh(x) 返回x的反双曲正弦（inverse hyperbolic sine）
+         *  Math.acosh(x) 返回x的反双曲余弦（inverse hyperbolic    cosine）
+         *  Math.atanh(x) 返回x的反双曲正切（inverse hyperbolic tangent）
+         */
+
+        // ES7新增了一个指数运算符（**），目前Babel转码器已经支持。
+        console.log(2 ** 3);
+        var set1 = new Set();
+        console.log(set1);
+
+        // 扩展运算符背后调用的是遍历器接口（Symbol.iterator），如果一个对象没有部署这个接口，就无法转换。Array.from方法则是还支持类似数组的对象。所谓类似数组的对象，本质特征只有一点，即必须有length属性。因此，任何有length属性的对象，都可以通过Array.from方法转为数组，而此时扩展运算符就无法转换。
+
+
+        // Array.from还可以接受第二个参数，作用类似于数组的map方法，用来对每个元素进行处理，将处理后的值放入返回的数组。
+        // Array.from(arrayLike, x => x * x);
+        // 等同于
+        // Array.from(arrayLike).map(x => x * x);
+        // Array.from([1, 2, 3], (x) => x * x);
+        // [1, 4, 9]
+
+        // 将数组中布尔值为false的成员转为0。 undefined null false 
+        Array.from([1, , 2, , 3], (n) => n || 0);
+        // [1, 0, 2, 0, 3]
+
+
+        // 上面代码中，Array.from的第一个参数指定了第二个参数运行的次数。这种特性可以让该方法的用法变得非常灵活。
+        Array.from({
+                length: 2
+            }, () => 'jack')
+            // ['jack', 'jack']
+
+        // Array.from()的另一个应用是，将字符串转为数组，然后返回字符串的长度。因为它能正确处理各种Unicode字符，可以避免JavaScript将大于\uFFFF的Unicode字符，算作两个字符的bug。
+        function countSymbols(string) {
+            return Array.from(string)
+        }
+        console.log(countSymbols('hello world!'));
+        //["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"]
+
+        // Array方法没有参数、一个参数、三个参数时，返回结果都不一样。只有当参数个数不少于2个时，Array()才会返回由参数组成的新数组。参数个数只有一个时，实际上是指定数组的长度。
+        // Array.of基本上可以用来替代Array()或new Array()，并且不存在由于参数不同而导致的重载。它的行为非常统一。
+        Array.of() // []
+        Array.of(undefined) // [undefined]
+        Array.of(1) // [1]
+        Array.of(1, 2) // [1, 2]
+
+        // 数组实例的copyWithin方法，在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。
+        // target（必需）：从该位置开始替换数据。
+        // start（可选）：从该位置开始读取数据，默认为0。如果为负值，表示倒数。
+        // end（可选）：到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数。
+        // splice方法类似
+        var arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9].copyWithin(4, 6)
+            // 1,2,3,4,,7,8,9 ,,8,9
+        console.log(arr1)
+
+        // 数组实例的find方法，用于找出第一个符合条件的数组成员。它的参数是一个回调函数，所有数组成员依次执行该回调函数，直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回undefined。
+        [1, 4, -5, 10].find((n) => n < 0)
+            // -5
+
+        // 数组实例的findIndex方法的用法与find方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。
+        // 与indexOf()方法类似
+        [1, 5, 10, 15].findIndex(function(value, index, arr) {
+                return value > 9;
+            }) // 2
+
+        // 上面代码中，indexOf方法无法识别数组的NaN成员，但是findIndex方法可以借助Object.is方法做到。
+        [NaN].indexOf(NaN)
+            // -1
+
+        [NaN].findIndex(y => Object.is(NaN, y))
+            // 0
+
+        // fill方法使用给定值，填充一个数组。
+        ['a', 'b', 'c'].fill(7)
+            // [7, 7, 7]
+        new Array(3).fill(7)
+            // [7, 7, 7]
+    </script>
+</body>
+
+</html>
