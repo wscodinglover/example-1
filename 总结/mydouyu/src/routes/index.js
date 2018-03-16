@@ -8,6 +8,7 @@ const routes = {
     path: '/',
     // component: App,
     childRoutes: [
+      App  ,
       List ,
       Game ,
     ]
