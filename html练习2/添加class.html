@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>class 操作</title>
+    <style>
+
+        div>p>span{
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+        .bg-1{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <p>
+            <span class="bg-2">1</span>
+            <span class="bg-2">2</span>
+            <span class="bg-2">3</span>
+        </p>
+        <p>
+            <span class="bg-2">4</span>
+            <span class="bg-2">5</span>
+            <span class="bg-2">6</span>
+        </p>
+        <p>
+            <span class="bg-2">7</span>
+            <span class="bg-2">8</span>
+            <span class="bg-2">9</span>
+        </p>
+    </div>
+    <script>
+   let container = document.getElementById('container');
+   let list = document.getElementsByClassName('bg-2')
+   container.addEventListener('click',(e)=>{
+       for(let i = 0; i<list.length;i++){
+        //    console.log('list',list[i])
+           list[i].classList.remove('bg-1')
+       }
+       let target = e.target;
+       console.log('target',target)
+       if(target.nodeName.toLowerCase() === "span"){
+           
+            target.classList.add('bg-1')
+       }
+       
+    //    console.log(target,'---');
+   })
+
+    </script>
+</body>
+</html>

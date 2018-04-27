@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>拖拽组件demo</title>
+  <style>
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .up {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .down {
+      width: 100%;
+      /* flex-basis: 30%; */
+      height: 200px;
+      background: #99e;
+    }
+
+    .down-border {
+      width: 100%;
+      height: 5px;
+      background: #000;
+    }
+
+    .down-border:hover {
+      cursor: n-resize;
+    }
+    .img{
+      width: 400px;
+      height: 300px;
+      background: #888;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="up" id="content">
+      <div class="img" id="img">this is section</div>
+    </div>
+    <div class="down" id="target">
+      <div class="down-border" id="rec"></div>
+      <div class="down-body"></div>
+    </div>
+  </div>
+  <script>
+    //获取div元素
+    var rec = document.getElementById("rec")
+    var target = document.getElementById("target")
+    var content = document.getElementById("content")
+    var img = document.getElementById("img")
+    var down = false;
+    var dx = 0;
+    var dy = 0;
+    // var sx = 0;
+    // var sy = 0;
+    var h = 0;
+    var ch = 0;
+    var ih = 0;
+    var iw = 0;
+    document.onmousemove = function (e) {
+      if (down) {
+        var ev = e || event;
+        console.log('dy', dy)
+        // console.log('offsetY', ev.offsetY)
+        console.log(dy - ev.clientY + h);
+        let i = (ch + ev.clientY - dy)/ch
+
+        // rec.style.top = ev.clientY - (dy - sy) + 'px';
+        // rec.style.left = ev.clientX - (dx - sx) + 'px';
+        target.style.height = dy - ev.clientY + h + 'px';
+        img.style.height = ih * i + 'px';
+        img.style.width = iw * i + 'px';
+      }
+    }
+    rec.onmousedown = function () {
+      console.log('height', target.clientHeight);
+      h = target.clientHeight
+      ch = content.clientHeight
+      ih = img.clientHeight
+      iw = img.clientWidth
+      // dx = event.clientX;
+      dy = event.clientY;
+      // sx = parseInt(rec.style.left);
+      // sy = parseInt(rec.style.top);
+      if (!down) {
+        down = true;
+      }
+    }
+    document.onmouseup = function () {
+      // if (down) {
+      down = false;
+      // }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body >
+
+        <a href="javascript:window.opener=null;window.close();">关闭</a>
+
+        <script language="javascript">
+                // // 这个脚本是 ie6和ie7 通用的脚本
+                // function custom_close(){
+                // if (confirm("您确定要关闭本页吗？")){
+                // window.close();
+                // }
+                // else{}
+                // }
+               
+
+        
+        window.onbeforeunload = function() { return "\n确定离开当前页吗？";}
+
+        window.onbeforeunload()
+
+        </script> 
+    
+</body>
+</html>
