@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>字符串比较大小</title>
+</head>
+<body>
+  <script>
+    var arr = ["1533168480,1533179880","1533463200,1533482280","1534031200,1533033000","1533463210,1533482280"]
+    function findMaxIndex(arr) {
+      const arrTemp = [...arr]
+      let index = [];
+      let value = 0;
+      arrTemp.map(item=>{
+        if(item.split(",")[0]>value){
+          index = []
+          value = item.split(",")[0];
+          index.push(item)
+        }
+      })
+      console.log("index",index);
+      console.log("value",value);
+    }
+
+    findMaxIndex(arr)
+
+  </script>
+</body>
+</html>

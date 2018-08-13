@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  var arr = [{id:1,name:'aa'},{id:2,name:"bb"},{id:3,name:'cc'}]
+  var arr1 = [{id:4,name:'a1a'},{id:5,name:"b2b"},{id:3,name:'c3c'}]
+var temp = [...arr]
+for(let i = 0;i<arr.length;i++){
+  let obj = arr[i]
+  arr1.map((item,index)=>{
+    if(item.id===obj.id){
+      // temp.push(obj)
+        arr1.splice(index,1)
+    }
+  })
+}
+console.log(arr1);
+
+  </script>
+</body>
+</html>

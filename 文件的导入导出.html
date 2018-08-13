@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>文件的导入导出</title>
+  <style>
+    #readFiles{
+      position: absolute;
+      /* top: 50px; */
+      color: transparent;
+      display: block;
+      width: 80px;
+      height: 30px;
+      overflow: hidden;
+      opacity: 0;
+    }
+    .file-btn{
+      width: 80px;
+      height: 30px;
+      background: rgb(39, 157, 224);
+      border: 2px solid rgb(39, 157, 224);
+      border-radius: 5px;
+      line-height: 30px;
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+    }
+  
+  </style>
+  <script src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+</head>
+<body>
+  <input type="file" id="readFiles" onchange="readfiles(files)">
+  <div class="file-btn">
+    点击选择文件
+  </div>
+
+  <script>
+
+    const readFiles = document.getElementById('readFiles')
+    const readfiles = (files) =>{
+      console.log('files', files[0]);
+      const fileReader = new FileReader()
+     
+     
+      fileReader.onload = function(ev) {
+        try {
+          var data = ev.target.result,
+          workbook = XLSX.read(data, {
+            type: 'binary'
+          }), // 以二进制流方式读取得到整份excel表格对象
+          persons = []; // 存储获取到的数据
+        } catch (e) {
+          console.log('文件类型不正确');
+          return;
+        }
+                // 表格的表格范围，可用于判断表头是否数量是否正确
+        var fromTo = '';
+                // 遍历每张表读取
+        for (var sheet in workbook.Sheets) {
+          if (workbook.Sheets.hasOwnProperty(sheet)) {
+            fromTo = workbook.Sheets[sheet]['!ref'];
+            console.log(fromTo);
+            persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+                        // break; // 如果只取第一张表，就取消注释这行
+          }
+        }
+
+        console.log(persons);
+      };
+
+            // 以二进制方式打开文件
+      fileReader.readAsBinaryString(files[0]);
+      
+    }
+  </script>
+</body>
+</html>

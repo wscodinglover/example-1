@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>aaaa</title>
+</head>
+<body>
+  <div>
+    这是aaa页面
+  </div>
+  <script>
+  // window.onmessage = function(e){
+  //   e = e || event;
+  //   alert(e.data)
+  // }
+  
+  window.addEventListener("message", function(MessageEvent){
+  var origin = event.origin || event.originalEvent.origin; 
+console.log(origin);
+
+  }, false);
+  </script>
+</body>
+</html>

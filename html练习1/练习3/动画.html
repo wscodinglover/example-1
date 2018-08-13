@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>动画练习</title>
+  <style>
+  .play-bg{
+    width: 800px;
+    height: 47px;
+    background: url("./下载.png")  100px top;
+    animation: play 2s steps(6) infinite;
+  }
+  @keyframes play{
+    0%{
+      background-position: 0px 0;
+    }
+    100%{
+      background-position: 500px 0;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="play-bg"></div>
+</body>
+</html>

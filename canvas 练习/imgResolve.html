@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>图像处理</title>
+</head>
+<body>
+  <canvas id="myCanvas">抱歉，您的浏览器还不支持canvas。</canvas>
+  <input type="file" id="myFile" />
+  <script>
+    let myCanvas = document.getElementById('myCanvas')
+    let myFile = document.getElementById('myFile')
+
+    // 当用户选定一个文件时，我们就应该开始通过FileReader读取文件数据，为此监视myFile的onchange事件，并构造FileReader
+    myFile.onchange = function (event) {
+      let selectedFile = event.target.files[0]
+      let reader = new FileReader ()
+      reader.onload = putImage2Canvas
+      reader.readAsDataURL(selectedFile)
+    }
+    // 在这段代码中，onchange事件被激活时会传递一个event参数给处理函数，event的target子属性是一个描述当前文件选择控件的对象，其files属性是一个描述用户已选文件信息的数组。files是数组类型是因为HTML5支持一次选择多个文件，如果文件选择空间没有开启多选模式，那么次数组只有一个元素。
+    // putImage2Canvas函数，用来将FileReader 读取的数据放入canvas中供JavaScript处理
+    const putImage2Canvas = (event) => {
+      let img = new Image ()
+      img.src = event.target.result
+      img.onload = () => {
+        myCanvas.width = img.width
+        myCanvas.height = img.height
+        let context = myCanvas.getContext('2d')
+        context.drawImage(img, 0, 0)
+        context.scale(1, -1);
+        // context.drawImage(img, 10, 10, 200, 200, 100, 100, 300, 300)
+        let imgdata = context.getImageData(0, 0, img.width, img.height)
+
+        // 反色处理
+        // console.log('imgdata', imgdata)
+        // for(var i=0; i < imgdata.data.length; i+=4) {
+        //   imgdata.data[i] = 255-imgdata.data[i];
+        //   imgdata.data[i+1] = 255-imgdata.data[i+1];
+        //   imgdata.data[i+2] = 255-imgdata.data[i+2];
+        // }
+        // context.putImageData(imgdata, 0, 0);
+        // let imgsrc = myCanvas.toDataURL();
+        // console.log('imgsrc',imgsrc);
+      }
+    }
+    // event是reader.onload传递的参数，event.target.result是FileReader读取的结果，由于之前我们将文件内容以Data URL的方式读取，所以可以直接将读取结果作为src创建图像对象。当图像创建完毕后，img.onload事件被激活，此时我们将canvas的尺寸设置成图像的尺寸，然后通过drawImage将图像画在画布上，最后通过getImage和getImageData这两个方法，
+
+    // drawImage的用法
+
+    // 用法一  context.drawImage(img, x, y)
+    // 该方法会将图片放到相对于左上角的画布坐标（x, y）点上，如果画布尺寸足够则画出整个图像，否则将超出画布的部分舍弃
+
+    // 用法二 context.drawImage(img, x, y, width, height) 
+    //  指定位置的图像尺寸，可以对图像进行放大或缩小
+
+    // 用法三  context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height)
+    // sx和sy指定图像被截取部分左上角的坐标，swidth和sheight指定图像被截取部分的尺寸，
+
+    
+
+  </script>
+</body>
+</html>

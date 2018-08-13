@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>鼠标操作，矩形框可移动，重编辑</title>
+  <style>
+    .display-container {
+      width: 800px;
+      height: 500px;
+      background: #ddd;
+      position: relative;
+    }
+
+    .select-border {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #fff;
+      position: absolute;
+      top: 100px;
+      left: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="display-container" onmousedown="mouseDown(event)"  onmousemove="mouseMove(event)"  onmouseup="mouseUp(event)">
+  </div>
+  <script>
+    const divContainer = document.getElementsByClassName('display-container')[0];
+   
+
+    const isMove = {val:false}
+
+    function mouseDown(e) {
+      console.log('down')
+      let dy = e.offsetY
+      let dx = e.offsetX
+      isMove.val = true    
+    }
+
+    function mouseMove(e) { 
+        e.preventDefault()
+        let  
+        if(isMove.val){
+          console.log('move',e.offsetX,e.offsetY)
+        } 
+    }
+    function mouseUp(e) {
+      console.log('up')
+      isMove.val = false
+    }
+  </script>
+</body>
+
+</html>

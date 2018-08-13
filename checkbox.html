@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>checkbox</title>
+</head>
+<body>
+  <div>
+    <label for="all"><input type="checkbox" name="" id="all" value="0" onchange="changeAll()">全部</label>
+    <label for="sec1"><input type="checkbox" name="" id="sec1" onchange="change1()">选择1</label>
+    <label for="sec2"><input type="checkbox" name="" id="sec2" onchange="change2()">选择2</label>
+    <label for="sec3"><input type="checkbox" name="" id="sec3" onchange="change3()">选择3</label>
+    <label for="sec4"><input type="checkbox" name="" id="sec4" onchange="change4()">选择4</label>
+  </div>
+  <script>
+  var all = document.getElementById('all')
+  var sec1 = document.getElementById('sec1')
+  var sec2 = document.getElementById('sec2')
+  var sec3 = document.getElementById('sec3')
+  var sec4 = document.getElementById('sec4')
+  function changeAll() {
+    console.log('ee',all.checked)
+    if(all.checked){
+      sec1.checked = true
+      sec2.checked = true
+      sec3.checked = true
+      sec4.checked = true
+    }else{
+      sec1.checked = false
+      sec2.checked = false
+      sec3.checked = false
+      sec4.checked = false
+    }
+  }
+  function change1() {
+    if(sec1.checked && sec2.checked && sec3.checked && sec4.checked){
+      all.checked =true
+    }else{
+      all.checked =false
+    }
+  }
+  function change1() {
+    if(sec1.checked && sec2.checked && sec3.checked && sec4.checked){
+      all.checked =true
+    }else{
+      all.checked =false
+    }
+  }
+  function change2() {
+    if(sec1.checked && sec2.checked && sec3.checked && sec4.checked){
+      all.checked =true
+    }else{
+      all.checked =false
+    }
+  }
+  function change3() {
+    if(sec1.checked && sec2.checked && sec3.checked && sec4.checked){
+      all.checked =true
+    }else{
+      all.checked =false
+    }
+  }
+  function change4() {
+    if(sec1.checked && sec2.checked && sec3.checked && sec4.checked){
+      all.checked =true
+    }else{
+      all.checked =false
+    }
+  }
+  </script>
+</body>
+</html>
