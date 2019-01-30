@@ -3,18 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Canvas时钟</title>
     <style>
-
+        #clock{
+            border:2px solid #f2f2f2;
+        }
     </style>
 </head>
 
 <body>
-    <canvas id="clock" width="500" height="500"></canvas>
+    <canvas id="clock" width="800" height="800"></canvas>
     <script>
         var colock = document.getElementById('clock');
         var cxt = clock.getContext('2d');
-        // cxt.scale(2, 2)  将画布放大，以减小图像模糊
+        cxt.scale(1.5, 1.5)  //将画布放大，
 
         function drawClock() {
             //清除画布 
@@ -147,8 +149,10 @@
                 // 先设置0,0点
                 cxt.translate(250, 250);
                 // 设置旋转角度
-                cxt.rotate(i * (30) * Math.PI / 180);
-                cxt.fillText(i, 0, -150);
+                // cxt.rotate(1 * 30 * Math.PI / 180);
+                var x = Math.sin(i * 30 * Math.PI / 180) * 150
+                var y = -Math.cos(i * 30 * Math.PI / 180) * 150
+                cxt.fillText(i, x, y);
                 cxt.restore();
             }
 
