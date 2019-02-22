@@ -6,10 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>三角彩带</title>
+    <style>
+    body{
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        section{
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-image: linear-gradient( rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5));
+        }
+        .center {
+            text-align: center;
+            margin: 0 auto;
+        }
+        .home {
+            color: #333333;
+        }
+        .image-word {
+            margin: auto;
+            width: 100%;
+            height: 300px;
+            margin-bottom:calc(100%-800px);
+            line-height: 300px;
+            text-align: center;
+            font-size: 180px;
+            font-weight: bold;
+            color: transparent;
+            background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493353832&di=c063b6b9c89082e96ffee0766112ffec&imgtype=jpg&er=1&src=http%3A%2F%2Fpic2016.5442.com%3A82%2F2016%2F0111%2F07%2F3.jpg%21960.jpg")
+            no-repeat center center;
+            background-size: cover;
+            -webkit-background-clip: text;
+        }
+        .home__title {
+            font-weight: bold;
+            font-family: "Times New Roman",Georgia,Serif;
+        }  
+    </style>
 </head>
 
 <body>
-    <canvas></canvas>
+    <section class="home center">
+        <h2 class="home__title image-word">Hello World</h2>
+        <canvas id="canvas"></canvas>
+    </section>
     <script>
         document.addEventListener('touchmove', function(e) {
             e.preventDefault() //阻止滚动事件
@@ -18,7 +60,7 @@
             x = c.getContext('2d'),
             pr = window.devicePixelRatio || 1,
             w = window.innerWidth,
-            h = window.innerHeight,
+            h = 500,
             f = 90,
             q,
             m = Math,
